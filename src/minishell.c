@@ -11,16 +11,17 @@
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include <stdlib.h>
 
 int main(int argc, char **argv)
 {
-    if (argc == 1)
-    {
-        printf("Hello shells.\n");
-    }
-    else
-    {
-        printf("%s\n", argv[1]);
-    }
-    return (0);
+	(void)argc;
+	(void)argv;
+	t_shell sh;
+	if (!(sh = (t_shell)malloc(sizeof(struct s_shell))))
+	exit(0);
+	while (1)
+		shell(sh);
+	free(sh);
+	return (0);
 }

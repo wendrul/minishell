@@ -13,6 +13,27 @@
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
-# include <stdio.h>
+#define MSH_BUFF_SIZE 4096
 
+# include <dirent.h>
+# include <errno.h>
+# include <fcntl.h>
+# include <stdio.h>
+# include <stdlib.h>
+# include <signal.h>
+# include <sys/wait.h>
+# include <sys/types.h>
+# include <sys/resource.h>
+# include <sys/stat.h>
+# include <unistd.h>
+
+#include "libft.h"
+
+typedef struct	s_shell
+{
+		char	buf[MSH_BUFF_SIZE];
+		int		i;
+}			*	t_shell;
+
+int		shell();
 #endif

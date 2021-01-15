@@ -10,7 +10,8 @@
 #                                                                              #
 # **************************************************************************** #
 
-SRCS		=	src/minishell.c
+SRCS		=	src/minishell.c\
+				src/msh_prompt.c
 
 MKDIR_P		=	mkdir -p
 RM			=	rm -f
@@ -83,6 +84,9 @@ re-libft:
 				@make -C $(LFT_PATH)
 
 bonus:			all
+
+good:			all
+				./$(NAME)
 
 together:		all
 				@echo "$(CYAN)"
