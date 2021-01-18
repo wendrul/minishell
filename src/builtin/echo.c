@@ -1,25 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   msh_parsing.h                                      :+:      :+:    :+:   */
+/*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ede-thom <ede-thom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/01/18 16:59:16 by wendrul           #+#    #+#             */
-/*   Updated: 2021/01/18 18:24:09 by ede-thom         ###   ########.fr       */
+/*   Created: 2021/01/18 23:43:58 by ede-thom          #+#    #+#             */
+/*   Updated: 2021/01/18 23:50:27 by ede-thom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MSH_PARSING_H
-# define MSH_PARSING_H
+#include "minishell.h"
 
-typedef struct	s_command
+int		msh_echo(int argc, char **argv)
 {
-	int			argc;
-	char		**argv;
-	int			num;
-}				t_command;
+	int i;
+	int endl;
 
-int	parse_into_args(char *line, char ***argv);
-
-#endif
+	endl = 1;
+	if (argc >= 2)
+		endl = !name_cmp(argv[1], "-n");
+	i = 0;
+	while (++i < argc)
+	{
+		printf("%s", argv[i]);
+		if (i < argc - 1)
+			printf(" ");
+	}
+	if (endl)
+		printf("\n");
+	fflush(stdout);
+	return (0);
+}

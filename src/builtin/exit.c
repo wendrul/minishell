@@ -1,25 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   msh_parsing.h                                      :+:      :+:    :+:   */
+/*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ede-thom <ede-thom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/01/18 16:59:16 by wendrul           #+#    #+#             */
-/*   Updated: 2021/01/18 18:24:09 by ede-thom         ###   ########.fr       */
+/*   Created: 2021/01/18 21:09:50 by ede-thom          #+#    #+#             */
+/*   Updated: 2021/01/18 21:10:42 by ede-thom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MSH_PARSING_H
-# define MSH_PARSING_H
+#include "minishell.h"
 
-typedef struct	s_command
+int		msh_exit(int argc, char **argv)
 {
-	int			argc;
-	char		**argv;
-	int			num;
-}				t_command;
-
-int	parse_into_args(char *line, char ***argv);
-
-#endif
+	(void)argc;
+	(void)argv;
+	exit(0);
+}

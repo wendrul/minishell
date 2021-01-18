@@ -13,7 +13,8 @@
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
-#define MSH_BUFF_SIZE 4096
+# define MSH_CMD_NAME_SIZE 256
+# define SH_NAME msh
 
 # include <dirent.h>
 # include <errno.h>
@@ -29,12 +30,11 @@
 
 # include "libft.h"
 # include "get_next_line.h"
+# include "msh_error.h"
+# include "msh_parsing.h"
+# include "msh_builtin.h"
 
-typedef struct	s_shell
-{
-		char	buf[MSH_BUFF_SIZE];
-		int		i;
-}			*	t_shell;
+int		shell(t_builtin builtins);
+void	run_cmd(t_command cmd, t_builtin builtins);
 
-int		shell();
 #endif

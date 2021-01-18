@@ -11,10 +11,17 @@
 # **************************************************************************** #
 
 SRCS		=	src/minishell.c\
-				src/msh_prompt.c
+				src/msh_prompt.c\
+				src/msh_parsing.c\
+				src/builtin/common.c
 
 SRCS		+=	src/gnl/get_next_line.c\
 				src/gnl/get_next_line_utils.c
+
+# Built-In's
+
+SRCS		+= 	src/builtin/exit.c\
+				src/builtin/echo.c
 
 MKDIR_P		=	mkdir -p
 RM			=	rm -f

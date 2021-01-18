@@ -1,25 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   msh_parsing.h                                      :+:      :+:    :+:   */
+/*   msh_parsing.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ede-thom <ede-thom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/01/18 16:59:16 by wendrul           #+#    #+#             */
-/*   Updated: 2021/01/18 18:24:09 by ede-thom         ###   ########.fr       */
+/*   Created: 2021/01/18 18:18:38 by ede-thom          #+#    #+#             */
+/*   Updated: 2021/01/18 18:24:15 by ede-thom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MSH_PARSING_H
-# define MSH_PARSING_H
+#include "minishell.h"
 
-typedef struct	s_command
+int		parse_into_args(char *line, char ***argv)
 {
-	int			argc;
-	char		**argv;
-	int			num;
-}				t_command;
+	int i;
 
-int	parse_into_args(char *line, char ***argv);
-
-#endif
+	*argv = ft_split_charset(line, "\f\t\n\r\v ");
+	i = 0;
+	while ((*argv)[i])
+		i++;
+	return i;
+}
