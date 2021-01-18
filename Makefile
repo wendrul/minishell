@@ -13,6 +13,9 @@
 SRCS		=	src/minishell.c\
 				src/msh_prompt.c
 
+SRCS		+=	src/gnl/get_next_line.c\
+				src/gnl/get_next_line_utils.c
+
 MKDIR_P		=	mkdir -p
 RM			=	rm -f
 
@@ -35,6 +38,8 @@ LFT_RULE	=	$(LFT_PATH)/$(LFT_NAME)
 # **************************************************************************** #
 
 OBJS		=	$(patsubst src/%.c, $(OBJ_DIR)/%.o, $(SRCS))
+OBJS_NODIR	=	$(patsubst %.o, $(OBJ_DIR)/%.o, $(notdir $(OBJS)))
+
 LIB			=	$(LFT_LIB)
 INC			=	-I $(INC_DIR) $(LFT_INC)
 
@@ -56,21 +61,28 @@ all:			${NAME}
 
 $(OBJ_DIR)/%.o:	$(SRC_DIR)/%.c $(INC_DIR)/
 				@$(MKDIR_P) $(OBJ_DIR)
-				@$(CC) $(CFLAGS) -c -o $@ $< $(INC)
+				@$(CC) $(CFLAGS) -c -o $(OBJ_DIR)/$(notdir $@) $< $(INC)
 				@printf "$(CYAN)Compiling $(MAGENTA)$<$(RESET)\r"
+				@printf "\r                                                                                                                                \r"
+
+
+# $(SRC_DIR)/%.c:	$(OBJ_DIR)/$(notdir %.o) $(INC_DIR)
+# 				@$(MKDIR_P) $(OBJ_DIR)
+# 				@$(CC) $(CFLAGS) -c -o $< $@ $(INC)
+# 				@printf "$(CYAN)Compiling $(MAGENTA)$<$(RESET)\r"
 
 $(NAME):		$(LFT_RULE) $(OBJS)
 				@printf "$(CYAN)Done creating $(NAME) object files!\n$(RESET)"
-				@$(CC) $(CFLAGS) $(OBJS) -o $@ $(INC) $(LIB)
+				@$(CC) $(CFLAGS) $(OBJS_NODIR) -o $@ $(INC) $(LIB)
 				@echo "$(CYAN)Created $(GREEN)$(NAME)$(CYAN)!! $(RESET)"
 
 $(LFT_RULE):
 				@make -C $(LFT_PATH)/
 
 clean: 
-				@${RM} ${OBJS} $(SDL_OBJS)
-				@$(MKDIR_P) $(OBJ_DIR) $(SDL_OBJ_DIR)
-				@rmdir -p $(OBJ_DIR) $(SDL_OBJ_DIR)
+				@${RM} ${OBJS_NODIR}
+				@$(MKDIR_P) $(OBJ_DIR)
+				@rmdir -p $(OBJ_DIR)
 				@echo "$(CYAN)CLEANING$(RESET)"
 
 fclean:			clean
