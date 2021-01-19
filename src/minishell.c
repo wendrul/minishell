@@ -22,7 +22,6 @@ int		main(int argc, char **argv)
 	(void)argv;
 	add_builtin(&builtins, "exit", msh_exit);
 	add_builtin(&builtins, "echo", msh_echo);
-	printf("aaaa\n");
 	while (1)
 		shell(builtins);
 	return (0);

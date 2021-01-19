@@ -6,7 +6,7 @@
 /*   By: ede-thom <ede-thom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/18 20:19:07 by ede-thom          #+#    #+#             */
-/*   Updated: 2021/01/18 23:43:12 by ede-thom         ###   ########.fr       */
+/*   Updated: 2021/01/19 15:12:46 by ede-thom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@ static t_builtin	create(char *name, int (*method)(int, char**), t_builtin next)
 void	add_builtin(t_builtin *list, char *name, int (*method)(int, char**))
 {
 	t_builtin cur;
-	printf("abbbb\n");
 
 	if (*list == NULL)
 	{
@@ -35,7 +34,6 @@ void	add_builtin(t_builtin *list, char *name, int (*method)(int, char**))
 		return ;
 	}
 	cur = *list;
-	printf("bbbb\n");
 	while (cur->next != NULL)
 		cur = cur->next;
 	cur->next = create(name, method, NULL);
