@@ -6,7 +6,7 @@
 /*   By: ede-thom <ede-thom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/18 20:19:07 by ede-thom          #+#    #+#             */
-/*   Updated: 2021/01/19 15:12:46 by ede-thom         ###   ########.fr       */
+/*   Updated: 2021/01/22 20:31:26 by ede-thom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,5 +56,5 @@ int		run_builtin(t_builtin builtin, char *name, t_command cmd)
 
 int		name_cmp(char *str1, char *str2)
 {
-	return (ft_strncmp(str1, str2, ft_strlen(str1)) == 0);
+	return (ft_strncmp(str1, str2, ft_min(ft_strlen(str1), ft_strlen(str2))) == 0);
 }
