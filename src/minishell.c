@@ -19,6 +19,7 @@ int		main(void)
 	builtins = NULL;
 	add_builtin(&builtins, "exit", msh_exit);
 	add_builtin(&builtins, "echo", msh_echo);
+	add_builtin(&builtins, "env", msh_env);
 	while (1)
 		shell(builtins);
 	return (0);

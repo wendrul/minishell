@@ -6,7 +6,7 @@
 /*   By: ede-thom <ede-thom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/22 20:08:41 by ede-thom          #+#    #+#             */
-/*   Updated: 2021/01/22 20:46:40 by ede-thom         ###   ########.fr       */
+/*   Updated: 2021/01/23 18:27:45 by ede-thom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ unsigned	hash(char *s)
 	return (hashval % HASHSIZE);
 }
 
-char		*lookup(char *s)
+t_var_dict		dict_get(char *s)
 {
 	t_var_dict var;
 
@@ -31,7 +31,7 @@ char		*lookup(char *s)
 	while (var != NULL)
 	{
 		if (name_cmp(s, var->name))
-			return var->value;
+			return (var);
 		var = var->next;
 	}
 	return (NULL);
@@ -41,7 +41,7 @@ t_var_dict	dict_put(char *name, char *defn)
 {
     t_var_dict np;
     unsigned hashval;
-    if ((np = lookup(name)) == NULL) 
+    if ((np = dict_get(name)) == NULL) 
 	{
         np = (t_var_dict) malloc(sizeof(*np));
         if (np == NULL || (np->name = ft_strdup(name)) == NULL)

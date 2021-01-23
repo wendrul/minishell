@@ -6,7 +6,7 @@
 /*   By: ede-thom <ede-thom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/22 23:07:18 by ede-thom          #+#    #+#             */
-/*   Updated: 2021/01/23 00:59:50 by ede-thom         ###   ########.fr       */
+/*   Updated: 2021/01/23 18:17:51 by ede-thom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,6 @@ void	tres_thing(void)
 
 void	run_cmd(t_command cmd, t_builtin builtins)
 {
-	char *name;
-
 	if (cmd.argc >= 1)
 	{
 		if (!run_builtin(builtins, cmd.argv[0], cmd))

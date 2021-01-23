@@ -14,7 +14,8 @@ SRCS		=	src/minishell.c\
 				src/msh_prompt.c\
 				src/msh_parsing.c\
 				src/builtin/common.c\
-				src/msh_execute.c
+				src/msh_execute.c\
+				src/msh_variables.c
 
 SRCS		+=	src/gnl/get_next_line.c\
 				src/gnl/get_next_line_utils.c
@@ -22,7 +23,8 @@ SRCS		+=	src/gnl/get_next_line.c\
 # Built-In's
 
 SRCS		+= 	src/builtin/exit.c\
-				src/builtin/echo.c
+				src/builtin/echo.c\
+				src/builtin/env.c
 
 MKDIR_P		=	mkdir -p
 RM			=	rm -f

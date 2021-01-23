@@ -6,7 +6,7 @@
 /*   By: ede-thom <ede-thom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/18 18:18:38 by ede-thom          #+#    #+#             */
-/*   Updated: 2021/01/23 00:53:56 by ede-thom         ###   ########.fr       */
+/*   Updated: 2021/01/23 18:33:53 by ede-thom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@ int		parse_into_args(char *line, char ***argv)
 	return (i);
 }
 
+
+
 char	*getcmd_path(t_command cmd)
 {
 	char		*path;
@@ -31,7 +33,7 @@ char	*getcmd_path(t_command cmd)
 	DIR			*dir;
 	t_dirent	*dir_ent;
 
-	path = lookup("PATH");
+	path = dict_get("PATH") ? dict_get("PATH")->value : NULL;
 	if (!(pathv = ft_split_charset(path, ":")))
 		error_exit(MALLOC_FAIL_ERROR);
 	i = -1;
@@ -39,9 +41,8 @@ char	*getcmd_path(t_command cmd)
 	{
 		if ((dir = opendir(pathv[i])) == NULL)
 			break ;
-		while (dir_ent != NULL)
+		while ((dir_ent = readdir(dir)))
 		{
-			dir_ent = readdir(dir);
 			if (name_cmp(dir_ent->d_name, cmd.name))
 			{
 				if ((cmd.name = ft_strjoin(pathv[i], cmd.name)) == NULL)
@@ -51,8 +52,8 @@ char	*getcmd_path(t_command cmd)
 				return (cmd.name);
 			}
 		}
-		closedir(dir);
-		free_arr(pathv);
-		return (cmd.name);
-	}	
+	}
+	closedir(dir);
+	free_arr(pathv);
+	return (cmd.name);
 }

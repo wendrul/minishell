@@ -6,7 +6,7 @@
 /*   By: ede-thom <ede-thom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/18 20:19:07 by ede-thom          #+#    #+#             */
-/*   Updated: 2021/01/23 00:46:16 by ede-thom         ###   ########.fr       */
+/*   Updated: 2021/01/23 18:31:23 by ede-thom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,9 +59,9 @@ int		name_cmp(char *str1, char *str2)
 	return (ft_strncmp(str1, str2, ft_min(ft_strlen(str1), ft_strlen(str2))) == 0);
 }
 
-void	free_arr(void **ptr)
+void	free_arr(char **ptr)
 {
-	void	**start;
+	char	**start;
 
 	start = ptr; 
 	while (*ptr)
@@ -70,4 +70,10 @@ void	free_arr(void **ptr)
 		ptr++;
 	}
 	free(start);
+}
+
+void	print_arr(char **s)
+{
+	while (*s)
+		printf("%s\n", *(s++));
 }
