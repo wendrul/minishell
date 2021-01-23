@@ -13,7 +13,8 @@
 SRCS		=	src/minishell.c\
 				src/msh_prompt.c\
 				src/msh_parsing.c\
-				src/builtin/common.c
+				src/builtin/common.c\
+				src/msh_execute.c
 
 SRCS		+=	src/gnl/get_next_line.c\
 				src/gnl/get_next_line_utils.c

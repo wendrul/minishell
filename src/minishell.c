@@ -11,15 +11,12 @@
 /* ************************************************************************** */
 
 #include "minishell.h"
-#include <stdlib.h>
 
-int		main(int argc, char **argv)
+int		main(void)
 {
 	t_builtin builtins;
 
 	builtins = NULL;
-	(void)argc;
-	(void)argv;
 	add_builtin(&builtins, "exit", msh_exit);
 	add_builtin(&builtins, "echo", msh_echo);
 	while (1)

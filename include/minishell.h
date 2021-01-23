@@ -33,6 +33,7 @@
 # include "msh_error.h"
 # include "msh_parsing.h"
 # include "msh_builtin.h"
+# include "msh_variables.h"
 
 int		shell(t_builtin builtins);
 void	run_cmd(t_command cmd, t_builtin builtins);

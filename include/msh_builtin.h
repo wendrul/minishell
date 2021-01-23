@@ -6,7 +6,7 @@
 /*   By: ede-thom <ede-thom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/18 16:59:20 by wendrul           #+#    #+#             */
-/*   Updated: 2021/01/18 23:47:27 by ede-thom         ###   ########.fr       */
+/*   Updated: 2021/01/23 00:46:57 by ede-thom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@ typedef struct	s_builtin
 }			*	t_builtin;
 
 int		name_cmp(char *str1, char *str2);
+void	free_arr(void **ptr);
+
 int		run_builtin(t_builtin builtin, char *name, t_command cmd);
 void	add_builtin(t_builtin *list, char *name, int (*method)(int, char**));
 
