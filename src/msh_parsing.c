@@ -6,7 +6,7 @@
 /*   By: ede-thom <ede-thom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/18 18:18:38 by ede-thom          #+#    #+#             */
-/*   Updated: 2021/01/23 19:17:42 by ede-thom         ###   ########.fr       */
+/*   Updated: 2021/01/23 19:19:27 by ede-thom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,6 @@ int		parse_into_args(char *line, char ***argv)
 		i++;
 	return (i);
 }
-
-
 
 char	*getcmd_path(t_command cmd)
 {

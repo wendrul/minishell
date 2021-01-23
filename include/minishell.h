@@ -38,5 +38,6 @@
 int		shell(t_builtin builtins);
 void	run_cmd(t_command cmd, t_builtin builtins);
 void	add_env_vars();
+void	execute(t_command cmd);
 
 #endif
