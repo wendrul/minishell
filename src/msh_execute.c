@@ -6,7 +6,7 @@
 /*   By: ede-thom <ede-thom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/22 23:07:18 by ede-thom          #+#    #+#             */
-/*   Updated: 2021/01/23 18:17:51 by ede-thom         ###   ########.fr       */
+/*   Updated: 2021/01/23 19:12:36 by ede-thom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,7 @@ void	run_cmd(t_command cmd, t_builtin builtins)
 	{
 		if (!run_builtin(builtins, cmd.argv[0], cmd))
 		{
-			//ENVP expects "key=value" our dictionnary is for personal usage (separte key and value)
-			if (execve(getcmd_path(cmd), cmd.argv, NULL) == -1)
+			if (execve(getcmd_path(cmd), cmd.argv, __environ) == -1)
 			{
 				printf("errno: %d: %s\n", errno, strerror(errno));
 				simple_error(NOT_FOUND_ERROR, cmd.num, cmd.argv[0]);

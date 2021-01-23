@@ -6,7 +6,7 @@
 /*   By: ede-thom <ede-thom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/18 18:18:38 by ede-thom          #+#    #+#             */
-/*   Updated: 2021/01/23 18:33:53 by ede-thom         ###   ########.fr       */
+/*   Updated: 2021/01/23 19:17:42 by ede-thom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ char	*getcmd_path(t_command cmd)
 	t_dirent	*dir_ent;
 
 	path = dict_get("PATH") ? dict_get("PATH")->value : NULL;
-	if (!(pathv = ft_split_charset(path, ":")))
+	if (!(pathv = ft_split(path, ':')))
 		error_exit(MALLOC_FAIL_ERROR);
 	i = -1;
 	while (pathv[++i])
@@ -45,10 +45,13 @@ char	*getcmd_path(t_command cmd)
 		{
 			if (name_cmp(dir_ent->d_name, cmd.name))
 			{
-				if ((cmd.name = ft_strjoin(pathv[i], cmd.name)) == NULL)
+				if ((path = ft_strjoin(pathv[i], "/")) == NULL)
+					error_exit(MALLOC_FAIL_ERROR);
+				if ((cmd.name = ft_strjoin(path, cmd.name)) == NULL)
 					error_exit(MALLOC_FAIL_ERROR);
 				closedir(dir);
 				free_arr(pathv);
+				printf("%s\n", cmd.name);
 				return (cmd.name);
 			}
 		}

@@ -6,7 +6,7 @@
 /*   By: ede-thom <ede-thom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/18 20:19:07 by ede-thom          #+#    #+#             */
-/*   Updated: 2021/01/23 18:31:23 by ede-thom         ###   ########.fr       */
+/*   Updated: 2021/01/23 18:59:58 by ede-thom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,8 @@ void	add_builtin(t_builtin *list, char *name, int (*method)(int, char**))
 	cur = *list;
 	while (cur->next != NULL)
 		cur = cur->next;
+
 	cur->next = create(name, method, NULL);
-	*list = cur;
 }
 
 int		run_builtin(t_builtin builtin, char *name, t_command cmd)
@@ -76,4 +76,14 @@ void	print_arr(char **s)
 {
 	while (*s)
 		printf("%s\n", *(s++));
+}
+
+int		arr_len(char **arr)
+{
+	int i;
+
+	i = 0;
+	while (arr[i])
+		i++;
+	return (i);
 }
