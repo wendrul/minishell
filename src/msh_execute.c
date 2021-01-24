@@ -6,7 +6,7 @@
 /*   By: ede-thom <ede-thom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/22 23:07:18 by ede-thom          #+#    #+#             */
-/*   Updated: 2021/01/23 21:20:53 by ede-thom         ###   ########.fr       */
+/*   Updated: 2021/01/24 14:18:47 by ede-thom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,18 +19,20 @@ void	execute(t_command cmd)
 
 	child_pid = fork();
 	
-	if (child_pid == 0)
+	if (child_pid == 0) /* Inside of child */
 	{
 		if (execve(getcmd_path(cmd), cmd.argv, __environ) == -1)
 		{
 			printf("errno: %d: %s\n", errno, strerror(errno));
 			simple_error(NOT_FOUND_ERROR, cmd.num, cmd.argv[0]);
+			exit(0);
 		}
 	} else if (child_pid == -1)
 	{
 		simple_error(strerror(errno), cmd.num, cmd.name);
 	} else
 	{
+		/* Inside of parent */
 	    if (waitpid(child_pid, &status, 0) == child_pid)
 		{
 			printf("status: %d\n", status);
