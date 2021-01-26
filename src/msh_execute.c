@@ -6,7 +6,7 @@
 /*   By: ede-thom <ede-thom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/22 23:07:18 by ede-thom          #+#    #+#             */
-/*   Updated: 2021/01/24 14:18:47 by ede-thom         ###   ########.fr       */
+/*   Updated: 2021/01/27 00:42:41 by ede-thom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@ void	execute(t_command cmd)
 	int status;
 
 	child_pid = fork();
-	
 	if (child_pid == 0) /* Inside of child */
 	{
 		if (execve(getcmd_path(cmd), cmd.argv, __environ) == -1)

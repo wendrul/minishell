@@ -12,6 +12,19 @@
 
 #include "minishell.h"
 
+void	handle_signal(int signo)
+{
+	//printf("signal: %d\n", signo);
+	if (signo == SIGINT)
+	{
+		printf("\n");
+	}
+	if (signo == SIGQUIT)
+	{
+		exit(0);
+	}
+}
+
 int		main(void)
 {
 	t_builtin builtins;
@@ -21,6 +34,8 @@ int		main(void)
 	add_builtin(&builtins, "env", msh_env);
 	add_builtin(&builtins, "exit", msh_exit);
 	add_env_vars();
+	signal(SIGINT, handle_signal);
+	signal(SIGQUIT, handle_signal);
 	while (1)
 		shell(builtins);
 	return (0);
