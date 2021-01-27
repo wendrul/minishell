@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: agoodwin <agoodwin@42.edu.fr>              +#+  +:+       +#+         #
+#    By: ede-thom <ede-thom@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/11/16 17:26:10 by agoodwin          #+#    #+#              #
-#    Updated: 2020/06/13 20:33:40 by agoodwin         ###   ########.fr        #
+#    Updated: 2021/01/27 22:58:36 by ede-thom         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,7 +24,8 @@ SRCS		+=	src/gnl/get_next_line.c\
 
 SRCS		+= 	src/builtin/exit.c\
 				src/builtin/echo.c\
-				src/builtin/env.c
+				src/builtin/env.c\
+				src/builtin/pwd.c
 
 MKDIR_P		=	mkdir -p
 RM			=	rm -f
