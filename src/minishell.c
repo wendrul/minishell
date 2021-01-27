@@ -17,7 +17,8 @@ void	handle_signal(int signo)
 	//printf("signal: %d\n", signo);
 	if (signo == SIGINT)
 	{
-		printf("\n");
+		write(STDOUT_FILENO, "\n", 1);
+		write(STDOUT_FILENO, PROMPT_TOKEN, ft_strlen(PROMPT_TOKEN));
 	}
 	if (signo == SIGQUIT)
 	{
@@ -25,10 +26,12 @@ void	handle_signal(int signo)
 	}
 }
 
-int		main(void)
+int		main(int argc, char **argv)
 {
 	t_builtin builtins;
 
+	if (argc > 1)
+		g_verbose = name_cmp("-v", argv[1]);
 	builtins = NULL;
 	add_builtin(&builtins, "echo", msh_echo);
 	add_builtin(&builtins, "env", msh_env);

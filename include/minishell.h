@@ -15,6 +15,7 @@
 
 # define MSH_CMD_NAME_SIZE 256
 # define SH_NAME msh
+# define PROMPT_TOKEN "m$ "
 
 # include <dirent.h>
 # include <errno.h>
@@ -34,6 +35,8 @@
 # include "msh_parsing.h"
 # include "msh_builtin.h"
 # include "msh_variables.h"
+
+int     g_verbose;
 
 int		shell(t_builtin builtins);
 void	run_cmd(t_command cmd, t_builtin builtins);

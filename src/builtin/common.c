@@ -56,7 +56,11 @@ int		run_builtin(t_builtin builtin, char *name, t_command cmd)
 
 int		name_cmp(char *str1, char *str2)
 {
-	return (ft_strncmp(str1, str2, ft_min(ft_strlen(str1), ft_strlen(str2))) == 0);
+	int		len;
+
+	len = ft_min(ft_strlen(str1), ft_strlen(str2));
+	len++;
+	return (ft_strncmp(str1, str2, len) == 0);
 }
 
 void	free_arr(char **ptr)

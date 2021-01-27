@@ -22,23 +22,24 @@ void	execute(t_command cmd)
 	{
 		if (execve(getcmd_path(cmd), cmd.argv, __environ) == -1)
 		{
-			printf("errno: %d: %s\n", errno, strerror(errno));
+			if (g_verbose)
+				printf("errno: %d: %s\n", errno, strerror(errno));
 			simple_error(NOT_FOUND_ERROR, cmd.num, cmd.argv[0]);
 			exit(0);
 		}
-	} else if (child_pid == -1)
-	{
+	}
+	else if (child_pid == -1)
 		simple_error(strerror(errno), cmd.num, cmd.name);
-	} else
+	else
 	{
 		/* Inside of parent */
 	    if (waitpid(child_pid, &status, 0) == child_pid)
 		{
-			printf("status: %d\n", status);
-	    } else
-		{
+			if (g_verbose)
+				printf("status: %d\n", status);
+		}
+	    else
 			simple_error(strerror(errno), cmd.num, cmd.name);
-	    }
 	}
 }
 

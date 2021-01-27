@@ -19,8 +19,7 @@ int		shell(t_builtin builtins)
 	t_command	cmd;
 	int			gnl_ret;
 
-	//printf("€ ");
-	write(STDOUT_FILENO, ">:v ", 5);
+	write(STDOUT_FILENO, PROMPT_TOKEN, ft_strlen(PROMPT_TOKEN));
 	gnl_ret = get_next_line(STDIN_FILENO, &line);
 	if (gnl_ret == -1)
 		error_exit(FAILED_TO_GET_NEXT_LINE);

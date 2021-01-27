@@ -49,7 +49,6 @@ char	*getcmd_path(t_command cmd)
 					error_exit(MALLOC_FAIL_ERROR);
 				closedir(dir);
 				free_arr(pathv);
-				printf("%s\n", cmd.name);
 				return (cmd.name);
 			}
 		}
