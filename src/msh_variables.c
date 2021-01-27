@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   msh_variables.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ede-thom <ede-thom@student.42.fr>          +#+  +:+       +#+        */
+/*   By: agoodwin <agoodwin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/22 20:08:41 by ede-thom          #+#    #+#             */
-/*   Updated: 2021/01/23 18:27:45 by ede-thom         ###   ########.fr       */
+/*   Updated: 2021/01/27 23:40:18 by agoodwin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "msh_variables.h"
+#include "minishell.h"
 
 unsigned	hash(char *s)
 {
@@ -27,7 +27,7 @@ t_var_dict		dict_get(char *s)
 {
 	t_var_dict var;
 
-	var = g_hashtab[hash(s)];
+	var = g_msh->dict[hash(s)];
 	while (var != NULL)
 	{
 		if (name_cmp(s, var->name))
@@ -47,11 +47,27 @@ t_var_dict	dict_put(char *name, char *defn)
         if (np == NULL || (np->name = ft_strdup(name)) == NULL)
           return NULL;
         hashval = hash(name);
-        np->next = g_hashtab[hashval];
-        g_hashtab[hashval] = np;
+        np->next = g_msh->dict[hashval];
+        g_msh->dict[hashval] = np;
     } else
         free((void *) np->value);
     if ((np->value = ft_strdup(defn)) == NULL)
        return NULL;
     return np;
+}
+
+void		dict_print(char **envp)
+{
+	char	*tmp;
+	int		pos;
+
+	while(envp)
+	{
+		pos = ft_indexof('=', *envp);
+		if (!(tmp = ft_substr(*envp, 0, pos)))
+			error_exit(MALLOC_FAIL_ERROR);
+		printf("%s=%s", tmp, dict_get(tmp)->value);
+		free(tmp);
+		envp++;
+	}
 }

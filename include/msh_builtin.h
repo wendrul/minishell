@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   msh_builtin.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ede-thom <ede-thom@student.42.fr>          +#+  +:+       +#+        */
+/*   By: agoodwin <agoodwin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/18 16:59:20 by wendrul           #+#    #+#             */
-/*   Updated: 2021/01/23 18:29:56 by ede-thom         ###   ########.fr       */
+/*   Updated: 2021/01/27 22:05:27 by agoodwin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,5 +32,6 @@ void	add_builtin(t_builtin *list, char *name, int (*method)(int, char**));
 int		msh_exit(int argc, char **argv);
 int		msh_echo(int argc, char **argv);
 int		msh_env();
+int		msh_cd(int argc, char** argv);
 
 #endif

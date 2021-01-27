@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   msh_execute.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ede-thom <ede-thom@student.42.fr>          +#+  +:+       +#+        */
+/*   By: agoodwin <agoodwin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/22 23:07:18 by ede-thom          #+#    #+#             */
-/*   Updated: 2021/01/27 00:42:41 by ede-thom         ###   ########.fr       */
+/*   Updated: 2021/01/27 23:26:30 by agoodwin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,9 @@ void	execute(t_command cmd)
 	child_pid = fork();
 	if (child_pid == 0) /* Inside of child */
 	{
-		if (execve(getcmd_path(cmd), cmd.argv, __environ) == -1)
+		if (execve(getcmd_path(cmd), cmd.argv, g_msh->env) == -1)
 		{
-			if (g_verbose)
+			if (g_msh->verbose)
 				printf("errno: %d: %s\n", errno, strerror(errno));
 			simple_error(NOT_FOUND_ERROR, cmd.num, cmd.argv[0]);
 			exit(0);
@@ -35,7 +35,7 @@ void	execute(t_command cmd)
 		/* Inside of parent */
 	    if (waitpid(child_pid, &status, 0) == child_pid)
 		{
-			if (g_verbose)
+			if (g_msh->verbose)
 				printf("status: %d\n", status);
 		}
 	    else
