@@ -1,34 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   echo.c                                             :+:      :+:    :+:   */
+/*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: agoodwin <agoodwin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/01/18 23:43:58 by ede-thom          #+#    #+#             */
-/*   Updated: 2021/01/27 22:02:07 by agoodwin         ###   ########.fr       */
+/*   Created: 2021/01/27 22:02:13 by agoodwin          #+#    #+#             */
+/*   Updated: 2021/01/27 22:02:15 by agoodwin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
-
-int		msh_echo(int argc, char **argv)
-{
-	int i;
-	int endl;
-
-	endl = 1;
-	if (argc >= 2)
-		endl = !name_cmp(argv[1], "-n");
-	i = endl ? 0 : 1;
-	while (++i < argc)
-	{
-		printf("%s", argv[i]);
-		if (i < argc - 1)
-			printf(" ");
-	}
-	if (endl)
-		printf("\n");
-	fflush(stdout);
-	return (0);
-}

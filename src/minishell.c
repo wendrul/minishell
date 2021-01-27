@@ -14,7 +14,8 @@
 
 void	handle_signal(int signo)
 {
-	//printf("signal: %d\n", signo);
+	if (g_verbose)
+		printf("signal: %d\n", signo);
 	if (signo == SIGINT)
 	{
 		write(STDOUT_FILENO, "\n", 1);
@@ -44,7 +45,7 @@ int		main(int argc, char **argv)
 	return (0);
 }
 
-void	add_env_vars()
+void	add_env_vars(void)
 {
 	char **env;
 	char **tmp;
@@ -60,13 +61,13 @@ void	add_env_vars()
 	}
 }
 
-void		error_exit(char *str)
+void	error_exit(char *str)
 {
 	printf("msh: %s\n", str);
 	exit(0);
 }
 
-void		simple_error(char *msg, int cmd_no, char *cmd_name)
+void	simple_error(char *msg, int cmd_no, char *cmd_name)
 {
 	printf("msh: %d: %s: %s\n", cmd_no, cmd_name, msg);
 }

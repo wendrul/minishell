@@ -19,6 +19,9 @@ int		shell(t_builtin builtins)
 	t_command	cmd;
 	int			gnl_ret;
 
+	gnl_ret = -1;
+	while (++gnl_ret < (int)ft_strlen(PROMPT_TOKEN))
+		write(STDOUT_FILENO, "\b", 1);
 	write(STDOUT_FILENO, PROMPT_TOKEN, ft_strlen(PROMPT_TOKEN));
 	gnl_ret = get_next_line(STDIN_FILENO, &line);
 	if (gnl_ret == -1)
@@ -33,5 +36,5 @@ int		shell(t_builtin builtins)
 	cmd.argc = parse_into_args(line, &cmd.argv);
 	cmd.name = cmd.argv[0];
 	run_cmd(cmd, builtins);
-	return 0;
+	return (0);
 }
