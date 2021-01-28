@@ -16,6 +16,7 @@
 # define MSH_CMD_NAME_SIZE 256
 # define SH_NAME msh
 # define PROMPT_TOKEN "m$ "
+# define HASHSIZE 101
 
 # include <dirent.h>
 # include <errno.h>
@@ -34,13 +35,30 @@
 # include "msh_error.h"
 # include "msh_parsing.h"
 # include "msh_builtin.h"
-# include "msh_variables.h"
 
-int     g_verbose;
+typedef struct	s_var_dict
+{
+	struct s_var_dict	*next;
+	char				*key;
+	char				*value;
+    int                 is_env;
+}			*	t_var_dict;
 
-int		shell(t_builtin builtins);
-void	run_cmd(t_command cmd, t_builtin builtins);
-void	add_env_vars();
-void	execute(t_command cmd);
+typedef struct  s_msh
+{
+    int         verbose;
+    char        **env;
+    t_var_dict  dict[HASHSIZE];
+}           *   t_msh;
+
+t_msh   g_msh;
+
+t_var_dict	dict_get(char *s);
+t_var_dict	dict_put(char *key, char *val);
+void        dict_print(t_var_dict *dict);
+int		    shell(t_builtin builtins);
+void	    run_cmd(t_command cmd, t_builtin builtins);
+void	    set_env_vars(char **envp);
+void	    execute(t_command cmd);
 
 #endif

@@ -3,55 +3,80 @@
 /*                                                        :::      ::::::::   */
 /*   msh_variables.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ede-thom <ede-thom@student.42.fr>          +#+  +:+       +#+        */
+/*   By: agoodwin <agoodwin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/22 20:08:41 by ede-thom          #+#    #+#             */
-/*   Updated: 2021/01/23 18:27:45 by ede-thom         ###   ########.fr       */
+/*   Updated: 2021/01/28 20:27:03 by agoodwin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "msh_variables.h"
+#include "minishell.h"
 
-unsigned	hash(char *s)
+unsigned	get_hash(char *key)
 {
 	int i;
-	unsigned hashval;
+	unsigned hash;
 
 	i = -1;
-	while (s[++i])
-		hashval = *s + 31 * hashval;
-	return (hashval % HASHSIZE);
+	hash = 0;
+	while (key[++i])
+		hash = *key + 31 * hash;
+	return (hash % HASHSIZE);
 }
 
-t_var_dict		dict_get(char *s)
+t_var_dict		dict_get(char *key)
 {
 	t_var_dict var;
 
-	var = g_hashtab[hash(s)];
-	while (var != NULL)
+	var = g_msh->dict[get_hash(key)];
+	while (var)
 	{
-		if (name_cmp(s, var->name))
+		if (name_cmp(key, var->key))
 			return (var);
 		var = var->next;
 	}
 	return (NULL);
 }
 
-t_var_dict	dict_put(char *name, char *defn)
+t_var_dict	dict_put(char *key, char *val)
 {
-    t_var_dict np;
-    unsigned hashval;
-    if ((np = dict_get(name)) == NULL) 
+    t_var_dict	new;
+    unsigned	hash;
+
+    if (!(new = dict_get(key))) 
 	{
-        np = (t_var_dict) malloc(sizeof(*np));
-        if (np == NULL || (np->name = ft_strdup(name)) == NULL)
-          return NULL;
-        hashval = hash(name);
-        np->next = g_hashtab[hashval];
-        g_hashtab[hashval] = np;
-    } else
-        free((void *) np->value);
-    if ((np->value = ft_strdup(defn)) == NULL)
-       return NULL;
-    return np;
+        new = (t_var_dict) malloc(sizeof(*new));
+        if (!new || !(new->key = ft_strdup(key)))
+			error_exit(MALLOC_FAIL_ERROR);
+        hash = get_hash(key);
+        new->next = g_msh->dict[hash];
+        g_msh->dict[hash] = new;
+    }
+	else
+        free((void *) new->value);
+    if (!(new->value = ft_strdup(val)))
+       error_exit(MALLOC_FAIL_ERROR);
+    return new;
+}
+
+void		dict_print(t_var_dict *dict)
+{
+	t_var_dict	*i;
+	t_var_dict	j;
+	int			c;
+
+	i = dict;
+	c = 0;
+	while (c < HASHSIZE)
+	{
+		j = *i;
+		while (j)
+		{
+			if (j->is_env)
+				printf("%s=%s\n", j->key, j->value);
+			j = j->next;
+		}
+		c++;
+		i++;
+	}
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   common.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ede-thom <ede-thom@student.42.fr>          +#+  +:+       +#+        */
+/*   By: agoodwin <agoodwin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/18 20:19:07 by ede-thom          #+#    #+#             */
-/*   Updated: 2021/01/23 18:59:58 by ede-thom         ###   ########.fr       */
+/*   Updated: 2021/01/28 20:17:54 by agoodwin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,8 @@ int		run_builtin(t_builtin builtin, char *name, t_command cmd)
 	{
 		if (name_cmp(name, builtin->name))
 		{
-			builtin->method(cmd.argc, cmd.argv);
+			if (builtin->method(cmd.argc, cmd.argv))
+				simple_error(strerror(errno), cmd.num, cmd.name);
 			return (1);
 		}
 		builtin = builtin->next;

@@ -6,7 +6,7 @@
 /*   By: ede-thom <ede-thom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/18 17:00:48 by ede-thom          #+#    #+#             */
-/*   Updated: 2021/01/27 22:08:51 by ede-thom         ###   ########.fr       */
+/*   Updated: 2021/01/28 20:36:11 by ede-thom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	handle_signal(int signo)
 {
-	if (g_verbose)
+	if (g_msh->verbose)
 		printf("signal: %d\n", signo);
 	if (signo == SIGINT)
 	{
@@ -27,38 +27,46 @@ void	handle_signal(int signo)
 	}
 }
 
-int		main(int argc, char **argv)
+int		main(int argc, char **argv, char **envp)
 {
 	t_builtin builtins;
 
+	g_msh = malloc(sizeof(struct s_msh));
+	g_msh->env = envp;
 	if (argc > 1)
-		g_verbose = name_cmp("-v", argv[1]);
+		g_msh->verbose = name_cmp("-v", argv[1]);
 	builtins = NULL;
+	add_builtin(&builtins, "cd", msh_cd);
 	add_builtin(&builtins, "echo", msh_echo);
 	add_builtin(&builtins, "env", msh_env);
 	add_builtin(&builtins, "exit", msh_exit);
 	add_builtin(&builtins, "pwd", msh_pwd);
-	add_env_vars();
 	signal(SIGINT, handle_signal);
 	signal(SIGQUIT, handle_signal);
+	set_env_vars(g_msh->env);
 	while (1)
 		shell(builtins);
+	free(g_msh);
 	return (0);
 }
 
-void	add_env_vars(void)
+void	set_env_vars(char **envp)
 {
-	char **env;
-	char **tmp;
+	char	*key;
+	char	*val;
+	int		pos;
 
-	env = __environ;
-	while (*env)
+	while (*envp)
 	{
-		if (!(tmp = ft_split(*env, '=')))
+		pos = ft_indexof('=', *envp);
+ 		if (!(key = ft_substr(*envp, 0, pos)))
+ 			error_exit(MALLOC_FAIL_ERROR);
+		if (!(val = ft_substr(*envp, pos + 1, ft_strlen(*envp))))
 			error_exit(MALLOC_FAIL_ERROR);
-		dict_put(tmp[0], tmp[1]);
-		free_arr(tmp);
-		env++;
+		dict_put(key, val)->is_env = 1;
+		free(key);
+		free(val);
+		envp++;
 	}
 }
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ede-thom <ede-thom@student.42.fr>          +#+  +:+       +#+        */
+/*   By: agoodwin <agoodwin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/23 18:28:32 by ede-thom          #+#    #+#             */
-/*   Updated: 2021/01/23 18:29:44 by ede-thom         ###   ########.fr       */
+/*   Updated: 2021/01/28 19:39:51 by agoodwin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,6 @@
 
 int		msh_env()
 {
-	print_arr(__environ);
+	dict_print(g_msh->dict);
 	return (0);
 }
