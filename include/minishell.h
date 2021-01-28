@@ -56,6 +56,8 @@ t_msh   g_msh;
 t_var_dict	dict_get(char *s);
 t_var_dict	dict_put(char *key, char *val);
 void        dict_print(t_var_dict *dict);
+int			dict_rm(char *key);
+
 int		    shell(t_builtin builtins);
 void	    run_cmd(t_command cmd, t_builtin builtins);
 void	    set_env_vars(char **envp);

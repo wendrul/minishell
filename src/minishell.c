@@ -6,7 +6,7 @@
 /*   By: ede-thom <ede-thom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/18 17:00:48 by ede-thom          #+#    #+#             */
-/*   Updated: 2021/01/28 20:36:11 by ede-thom         ###   ########.fr       */
+/*   Updated: 2021/01/28 21:57:10 by ede-thom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ int		main(int argc, char **argv, char **envp)
 	add_builtin(&builtins, "env", msh_env);
 	add_builtin(&builtins, "exit", msh_exit);
 	add_builtin(&builtins, "pwd", msh_pwd);
+	add_builtin(&builtins, "unset", msh_unset);
 	signal(SIGINT, handle_signal);
 	signal(SIGQUIT, handle_signal);
 	set_env_vars(g_msh->env);

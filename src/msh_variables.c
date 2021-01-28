@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   msh_variables.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: agoodwin <agoodwin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ede-thom <ede-thom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/22 20:08:41 by ede-thom          #+#    #+#             */
-/*   Updated: 2021/01/28 20:27:03 by agoodwin         ###   ########.fr       */
+/*   Updated: 2021/01/28 21:55:27 by ede-thom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ t_var_dict	dict_put(char *key, char *val)
 			error_exit(MALLOC_FAIL_ERROR);
         hash = get_hash(key);
         new->next = g_msh->dict[hash];
+		new->is_env = 0;
         g_msh->dict[hash] = new;
     }
 	else
@@ -57,6 +58,38 @@ t_var_dict	dict_put(char *key, char *val)
     if (!(new->value = ft_strdup(val)))
        error_exit(MALLOC_FAIL_ERROR);
     return new;
+}
+
+int		dict_rm(char *key)
+{
+	t_var_dict var;
+	t_var_dict prev;
+
+	var = g_msh->dict[get_hash(key)];
+	if (var && name_cmp(key, var->key))
+	{
+		g_msh->dict[get_hash(key)] = var->next;
+		free(var->key);
+		free(var->value);
+		free(var);
+		return (1);
+	}
+	prev = NULL;
+	while (var)
+	{
+		if (name_cmp(key, var->key))
+		{
+			if (prev != NULL)
+				prev->next = var->next;
+			free(var->key);
+			free(var->value);
+			free(var);
+			return (1);
+		}
+		prev = var;
+		var = var->next;
+	}
+	return (0);
 }
 
 void		dict_print(t_var_dict *dict)
