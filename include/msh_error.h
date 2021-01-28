@@ -6,7 +6,7 @@
 /*   By: ede-thom <ede-thom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/18 17:46:23 by ede-thom          #+#    #+#             */
-/*   Updated: 2021/01/26 23:29:20 by ede-thom         ###   ########.fr       */
+/*   Updated: 2021/01/28 22:23:30 by ede-thom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,9 @@
 
 /* Normal Errors */
 # define NOT_FOUND_ERROR "not found"
+
+# define EXPECTED_KEY_EQUALS_VALUE_STRING "Expected string of type \
+								'[KEY]=[VALUE]' but no `=` was found"
 
 
 void		error_exit(char *str);

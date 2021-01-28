@@ -6,7 +6,7 @@
 /*   By: ede-thom <ede-thom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/22 20:08:41 by ede-thom          #+#    #+#             */
-/*   Updated: 2021/01/28 21:55:27 by ede-thom         ###   ########.fr       */
+/*   Updated: 2021/01/28 22:24:07 by ede-thom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,4 +112,27 @@ void		dict_print(t_var_dict *dict)
 		c++;
 		i++;
 	}
+}
+
+t_var_dict	dict_strput(char *str)
+{
+	t_var_dict	entry;
+	char		*key;
+	char		*val;
+	int			pos;
+
+	if ((pos = ft_indexof('=', str)) == -1)
+	{
+		if (g_msh->verbose)
+			simple_error(EXPECTED_KEY_EQUALS_VALUE_STRING, -69, "debug");
+		return (NULL);
+	}
+	if (!(key = ft_substr(str, 0, pos)))
+ 		error_exit(MALLOC_FAIL_ERROR);
+	if (!(val = ft_substr(str, pos + 1, ft_strlen(str))))
+ 		error_exit(MALLOC_FAIL_ERROR);
+	entry = dict_put(key, val);
+	free(key);
+	free(val);
+	return (entry);
 }

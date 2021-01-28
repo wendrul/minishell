@@ -6,7 +6,7 @@
 #    By: ede-thom <ede-thom@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/11/16 17:26:10 by agoodwin          #+#    #+#              #
-#    Updated: 2021/01/28 21:57:45 by ede-thom         ###   ########.fr        #
+#    Updated: 2021/01/28 22:29:14 by ede-thom         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,7 +27,8 @@ SRCS		+= 	src/builtin/exit.c\
 				src/builtin/env.c\
 				src/builtin/pwd.c\
 				src/builtin/cd.c\
-				src/builtin/unset.c
+				src/builtin/unset.c\
+				src/builtin/export.c
 
 MKDIR_P		=	mkdir -p
 RM			=	rm -f

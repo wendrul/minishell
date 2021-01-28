@@ -6,7 +6,7 @@
 /*   By: ede-thom <ede-thom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/18 17:00:48 by ede-thom          #+#    #+#             */
-/*   Updated: 2021/01/28 21:57:10 by ede-thom         ###   ########.fr       */
+/*   Updated: 2021/01/28 22:37:19 by ede-thom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ int		main(int argc, char **argv, char **envp)
 	add_builtin(&builtins, "exit", msh_exit);
 	add_builtin(&builtins, "pwd", msh_pwd);
 	add_builtin(&builtins, "unset", msh_unset);
+	add_builtin(&builtins, "export", msh_export);
 	signal(SIGINT, handle_signal);
 	signal(SIGQUIT, handle_signal);
 	set_env_vars(g_msh->env);
@@ -53,20 +54,9 @@ int		main(int argc, char **argv, char **envp)
 
 void	set_env_vars(char **envp)
 {
-	char	*key;
-	char	*val;
-	int		pos;
-
 	while (*envp)
 	{
-		pos = ft_indexof('=', *envp);
- 		if (!(key = ft_substr(*envp, 0, pos)))
- 			error_exit(MALLOC_FAIL_ERROR);
-		if (!(val = ft_substr(*envp, pos + 1, ft_strlen(*envp))))
-			error_exit(MALLOC_FAIL_ERROR);
-		dict_put(key, val)->is_env = 1;
-		free(key);
-		free(val);
+		dict_strput(*envp)->is_env = 1;
 		envp++;
 	}
 }

@@ -6,14 +6,14 @@
 /*   By: ede-thom <ede-thom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/18 16:59:20 by wendrul           #+#    #+#             */
-/*   Updated: 2021/01/28 21:57:26 by ede-thom         ###   ########.fr       */
+/*   Updated: 2021/01/28 22:33:03 by ede-thom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MSH_BUILTIN_H
 # define MSH_BUILTIN_H
 
-# define PWD_BUFF_SIZE 30
+# define PWD_BUFF_SIZE 4096
 
 #include "minishell.h"
 
@@ -37,5 +37,6 @@ int		msh_env();
 int		msh_pwd();
 int		msh_cd(int argc, char** argv);
 int		msh_unset(int argc, char **argv);
+int		msh_export(int argc, char **argv);
 
 #endif
