@@ -6,7 +6,7 @@
 /*   By: agoodwin <agoodwin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/18 16:59:06 by wendrul           #+#    #+#             */
-/*   Updated: 2021/01/27 23:04:47 by agoodwin         ###   ########.fr       */
+/*   Updated: 2021/01/28 19:15:38 by agoodwin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ int		shell(t_builtin builtins)
 	t_command	cmd;
 	int			gnl_ret;
 
-	set_env_vars();
 	gnl_ret = -1;
 	while (++gnl_ret < (int)ft_strlen(PROMPT_TOKEN))
 		write(STDOUT_FILENO, "\b", 1);

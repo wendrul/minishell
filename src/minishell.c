@@ -6,7 +6,7 @@
 /*   By: agoodwin <agoodwin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/18 17:00:48 by ede-thom          #+#    #+#             */
-/*   Updated: 2021/01/27 23:45:07 by agoodwin         ###   ########.fr       */
+/*   Updated: 2021/01/28 19:52:34 by agoodwin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int		main(int argc, char **argv, char **envp)
 {
 	t_builtin builtins;
 
-	g_msh = malloc(sizeof(g_msh));
+	g_msh = malloc(sizeof(struct s_msh));
 	g_msh->env = envp;
 	if (argc > 1)
 		g_msh->verbose = name_cmp("-v", argv[1]);
@@ -51,14 +51,20 @@ int		main(int argc, char **argv, char **envp)
 
 void	set_env_vars(char **envp)
 {
-	char **tmp;
-	
+	char	*key;
+	char	*val;
+	int		pos;
+
 	while (*envp)
 	{
-		if (!(tmp = ft_split(*envp, '=')))
+		pos = ft_indexof('=', *envp);
+ 		if (!(key = ft_substr(*envp, 0, pos)))
+ 			error_exit(MALLOC_FAIL_ERROR);
+		if (!(val = ft_substr(*envp, pos + 1, ft_strlen(*envp))))
 			error_exit(MALLOC_FAIL_ERROR);
-		dict_put(tmp[0], tmp[1]);
-		free_arr(tmp);
+		dict_put(key, val)->is_env = 1;
+		free(key);
+		free(val);
 		envp++;
 	}
 }

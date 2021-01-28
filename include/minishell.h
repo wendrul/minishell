@@ -39,8 +39,9 @@
 typedef struct	s_var_dict
 {
 	struct s_var_dict	*next;
-	char				*name;
+	char				*key;
 	char				*value;
+    int                 is_env;
 }			*	t_var_dict;
 
 typedef struct  s_msh
@@ -53,11 +54,11 @@ typedef struct  s_msh
 t_msh   g_msh;
 
 t_var_dict	dict_get(char *s);
-t_var_dict	dict_put(char *name, char *defn);
-void        dict_print(char **envp);
-int		shell(t_builtin builtins);
-void	run_cmd(t_command cmd, t_builtin builtins);
-void	set_env_vars();
-void	execute(t_command cmd);
+t_var_dict	dict_put(char *key, char *val);
+void        dict_print(t_var_dict *dict);
+int		    shell(t_builtin builtins);
+void	    run_cmd(t_command cmd, t_builtin builtins);
+void	    set_env_vars(char **envp);
+void	    execute(t_command cmd);
 
 #endif
