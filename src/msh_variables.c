@@ -6,31 +6,32 @@
 /*   By: agoodwin <agoodwin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/22 20:08:41 by ede-thom          #+#    #+#             */
-/*   Updated: 2021/01/28 19:51:06 by agoodwin         ###   ########.fr       */
+/*   Updated: 2021/01/28 20:27:03 by agoodwin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-unsigned	get_hash(char *s)
+unsigned	get_hash(char *key)
 {
 	int i;
 	unsigned hash;
 
 	i = -1;
-	while (s[++i])
-		hash = *s + 31 * hash;
+	hash = 0;
+	while (key[++i])
+		hash = *key + 31 * hash;
 	return (hash % HASHSIZE);
 }
 
-t_var_dict		dict_get(char *s)
+t_var_dict		dict_get(char *key)
 {
 	t_var_dict var;
 
-	var = g_msh->dict[get_hash(s)];
-	while (var != NULL)
+	var = g_msh->dict[get_hash(key)];
+	while (var)
 	{
-		if (name_cmp(s, var->key))
+		if (name_cmp(key, var->key))
 			return (var);
 		var = var->next;
 	}

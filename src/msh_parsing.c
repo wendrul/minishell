@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   msh_parsing.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ede-thom <ede-thom@student.42.fr>          +#+  +:+       +#+        */
+/*   By: agoodwin <agoodwin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/18 18:18:38 by ede-thom          #+#    #+#             */
-/*   Updated: 2021/01/23 19:19:27 by ede-thom         ###   ########.fr       */
+/*   Updated: 2021/01/28 20:28:04 by agoodwin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ char	*getcmd_path(t_command cmd)
 	DIR			*dir;
 	t_dirent	*dir_ent;
 
-	path = dict_get("PATH") ? dict_get("PATH")->value : NULL;
+	path = dict_get("PATH")->value;
 	if (!(pathv = ft_split(path, ':')))
 		error_exit(MALLOC_FAIL_ERROR);
 	i = -1;
