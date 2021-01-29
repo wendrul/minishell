@@ -18,6 +18,11 @@
 # define PROMPT_TOKEN "m$ "
 # define HASHSIZE 101
 
+# define ENV_PWD "PWD"
+# define ENV_OLDPWD "OLDPWD"
+# define ENV_HOME "HOME"
+# define ENV_PATH "PATH"
+
 # include <dirent.h>
 # include <errno.h>
 # include <fcntl.h>

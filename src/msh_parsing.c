@@ -6,7 +6,7 @@
 /*   By: agoodwin <agoodwin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/18 18:18:38 by ede-thom          #+#    #+#             */
-/*   Updated: 2021/01/28 20:28:04 by agoodwin         ###   ########.fr       */
+/*   Updated: 2021/01/29 19:22:14 by agoodwin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ char	*getcmd_path(t_command cmd)
 	DIR			*dir;
 	t_dirent	*dir_ent;
 
-	path = dict_get("PATH")->value;
+	path = dict_get(ENV_PATH)->value;
 	if (!(pathv = ft_split(path, ':')))
 		error_exit(MALLOC_FAIL_ERROR);
 	i = -1;
