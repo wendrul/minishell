@@ -6,7 +6,7 @@
 /*   By: agoodwin <agoodwin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/22 23:07:18 by ede-thom          #+#    #+#             */
-/*   Updated: 2021/01/27 23:26:30 by agoodwin         ###   ########.fr       */
+/*   Updated: 2021/01/29 20:00:54 by agoodwin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,9 @@ void	execute(t_command cmd)
 	    if (waitpid(child_pid, &status, 0) == child_pid)
 		{
 			if (g_msh->verbose)
+			{
 				printf("status: %d\n", status);
+			}
 		}
 	    else
 			simple_error(strerror(errno), cmd.num, cmd.name);

@@ -6,7 +6,7 @@
 /*   By: agoodwin <agoodwin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/27 22:02:13 by agoodwin          #+#    #+#             */
-/*   Updated: 2021/01/29 19:38:09 by agoodwin         ###   ########.fr       */
+/*   Updated: 2021/01/29 20:08:25 by agoodwin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@ int		msh_cd(int argc, char **argv)
 
     if (!getcwd(old_pwd, PWD_BUFF_SIZE))
         return (-1);
+    if (!dict_get(ENV_HOME))
+        return (-2);
     if (argc == 1)
         path = dict_get(ENV_HOME)->value;
     else

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ede-thom <ede-thom@student.42.fr>          +#+  +:+       +#+        */
+/*   By: agoodwin <agoodwin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/18 17:00:48 by ede-thom          #+#    #+#             */
-/*   Updated: 2021/01/28 22:37:19 by ede-thom         ###   ########.fr       */
+/*   Updated: 2021/01/29 19:58:11 by agoodwin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,6 @@ void	handle_signal(int signo)
 	{
 		write(STDOUT_FILENO, "\n", 1);
 		write(STDOUT_FILENO, PROMPT_TOKEN, ft_strlen(PROMPT_TOKEN));
-	}
-	if (signo == SIGQUIT)
-	{
-		exit(0);
 	}
 }
 
