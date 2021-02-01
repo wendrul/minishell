@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   msh_parsing.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: agoodwin <agoodwin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ede-thom <ede-thom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/18 18:18:38 by ede-thom          #+#    #+#             */
-/*   Updated: 2021/01/29 19:22:14 by agoodwin         ###   ########.fr       */
+/*   Updated: 2021/02/02 00:01:37 by ede-thom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int		parse_into_args(char *line, char ***argv)
 {
-	int i;
+	int		i;
 
 	*argv = ft_split_charset(line, "\f\t\n\r\v ");
 	i = 0;
@@ -33,7 +33,7 @@ char	*getcmd_path(t_command cmd)
 
 	path = dict_get(ENV_PATH)->value;
 	if (!(pathv = ft_split(path, ':')))
-		error_exit(MALLOC_FAIL_ERROR);
+		error_exit(SPLIT_FAIL_ERROR);
 	i = -1;
 	while (pathv[++i])
 	{
