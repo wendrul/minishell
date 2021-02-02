@@ -1,33 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   echo.c                                             :+:      :+:    :+:   */
+/*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ede-thom <ede-thom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/01/18 23:43:58 by ede-thom          #+#    #+#             */
-/*   Updated: 2021/02/02 18:32:15 by ede-thom         ###   ########.fr       */
+/*   Created: 2021/02/02 19:18:14 by ede-thom          #+#    #+#             */
+/*   Updated: 2021/02/02 19:18:23 by ede-thom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int		msh_echo(int argc, char **argv)
+int		separate(char **half1, char **half2, char sep, char *line)
 {
-	int i;
-	int endl;
+	int		pos;
 
-	endl = 1;
-	if (argc >= 2)
-		endl = !name_cmp(argv[1], "-n");
-	i = endl ? 0 : 1;
-	while (++i < argc)
-	{
-		ft_putstr_fd(argv[i], STDOUT_FILENO);
-		if (i < argc - 1)
-			ft_putstr_fd(" ", STDOUT_FILENO);
-	}
-	if (endl)
-		ft_putstr_fd("\n", STDOUT_FILENO);
-	return (0);
+	if ((pos = ft_indexof(sep, line)) == -1 )
+		return (0);
+	*half1 = ft_substr(line, 0, pos);
+	*half2 = ft_substr(line, pos + 1, ft_strlen(line));
+	if (!*half1 || !*half2)
+		error_exit(MALLOC_FAIL_ERROR);
+	return (1);
 }

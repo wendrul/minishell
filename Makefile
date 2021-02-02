@@ -6,7 +6,7 @@
 #    By: ede-thom <ede-thom@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/11/16 17:26:10 by agoodwin          #+#    #+#              #
-#    Updated: 2021/01/28 22:29:14 by ede-thom         ###   ########.fr        #
+#    Updated: 2021/02/02 19:19:29 by ede-thom         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,8 @@ SRCS		=	src/minishell.c\
 				src/msh_parsing.c\
 				src/builtin/common.c\
 				src/msh_execute.c\
-				src/msh_variables.c
+				src/msh_variables.c\
+				src/utils.c
 
 SRCS		+=	src/gnl/get_next_line.c\
 				src/gnl/get_next_line_utils.c

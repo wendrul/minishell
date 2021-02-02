@@ -6,7 +6,7 @@
 /*   By: ede-thom <ede-thom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/18 16:59:06 by wendrul           #+#    #+#             */
-/*   Updated: 2021/02/01 23:38:16 by ede-thom         ###   ########.fr       */
+/*   Updated: 2021/02/02 19:17:28 by ede-thom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,9 +46,7 @@ int		shell(t_builtin builtins)
 		error_exit(SPLIT_FAIL_ERROR);
 	while (*cmds)
 	{
-		cmd.argc = parse_into_args(*cmds, &cmd.argv);
-		cmd.name = cmd.argv[0];	
-		run_cmd(cmd, builtins);
+		execute_pipe(*cmds, cmd, builtins);
 		//free(*cmds);
 		cmds++;	
 	}
