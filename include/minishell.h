@@ -15,7 +15,7 @@
 
 # define MSH_CMD_NAME_SIZE 256
 # define SH_NAME msh
-# define PROMPT_TOKEN "m$ "
+# define PROMPT_TOKEN "\033[1;36mm$ \033[0;m"
 # define HASHSIZE 101
 
 # define ENV_PWD "PWD"

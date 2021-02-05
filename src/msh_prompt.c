@@ -6,7 +6,7 @@
 /*   By: ede-thom <ede-thom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/18 16:59:06 by wendrul           #+#    #+#             */
-/*   Updated: 2021/02/02 19:17:28 by ede-thom         ###   ########.fr       */
+/*   Updated: 2021/02/05 19:04:16 by ede-thom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,16 +17,13 @@ static char	*gnl()
 	char	*line;
 	int		gnl_ret;
 
-	gnl_ret = -1;
-	while (++gnl_ret < (int)ft_strlen(PROMPT_TOKEN))
-		write(STDOUT_FILENO, "\b", 1);
 	write(STDOUT_FILENO, PROMPT_TOKEN, ft_strlen(PROMPT_TOKEN));
 	gnl_ret = get_next_line(STDIN_FILENO, &line);
 	if (gnl_ret == -1)
 		error_exit(FAILED_TO_GET_NEXT_LINE);
 	if (gnl_ret == 0)
 	{
-		write(STDOUT_FILENO, "\n", 1);
+		write(STDOUT_FILENO, "exit\n", 6);
 		exit(0);
 	}
 	return (line);

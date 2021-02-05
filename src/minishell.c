@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: agoodwin <agoodwin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ede-thom <ede-thom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/18 17:00:48 by ede-thom          #+#    #+#             */
-/*   Updated: 2021/01/29 19:58:11 by agoodwin         ###   ########.fr       */
+/*   Updated: 2021/02/05 19:41:55 by ede-thom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,13 @@
 
 void	handle_signal(int signo)
 {
+	int i;
+
 	if (g_msh->verbose)
 		printf("signal: %d\n", signo);
 	if (signo == SIGINT)
 	{
+		i = -1;
 		write(STDOUT_FILENO, "\n", 1);
 		write(STDOUT_FILENO, PROMPT_TOKEN, ft_strlen(PROMPT_TOKEN));
 	}
@@ -59,11 +62,19 @@ void	set_env_vars(char **envp)
 
 void	error_exit(char *str)
 {
-	printf("msh: %s\n", str);
+	ft_putstr_fd(str, STDERR_FILENO);
+	ft_putchar_fd('\n', STDERR_FILENO);
 	exit(0);
 }
 
 void	simple_error(char *msg, int cmd_no, char *cmd_name)
 {
-	printf("msh: %d: %s: %s\n", cmd_no, cmd_name, msg);
+	ft_putstr_fd("msh: ", STDERR_FILENO);
+	ft_putnbr_fd(cmd_no, STDERR_FILENO);
+	ft_putstr_fd(": ", STDERR_FILENO);
+	ft_putstr_fd(cmd_name, STDERR_FILENO);
+	ft_putstr_fd(": ", STDERR_FILENO);
+	ft_putstr_fd(msg, STDERR_FILENO);
+	ft_putchar_fd('\n', STDERR_FILENO);
+//	printf("msh: %d: %s: %s\n", cmd_no, cmd_name, msg);
 }
