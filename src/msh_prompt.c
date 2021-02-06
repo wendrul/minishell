@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   msh_prompt.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: agoodwin <agoodwin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ede-thom <ede-thom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/18 16:59:06 by wendrul           #+#    #+#             */
-/*   Updated: 2021/02/06 04:13:17 by agoodwin         ###   ########.fr       */
+/*   Updated: 2021/02/06 20:51:13 by ede-thom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,20 +50,25 @@ int		shell(t_builtin builtins)
 	t_list		**cmds;
 	int			i;
 
+	(void)&builtins;
 	line = gnl();
 	cmd_num++;
 	cmd.num = cmd_num;
 	if (!(elements = parse_quotes(line, cmd)))
 		return (2);
+	elements = parse_tokens(elements, cmd);
+	ft_lstiter(elements, print_el);
+	printf("\n");	
+	//syntax check;
 	cmds = get_cmds(elements);
 	i = 0;
 	while (cmds[i])
 	{
-		cmds[i] = parse_tokens(cmds[i], cmd);
-		printf("This is command #%d: ", i);
+		printf("cmd %d - ", i);
+		fflush(stdout);
 		ft_lstiter(cmds[i], print_el);
 		printf("\n");
-		execute_pipe(cmds[i], cmd, builtins);
+		//execute_pipe(cmds[i], cmd, builtins);
 		i++;
 	}
 	clear_list_arr(&cmds);

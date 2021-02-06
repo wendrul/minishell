@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   msh_parsing.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: agoodwin <agoodwin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ede-thom <ede-thom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/18 18:18:38 by ede-thom          #+#    #+#             */
-/*   Updated: 2021/02/06 04:35:15 by agoodwin         ###   ########.fr       */
+/*   Updated: 2021/02/06 20:50:55 by ede-thom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,6 +93,8 @@ char *type_name(int type)
 		return ("TEXT");
 	else if (type == UNPARSED)
 		return ("UNPARSED");
+	else if (type == SEMICOLON)
+		return ("SEMICOLON");
 	else
 		return ("undef");
 }
@@ -181,6 +183,21 @@ t_list *add_txt(char *str)
 	return (newlst);
 }
 
+int		typeof_token(char *str)
+{
+	if (str[0] == '|')
+		return (PIPE);
+	else if (str[0] == ';')
+		return (SEMICOLON);
+	else if (str[0] == '<')
+		return (LESS);
+	else if (str[0] == '>' && str[1] != '>')
+		return (GREAT);
+	else if (str[0] == '>' && str[1] == '>')
+		return (GREATGREAT);
+	return (-1);
+}
+
 t_list *parse_token(char *str)
 {
 	t_list *newlst;
@@ -195,21 +212,14 @@ t_list *parse_token(char *str)
 	newlst = NULL;
 	while (str[++i])
 	{
-		if (ft_indexof(str[i], "|><") != -1)
+		if (ft_indexof(str[i], "|><;") != -1)
 		{
-			printf("token\n");
 			tokensize = 0;
-			if (str[i] == '|')
-				type = PIPE;
-			else if (str[i] == '>' || str[i] == '<')
+			type = typeof_token(&str[i]);
+			if (type == GREATGREAT)
 			{
-				type = str[i] == '>' ? GREAT : LESS;
-				if (str[i] == '>' && str[i + 1] == '>')
-				{
-					type = GREATGREAT;
-					i++;
-					tokensize++;
-				}
+				i++;
+				tokensize++;
 			}
 			if (!(tmp = ft_substr(str, start, i - start - tokensize)))
 				error_exit(MALLOC_FAIL_ERROR);
@@ -247,92 +257,51 @@ t_list *parse_tokens(t_list *old_lst, t_command cmd)
 	return (newlst);
 }
 
-int		count_semicolons(char *str)
+int		count_semicolons(t_list *elements)
 {
-	int count;
-	int i;
+	int size;
+	t_cmd_element e;
 
-	count = 0;
-	i = -1;
-	while (str[++i])
-		if (str[i] == ';')
-			count++;
-	return (count);
-}
-
-char	**get_string_cmds(char *str)
-{
-	int		i;
-	int		count;
-	int		start;
-	char	**string_cmds;
-	int		j;
-
-	count = count_semicolons(str);
-	if (!(string_cmds = malloc(sizeof(char *) * count + 1)))
-		error_exit(MALLOC_FAIL_ERROR);
-	i = -1;
-	start = 0;
-	j = 0;
-	while (str[++i])
-	{
-		if (str[i] == ';')
-		{
-			if (!(string_cmds[j] = ft_substr(str, start, i - start))) //i - start will be 0 if ; is first character
-				error_exit(MALLOC_FAIL_ERROR); //also supposed to be syntax error if two semicolons in a row ";;"
-			j++;
-			start = i + 1;
-		}
-	}
-	return (string_cmds);
-}
-
-int		count_cmds(t_list *elements)
-{
-	int				count;
-	int				i;
-	t_cmd_element	e;
-
-	count = 1;
-	while (elements)
+	size = 0;
+	while (elements->next)
 	{
 		e = (t_cmd_element)elements->content;
-		if (e->type = UNPARSED)
-		{
-			count += count_semicolons(e->str);
-		}
+		if (e->type == SEMICOLON && elements)
+			size++;
 		elements = elements->next;
 	}
-	return (count);
+	return (size);
 }
 
 t_list	**get_cmds(t_list *elements)
 {
-	t_list **cmds;
-	t_cmd_element e;
-	char **arr;
-	int i;
-	int j;
+	int		size;
+	t_list	**cmds;
+	t_list	*cur;
+	int		i;
 
-	i = 0;
-	if (!(cmds = (t_list **)malloc(sizeof(t_list *) * count_cmds(elements) + 1)))
+	size = count_semicolons(elements);
+	if(!(cmds = (t_list**)malloc(sizeof(*cmds) * (size + 1))))
 		error_exit(MALLOC_FAIL_ERROR);
-	while (elements)
+	i = -1;
+	while (++i < size + 1)
 	{
-		if (!(cmds[i] = (t_list *)malloc(sizeof(**cmds))))
+		if (!(cmds[i] = (t_list*)malloc(sizeof(**cmds))))
 			error_exit(MALLOC_FAIL_ERROR);
-		e = (t_cmd_element)elements->content;
-		if (e->type == TEXT)
+		cmds[i] = elements;
+		cur = elements;
+		while (cur->next)
 		{
-			add_el(&cmds[i], e->str, e->type);
+			if (((t_cmd_element)cur->next->content)->type == SEMICOLON)
+			{
+				elements = cur->next->next;
+				ft_lstdelone(cur->next, del_element);
+				cur->next = NULL;
+				break;
+			}
+			cur = cur->next;
 		}
-		else if (e->type == UNPARSED)
-		{
-			add_el(&cmds[i], e->str, e->type);
-			separate_unparsed(e->str);
-		}
-		elements = elements->next;
 	}
-	cmds[i] = NULL; //must null terminate the list, don't forget to increment i
+	cmds[i] = NULL;
 	return (cmds);
 }
