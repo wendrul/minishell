@@ -6,7 +6,7 @@
 /*   By: ede-thom <ede-thom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/18 18:18:38 by ede-thom          #+#    #+#             */
-/*   Updated: 2021/02/06 20:50:55 by ede-thom         ###   ########.fr       */
+/*   Updated: 2021/02/07 00:06:21 by ede-thom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -223,7 +223,7 @@ t_list *parse_token(char *str)
 			}
 			if (!(tmp = ft_substr(str, start, i - start - tokensize)))
 				error_exit(MALLOC_FAIL_ERROR);
-			ft_lstadd_back(&newlst, add_txt(tmp));
+			lst_append(&newlst, add_txt(tmp));
 			free(tmp);
 			add_el(&newlst, "-TOKEN-", type);
 			start = i + 1;
@@ -231,7 +231,7 @@ t_list *parse_token(char *str)
 	}
 	if (!(tmp = ft_substr(str, start, i - start - tokensize)))
 		error_exit(MALLOC_FAIL_ERROR);
-	ft_lstadd_back(&newlst, add_txt(tmp));
+	lst_append(&newlst, add_txt(tmp));
 	return (newlst);
 }
 
@@ -250,7 +250,7 @@ t_list *parse_tokens(t_list *old_lst, t_command cmd)
 		if (e->type != UNPARSED)
 			add_el(&newlst, e->str, e->type);
 		else
-			ft_lstadd_back(&newlst, parse_token(e->str));
+			lst_append(&newlst, parse_token(e->str));
 		cur = cur->next;
 	}
 	ft_lstclear(&old_lst, del_element);
@@ -304,4 +304,49 @@ t_list	**get_cmds(t_list *elements)
 	}
 	cmds[i] = NULL;
 	return (cmds);
+}
+
+int		syntaxerror_msg(int type, t_command cmd)
+{
+	char *msg;
+	char *token;
+
+	if (type == PIPE)
+		token = "\"|\"";
+	else if (type == GREAT)
+		token = "\">\"";
+	else if (type == GREATGREAT)
+		token = "\">>\"";
+	else if (type == LESS)
+		token = "\"<\"";
+	else if (type == SEMICOLON)
+		token = "\";\"";
+	msg = ft_strjoin(SYNTAX_ERROR_UNEXPECTED, token);
+	if (msg)
+		shell_error(msg, cmd.num);
+	else
+		shell_error(SYNTAX_ERROR, cmd.num);
+	return (0);
+}
+
+int		syntax_check(t_list *elements, t_command cmd)
+{
+	t_cmd_element prev;
+	t_cmd_element e;
+
+	prev = NULL;
+	while (elements)
+	{
+		e = (t_cmd_element)elements->content;
+		if (e->type != TEXT)
+		{
+			if (!prev || prev->type != TEXT)
+				return (syntaxerror_msg(e->type, cmd));
+			if (prev && prev->type != SEMICOLON && !elements->next)
+				return (syntaxerror_msg(e->type, cmd));
+		}
+		prev = e;
+		elements = elements->next;
+	}
+	return (1);
 }

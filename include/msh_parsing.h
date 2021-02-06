@@ -6,7 +6,7 @@
 /*   By: ede-thom <ede-thom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/18 16:59:16 by wendrul           #+#    #+#             */
-/*   Updated: 2021/02/06 18:57:32 by ede-thom         ###   ########.fr       */
+/*   Updated: 2021/02/06 20:59:20 by ede-thom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ void	print_el(void *ptr);
 t_list	*parse_quotes(char *line, t_command cmd);
 t_list *parse_tokens(t_list *old_lst, t_command cmd);
 t_list	**get_cmds(t_list *elements);
+int		syntax_check(t_list *elements, t_command cmd);
 
 
 #endif

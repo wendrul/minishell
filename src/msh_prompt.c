@@ -6,7 +6,7 @@
 /*   By: ede-thom <ede-thom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/18 16:59:06 by wendrul           #+#    #+#             */
-/*   Updated: 2021/02/06 20:51:13 by ede-thom         ###   ########.fr       */
+/*   Updated: 2021/02/06 23:09:55 by ede-thom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ int		shell(t_builtin builtins)
 {
 	static int	cmd_num = 0;
 	char		*line;
-	t_command	cmd;
+	t_command	cmd_meta;
 	t_list		*elements;
 	t_list		**cmds;
 	int			i;
@@ -53,22 +53,22 @@ int		shell(t_builtin builtins)
 	(void)&builtins;
 	line = gnl();
 	cmd_num++;
-	cmd.num = cmd_num;
-	if (!(elements = parse_quotes(line, cmd)))
+	cmd_meta.num = cmd_num;
+	if (!(elements = parse_quotes(line, cmd_meta)))
 		return (2);
-	elements = parse_tokens(elements, cmd);
-	ft_lstiter(elements, print_el);
-	printf("\n");	
-	//syntax check;
+	elements = parse_tokens(elements, cmd_meta);
+	if (!syntax_check(elements, cmd_meta))
+		return (2);
 	cmds = get_cmds(elements);
 	i = 0;
 	while (cmds[i])
 	{
-		printf("cmd %d - ", i);
-		fflush(stdout);
+		ft_lstiter(cmds[i], print_el);
+		printf("\nredirs:\n");
+		redirections(&cmds[i]);
 		ft_lstiter(cmds[i], print_el);
 		printf("\n");
-		//execute_pipe(cmds[i], cmd, builtins);
+		//dispatch(cmds[i], cmd_meta, builtins);
 		i++;
 	}
 	clear_list_arr(&cmds);
