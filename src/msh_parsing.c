@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   msh_parsing.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ede-thom <ede-thom@student.42.fr>          +#+  +:+       +#+        */
+/*   By: agoodwin <agoodwin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/18 18:18:38 by ede-thom          #+#    #+#             */
-/*   Updated: 2021/02/06 02:29:34 by ede-thom         ###   ########.fr       */
+/*   Updated: 2021/02/06 04:35:15 by agoodwin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,7 +110,7 @@ void add_el(t_list **lst, char *str, int type)
 	t_list *new;
 
 	if (!str || str[0] == '\0')
-		return ;
+		return;
 	if (!(new = ft_lstnew(new_el(str, type))))
 		error_exit(MALLOC_FAIL_ERROR);
 	ft_lstadd_back(lst, new);
@@ -247,7 +247,66 @@ t_list *parse_tokens(t_list *old_lst, t_command cmd)
 	return (newlst);
 }
 
-t_list **get_cmds(t_list *elements)
+int		count_semicolons(char *str)
+{
+	int count;
+	int i;
+
+	count = 0;
+	i = -1;
+	while (str[++i])
+		if (str[i] == ';')
+			count++;
+	return (count);
+}
+
+char	**get_string_cmds(char *str)
+{
+	int		i;
+	int		count;
+	int		start;
+	char	**string_cmds;
+	int		j;
+
+	count = count_semicolons(str);
+	if (!(string_cmds = malloc(sizeof(char *) * count + 1)))
+		error_exit(MALLOC_FAIL_ERROR);
+	i = -1;
+	start = 0;
+	j = 0;
+	while (str[++i])
+	{
+		if (str[i] == ';')
+		{
+			if (!(string_cmds[j] = ft_substr(str, start, i - start))) //i - start will be 0 if ; is first character
+				error_exit(MALLOC_FAIL_ERROR); //also supposed to be syntax error if two semicolons in a row ";;"
+			j++;
+			start = i + 1;
+		}
+	}
+	return (string_cmds);
+}
+
+int		count_cmds(t_list *elements)
+{
+	int				count;
+	int				i;
+	t_cmd_element	e;
+
+	count = 1;
+	while (elements)
+	{
+		e = (t_cmd_element)elements->content;
+		if (e->type = UNPARSED)
+		{
+			count += count_semicolons(e->str);
+		}
+		elements = elements->next;
+	}
+	return (count);
+}
+
+t_list	**get_cmds(t_list *elements)
 {
 	t_list **cmds;
 	t_cmd_element e;
@@ -256,25 +315,24 @@ t_list **get_cmds(t_list *elements)
 	int j;
 
 	i = 0;
-	if(!(cmds = (t_list**)malloc(sizeof(**cmds) * count)))
+	if (!(cmds = (t_list **)malloc(sizeof(t_list *) * count_cmds(elements) + 1)))
 		error_exit(MALLOC_FAIL_ERROR);
 	while (elements)
 	{
-		if(!(cmds[i] = (t_list*)malloc(sizeof(**cmds))))
+		if (!(cmds[i] = (t_list *)malloc(sizeof(**cmds))))
 			error_exit(MALLOC_FAIL_ERROR);
 		e = (t_cmd_element)elements->content;
 		if (e->type == TEXT)
 		{
 			add_el(&cmds[i], e->str, e->type);
 		}
-		if (e->type == UNPARSED)
+		else if (e->type == UNPARSED)
 		{
-			// j = 0;
-			// while (e->str[i])
-			// {
-
-			// }
+			add_el(&cmds[i], e->str, e->type);
+			separate_unparsed(e->str);
 		}
 		elements = elements->next;
 	}
+	cmds[i] = NULL; //must null terminate the list, don't forget to increment i
+	return (cmds);
 }

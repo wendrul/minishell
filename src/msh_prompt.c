@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   msh_prompt.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ede-thom <ede-thom@student.42.fr>          +#+  +:+       +#+        */
+/*   By: agoodwin <agoodwin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/18 16:59:06 by wendrul           #+#    #+#             */
-/*   Updated: 2021/02/06 02:28:58 by ede-thom         ###   ########.fr       */
+/*   Updated: 2021/02/06 04:13:17 by agoodwin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,36 +29,44 @@ static char	*gnl()
 	return (line);
 }
 
+void	clear_list_arr(t_list ***lst)
+{
+	t_list	**tmp;
 
+	tmp = *lst;
+	while (*tmp)
+	{
+		ft_lstclear(tmp, del_element);
+		tmp++;
+	}
+}
 
 int		shell(t_builtin builtins)
 {
 	static int	cmd_num = 0;
 	char		*line;
-	char		**cmds;
 	t_command	cmd;
-	char		**cmd_ptr;
 	t_list		*elements;
+	t_list		**cmds;
+	int			i;
 
 	line = gnl();
 	cmd_num++;
 	cmd.num = cmd_num;
 	if (!(elements = parse_quotes(line, cmd)))
 		return (2);
-	semicolon_split()
-	
-	elements = parse_tokens(elements, cmd);
-	ft_lstiter(elements, print_el);
-	printf("\n");
-	if (!(cmds = ft_split(line, ';')))
-		error_exit(SPLIT_FAIL_ERROR);
-	cmd_ptr = cmds;
-	while (*cmds)
+	cmds = get_cmds(elements);
+	i = 0;
+	while (cmds[i])
 	{
-		execute_pipe(*cmds, cmd, builtins);
-		cmds++;	
+		cmds[i] = parse_tokens(cmds[i], cmd);
+		printf("This is command #%d: ", i);
+		ft_lstiter(cmds[i], print_el);
+		printf("\n");
+		execute_pipe(cmds[i], cmd, builtins);
+		i++;
 	}
-	free_arr(cmd_ptr);
+	clear_list_arr(&cmds);
 	return (0);
 }
 

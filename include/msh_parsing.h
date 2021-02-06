@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   msh_parsing.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ede-thom <ede-thom@student.42.fr>          +#+  +:+       +#+        */
+/*   By: agoodwin <agoodwin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/18 16:59:16 by wendrul           #+#    #+#             */
-/*   Updated: 2021/02/06 01:57:45 by ede-thom         ###   ########.fr       */
+/*   Updated: 2021/02/06 03:55:52 by agoodwin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ void	print_el(void *ptr);
 
 t_list	*parse_quotes(char *line, t_command cmd);
 t_list *parse_tokens(t_list *old_lst, t_command cmd);
+t_list	**get_cmds(t_list *elements);
 
 
 #endif
