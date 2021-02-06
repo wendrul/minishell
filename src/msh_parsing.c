@@ -6,7 +6,7 @@
 /*   By: ede-thom <ede-thom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/18 18:18:38 by ede-thom          #+#    #+#             */
-/*   Updated: 2021/02/06 02:20:09 by ede-thom         ###   ########.fr       */
+/*   Updated: 2021/02/06 02:29:34 by ede-thom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -253,6 +253,7 @@ t_list **get_cmds(t_list *elements)
 	t_cmd_element e;
 	char **arr;
 	int i;
+	int j;
 
 	i = 0;
 	if(!(cmds = (t_list**)malloc(sizeof(**cmds) * count)))
@@ -268,8 +269,11 @@ t_list **get_cmds(t_list *elements)
 		}
 		if (e->type == UNPARSED)
 		{
-			if (!(arr = ft_split(e->str, ';')))
-				error_exit(SPLIT_FAIL_ERROR);
+			// j = 0;
+			// while (e->str[i])
+			// {
+
+			// }
 		}
 		elements = elements->next;
 	}
