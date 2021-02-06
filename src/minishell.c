@@ -6,7 +6,7 @@
 /*   By: ede-thom <ede-thom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/18 17:00:48 by ede-thom          #+#    #+#             */
-/*   Updated: 2021/02/05 19:41:55 by ede-thom         ###   ########.fr       */
+/*   Updated: 2021/02/05 23:13:13 by ede-thom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,4 +77,13 @@ void	simple_error(char *msg, int cmd_no, char *cmd_name)
 	ft_putstr_fd(msg, STDERR_FILENO);
 	ft_putchar_fd('\n', STDERR_FILENO);
 //	printf("msh: %d: %s: %s\n", cmd_no, cmd_name, msg);
+}
+
+void	shell_error(char *msg, int cmd_no)
+{
+	ft_putstr_fd("msh: ", STDERR_FILENO);
+	ft_putnbr_fd(cmd_no, STDERR_FILENO);
+	ft_putstr_fd(": ", STDERR_FILENO);
+	ft_putstr_fd(msg, STDERR_FILENO);
+	ft_putchar_fd('\n', STDERR_FILENO);
 }

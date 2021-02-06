@@ -6,7 +6,7 @@
 /*   By: ede-thom <ede-thom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/18 17:46:23 by ede-thom          #+#    #+#             */
-/*   Updated: 2021/02/02 18:49:53 by ede-thom         ###   ########.fr       */
+/*   Updated: 2021/02/05 23:14:48 by ede-thom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 
 /* Normal Errors */
 # define NOT_FOUND_ERROR "not found"
+# define SYNTAX_ERROR "Syntax error."
 
 # define EXPECTED_KEY_EQUALS_VALUE_STRING "Expected string of type \
 								'[KEY]=[VALUE]' but no `=` was found"
@@ -29,5 +30,6 @@
 
 void		error_exit(char *str);
 void		simple_error(char *msg, int cmd_no, char *cmd_name);
+void		shell_error(char *msg, int cmd_no);
 
 #endif

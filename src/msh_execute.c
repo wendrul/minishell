@@ -6,7 +6,7 @@
 /*   By: ede-thom <ede-thom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/22 23:07:18 by ede-thom          #+#    #+#             */
-/*   Updated: 2021/02/05 00:22:59 by ede-thom         ###   ########.fr       */
+/*   Updated: 2021/02/05 23:29:55 by ede-thom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,14 @@ void run_cmd(char *line, t_command cmd, t_builtin builtins)
 	}
 }
 
+// void dispatch(char *line, t_command cmd, t_builtin builtins)
+// {
+// 	if (nextisPIPE)
+// 		execute_pipe(line, cmd, builtins);
+// 	if (nextisGREAT)
+// 		redirection(line, cmd, builtins);
+// }
+
 void execute_pipe(char *line, t_command cmd, t_builtin builtins)
 {
 	int		pipefd[2];
@@ -105,3 +113,14 @@ void execute_pipe(char *line, t_command cmd, t_builtin builtins)
 		close(stdout_cpy);
 	}
 }
+
+// void	redirection(char *line, t_command cmd, t_builtin builtins)
+// {
+// 	int		pipefd[2];
+// 	pid_t	pid;
+// 	char	*left;
+// 	char	*right;
+// 	int		stdout_cpy;
+
+// 	if (!separate(left, right, '>', line))
+// }
