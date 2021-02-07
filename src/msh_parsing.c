@@ -6,7 +6,7 @@
 /*   By: agoodwin <agoodwin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/18 18:18:38 by ede-thom          #+#    #+#             */
-/*   Updated: 2021/02/07 23:27:00 by agoodwin         ###   ########.fr       */
+/*   Updated: 2021/02/07 23:30:06 by agoodwin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -189,10 +189,7 @@ void	replace_evar(char **str, int *var_start)
 		error_exit(MALLOC_FAIL_ERROR);
 	len -= (ft_strlen(key) + 1);
 	if (!(dict_get(key)))
-	{
-		free(key);
 		val = "";
-	}
 	else
 		val = dict_get(key)->value;
 	len += ft_strlen(val);
@@ -202,8 +199,8 @@ void	replace_evar(char **str, int *var_start)
 	ft_memmove(*str, old, *var_start);
 	ft_memmove(*str + *var_start, val, ft_strlen(val));
 	ft_memmove(*str + *var_start + ft_strlen(val), old + var_end, ft_strlen(old) - var_end);
-	//free(key); <- these two frees cause segfault. not sure why
-	//free(old);
+	free(key);
+	free(old);
 	*var_start += ft_strlen(val) - 1;
 }
 
