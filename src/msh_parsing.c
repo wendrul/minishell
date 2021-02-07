@@ -6,7 +6,7 @@
 /*   By: agoodwin <agoodwin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/18 18:18:38 by ede-thom          #+#    #+#             */
-/*   Updated: 2021/02/07 22:41:25 by agoodwin         ###   ########.fr       */
+/*   Updated: 2021/02/07 23:27:00 by agoodwin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -183,16 +183,11 @@ void	replace_evar(char **str, int *var_start)
 
 	old = *str;
 	len = ft_strlen(old);
-printf("LEN IS %d\n", len);
 	var_end = *var_start;
 	while ((*str)[++var_end] && ft_isalnum((*str)[var_end]));
-	
-printf("BEGIN\n\n");
-
 	if (!(key = ft_substr(*str, *var_start + 1, var_end - *var_start - 1)))
 		error_exit(MALLOC_FAIL_ERROR);
 	len -= (ft_strlen(key) + 1);
-printf("LEN IS %d\n", len);
 	if (!(dict_get(key)))
 	{
 		free(key);
@@ -201,25 +196,15 @@ printf("LEN IS %d\n", len);
 	else
 		val = dict_get(key)->value;
 	len += ft_strlen(val);
-printf("LEN IS %d\n", len);
 	if (!(*str = malloc(sizeof(char) * (len + 1))))
 		error_exit(MALLOC_FAIL_ERROR);
 	ft_bzero(*str, len + 1);
-printf("malloc'd %d + 1 bytes, original = -%s-\nvar_end=%d, var_start=%d\n\n", len, old, var_end, *var_start);
-printf("MOVING %d BYTES INTO STR\n", *var_start);
 	ft_memmove(*str, old, *var_start);
-printf("after moving stuff before $: -%s-\n", *str);
 	ft_memmove(*str + *var_start, val, ft_strlen(val));
-printf("after moving in new val: -%s-\n", *str);
-	ft_memmove(*str + *var_start + ft_strlen(val), old + var_end,
-		ft_strlen(old) - *var_start - ft_strlen(key)); //probably off by 1 everywhere or something
-		//there are also random segfaults before anything prints, like before place_vars is even called maybe?
-		//probably would be fixed by fixing the off by one stuff here
-printf("after moving stuff after var: = -%s-\n", *str);
-	free(key);
-	free(old);
-	
-	printf("\nEND\n\n");
+	ft_memmove(*str + *var_start + ft_strlen(val), old + var_end, ft_strlen(old) - var_end);
+	//free(key); <- these two frees cause segfault. not sure why
+	//free(old);
+	*var_start += ft_strlen(val) - 1;
 }
 
 char	*place_vars(char *str)
@@ -236,7 +221,6 @@ char	*place_vars(char *str)
 		{
 			if (!ft_isalpha(ret[i + 1]) || ft_iswhitespace(ret[i + 1]) || !ret[i + 1])
 				continue ;
-			printf("PASSING IN -%s-, %d\n\n", ret, i);
 			replace_evar(&ret, &i);
 		}
 	}
