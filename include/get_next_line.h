@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ede-thom <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: agoodwin <agoodwin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/14 19:15:17 by ede-thom          #+#    #+#             */
-/*   Updated: 2019/11/23 22:19:21 by ede-thom         ###   ########.fr       */
+/*   Updated: 2021/02/07 22:40:46 by agoodwin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ typedef	struct			s_buf_hist
 }					*	t_buf_hist;
 
 int						ft_strjoin_endl(char **line, char *s2, int *error_no);
-void					*ft_memmove(void *dest, const void *src, size_t n);
+void					*gnl_memmove(void *dest, const void *src, size_t n);
 char					*get_last_from_fd(int fd, t_buf_hist *hist);
 t_buf_hist				remove_fd_from_hist(int fd, t_buf_hist element);
 int						get_next_line(int fd, char **line);

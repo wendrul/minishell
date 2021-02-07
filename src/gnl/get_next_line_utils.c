@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ede-thom <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: agoodwin <agoodwin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/14 19:15:07 by ede-thom          #+#    #+#             */
-/*   Updated: 2019/11/24 15:51:31 by ede-thom         ###   ########.fr       */
+/*   Updated: 2021/02/07 22:40:25 by agoodwin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ t_buf_hist	remove_fd_from_hist(int fd, t_buf_hist element)
 	return (element);
 }
 
-void		*ft_memmove(void *dest, const void *src, size_t n)
+void		*gnl_memmove(void *dest, const void *src, size_t n)
 {
 	char	*desert;
 	char	*sauce;
