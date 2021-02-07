@@ -6,7 +6,7 @@
 /*   By: ede-thom <ede-thom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/18 16:59:06 by wendrul           #+#    #+#             */
-/*   Updated: 2021/02/06 23:09:55 by ede-thom         ###   ########.fr       */
+/*   Updated: 2021/02/07 16:35:55 by ede-thom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,12 +63,13 @@ int		shell(t_builtin builtins)
 	i = 0;
 	while (cmds[i])
 	{
-		ft_lstiter(cmds[i], print_el);
-		printf("\nredirs:\n");
+		if (g_msh->verbose)
+		{
+			ft_lstiter(cmds[i], print_el);
+			write(STDOUT_FILENO, "\n", 1);
+		}
 		redirections(&cmds[i]);
-		ft_lstiter(cmds[i], print_el);
-		printf("\n");
-		//dispatch(cmds[i], cmd_meta, builtins);
+		dispatch(cmds[i], cmd_meta, builtins);
 		i++;
 	}
 	clear_list_arr(&cmds);

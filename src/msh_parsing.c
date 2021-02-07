@@ -6,21 +6,31 @@
 /*   By: ede-thom <ede-thom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/18 18:18:38 by ede-thom          #+#    #+#             */
-/*   Updated: 2021/02/07 00:06:21 by ede-thom         ###   ########.fr       */
+/*   Updated: 2021/02/07 16:38:48 by ede-thom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int parse_into_args(char *line, char ***argv)
+int parse_into_args(t_list *cmd, char ***argv)
 {
+	int size;
 	int i;
+	t_cmd_element e;
 
-	*argv = ft_split_charset(line, "\f\t\n\r\v ");
+	size = ft_lstsize(cmd);
+	*argv = (char**)malloc(sizeof(char*) * (size + 1));
 	i = 0;
-	while ((*argv)[i])
+	while (cmd)
+	{
+		e = (t_cmd_element)cmd->content;
+		if (!((*argv)[i] = ft_strdup(e->str)))
+			error_exit(MALLOC_FAIL_ERROR);
 		i++;
-	return (i);
+		cmd = cmd->next;
+	}
+	(*argv)[i] = NULL;
+	return (size);
 }
 
 char *getcmd_path(t_command cmd)
@@ -163,19 +173,26 @@ t_list *parse_quotes(char *line, t_command cmd)
 	return (elements);
 }
 
-t_list *add_txt(char *str)
+char	*place_vars(char *str)
+{
+	(void)str;
+	return NULL;
+}
+
+t_list *add_txt(char *line)
 {
 	t_list *newlst;
 	char **arr;
 	char **ptr;
+	char *str;
 
 	newlst = NULL;
-	if (!(arr = ft_split_charset(str, " \f\t\n\r\v")))
+	if (!(arr = ft_split_charset(line, " \f\t\n\r\v")))
 		error_exit(SPLIT_FAIL_ERROR);
 	ptr = arr;
 	while (*arr)
 	{
-		//Replace $env vars and $?
+		str = place_vars(*arr);
 		add_el(&newlst, *arr, TEXT);
 		arr++;
 	}

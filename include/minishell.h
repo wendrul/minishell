@@ -66,8 +66,8 @@ int			dict_rm(char *key);
 t_var_dict	dict_strput(char *str);
 
 int		    shell(t_builtin builtins);
-void	    run_cmd(char *line, t_command cmd, t_builtin builtins);
-void	    execute_pipe(char *line, t_command cmd, t_builtin builtins);
+void	    run_cmd(t_list *cmd, t_command cmd_meta, t_builtin builtins);
+void	    execute_pipe(t_list *cmd, t_command cmd_meta, t_builtin builtins);
 void	    set_env_vars(char **envp);
 void	    execute(t_command cmd);
 void		dispatch(t_list *cmd, t_command cmd_meta, t_builtin builtins);

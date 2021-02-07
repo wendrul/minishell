@@ -6,7 +6,7 @@
 /*   By: ede-thom <ede-thom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/22 23:07:18 by ede-thom          #+#    #+#             */
-/*   Updated: 2021/02/06 23:20:28 by ede-thom         ###   ########.fr       */
+/*   Updated: 2021/02/07 16:46:01 by ede-thom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,15 +45,15 @@ void execute(t_command cmd)
 	}
 }
 
-void run_cmd(char *line, t_command cmd, t_builtin builtins)
+void run_cmd(t_list *cmd, t_command cmd_meta, t_builtin builtins)
 {
-	cmd.argc = parse_into_args(line, &cmd.argv);
-	cmd.name = cmd.argv[0];	
-	if (cmd.argc >= 1)
+	cmd_meta.argc = parse_into_args(cmd, &cmd_meta.argv);
+	cmd_meta.name = cmd_meta.argv[0];	
+	if (cmd_meta.argc >= 1)
 	{
-		if (!run_builtin(builtins, cmd.argv[0], cmd))
+		if (!run_builtin(builtins, cmd_meta.argv[0], cmd_meta))
 		{
-			execute(cmd);
+			execute(cmd_meta);
 		}
 	}
 }
@@ -72,42 +72,37 @@ int		next_token(t_list *cmd)
 	return (TEXT);
 }
 
-void dispatch(t_list *line, t_command cmd, t_builtin builtins)
-{
-(void)builtins;
-(void)cmd;
-(void)line;
-	
-	// type = next_token(line);
-	// if (type == PIPE)
-	// 	execute_pipe(line, cmd, builtins);
+void dispatch(t_list *cmd, t_command cmd_meta, t_builtin builtins)
+{	
+	if (next_token(cmd) == PIPE)
+		execute_pipe(cmd, cmd_meta, builtins);
+	else
+		run_cmd(cmd, cmd_meta, builtins);
 }
 
-void execute_pipe(char *line, t_command cmd, t_builtin builtins)
+void execute_pipe(t_list *cmd, t_command cmd_meta, t_builtin builtins)
 {
 	int		pipefd[2];
 	pid_t	pid;
-	char	*left;
-	char	*right;
+	t_list	*left;
+	t_list	*right;
 	int		stdout_cpy;
 
-
-	if (!separate(&left, &right, '|', line))
+	if (!separate_at(lst_indexof(PIPE, cmd), cmd, &left, &right))
 	{
-		run_cmd(line, cmd, builtins);
+		run_cmd(cmd, cmd_meta, builtins);
 		return ;
 	}
 	if (pipe(pipefd))
 		error_exit(FAILED_TO_CREATE_PIPE);
 	pid = fork();
-	stdout_cpy = dup(STDOUT_FILENO);
 	if (pid == (pid_t)0)
 	{
 		/* This is the child process.
          Close other end first. */
 		close(pipefd[1]);
 		dup2(pipefd[0], STDIN_FILENO);
-		//dispatch(right, cmd, builtins);
+		dispatch(right, cmd_meta, builtins);
 		close(pipefd[0]);
 		exit(0);
 	}
@@ -121,8 +116,9 @@ void execute_pipe(char *line, t_command cmd, t_builtin builtins)
 		/* This is the parent process.
          Close other end first. */
 		close(pipefd[0]);
+		stdout_cpy = dup(STDOUT_FILENO);
 		dup2(pipefd[1], STDOUT_FILENO);
-		run_cmd(left, cmd, builtins);
+		run_cmd(left, cmd_meta, builtins);
 		close(pipefd[1]);
 		close(STDOUT_FILENO);
 		wait(NULL);
@@ -152,7 +148,6 @@ void	redirections(t_list **cmd_ptr)
 		{
 			redirect(((t_cmd_element)(*tmp2)->next->content)->str, e->type);
 			after_redir = (*tmp2)->next->next;
-			printf("ptr: %p\n", after_redir);
 			ft_lstdelone((*tmp2)->next, del_element);
 			ft_lstdelone(*tmp2, del_element);
 			*tmp2 = after_redir;
