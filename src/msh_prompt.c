@@ -6,7 +6,7 @@
 /*   By: ede-thom <ede-thom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/18 16:59:06 by wendrul           #+#    #+#             */
-/*   Updated: 2021/02/07 16:35:55 by ede-thom         ###   ########.fr       */
+/*   Updated: 2021/02/07 17:28:08 by ede-thom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ int		shell(t_builtin builtins)
 	t_list		*elements;
 	t_list		**cmds;
 	int			i;
+	int			og_inout[2];
 
 	(void)&builtins;
 	line = gnl();
@@ -63,13 +64,26 @@ int		shell(t_builtin builtins)
 	i = 0;
 	while (cmds[i])
 	{
+		og_inout[0] = dup(STDOUT_FILENO);
+		og_inout[1] = dup(STDIN_FILENO);
 		if (g_msh->verbose)
 		{
 			ft_lstiter(cmds[i], print_el);
 			write(STDOUT_FILENO, "\n", 1);
 		}
-		redirections(&cmds[i]);
+		if (redirections(&cmds[i], cmd_meta) == -1)
+			return (2);
 		dispatch(cmds[i], cmd_meta, builtins);
+		if (g_msh->redir_out_fd != -1)
+			close (g_msh->redir_out_fd);
+		if (g_msh->redir_in_fd != -1)
+			close (g_msh->redir_in_fd);
+		g_msh->redir_out_fd = -1;
+		g_msh->redir_in_fd = -1;
+		dup2(og_inout[0], STDOUT_FILENO);
+		dup2(og_inout[1], STDIN_FILENO);
+		close(og_inout[0]);
+		close(og_inout[1]);
 		i++;
 	}
 	clear_list_arr(&cmds);

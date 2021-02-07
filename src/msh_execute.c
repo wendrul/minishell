@@ -6,7 +6,7 @@
 /*   By: ede-thom <ede-thom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/22 23:07:18 by ede-thom          #+#    #+#             */
-/*   Updated: 2021/02/07 16:46:01 by ede-thom         ###   ########.fr       */
+/*   Updated: 2021/02/07 17:45:39 by ede-thom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,14 +127,47 @@ void execute_pipe(t_list *cmd, t_command cmd_meta, t_builtin builtins)
 	}
 }
 
-void redirect(char *str, int type)
+int redirect(char *filename, int type, t_command cmd_meta)
 {
-	(void)str;
-	(void)type;
-	return ;
+	int fd;
+	char buf[BUFFER_SIZE];
+
+	if ((type == GREAT || type == GREATGREAT) && g_msh->redir_out_fd != -1)
+		close(g_msh->redir_out_fd);
+	if (type == GREAT)
+	{
+		if ((fd = open(filename, O_CREAT | O_RDWR)) == -1)
+		{
+			shell_error(strerror(errno), cmd_meta.num);
+			return(0);
+		}
+		g_msh->redir_out_fd = fd;
+		dup2(fd, STDOUT_FILENO);
+	}
+	else if (type == GREATGREAT)
+	{
+		if ((fd = open(filename, O_CREAT | O_RDWR)) == -1)
+		{
+			shell_error(strerror(errno), cmd_meta.num);
+			return(0);
+		}
+		while (read(fd, buf, BUFFER_SIZE));		
+		g_msh->redir_out_fd = fd;
+		dup2(fd, STDOUT_FILENO);
+	}
+	else if (type == LESS)
+	{
+		if (g_msh->redir_in_fd != -1)
+			close(g_msh->redir_in_fd);
+		if ((fd = open(filename, O_RDONLY)) == -1)
+			shell_error(strerror(errno), cmd_meta.num);
+		g_msh->redir_in_fd = fd;
+		dup2(fd, STDIN_FILENO);
+	}
+	return (1);
 }
 
-void	redirections(t_list **cmd_ptr)
+int	redirections(t_list **cmd_ptr, t_command cmd_meta)
 {
 	t_list *after_redir;
 	t_list **tmp2;
@@ -146,7 +179,8 @@ void	redirections(t_list **cmd_ptr)
 		e = (t_cmd_element)(*tmp2)->content;
 		if (e->type == GREAT || e->type == GREATGREAT || e->type == LESS)
 		{
-			redirect(((t_cmd_element)(*tmp2)->next->content)->str, e->type);
+			if (!redirect(((t_cmd_element)(*tmp2)->next->content)->str, e->type, cmd_meta))
+				return (-1);
 			after_redir = (*tmp2)->next->next;
 			ft_lstdelone((*tmp2)->next, del_element);
 			ft_lstdelone(*tmp2, del_element);
@@ -156,4 +190,5 @@ void	redirections(t_list **cmd_ptr)
 		}
 		tmp2 = &((*tmp2)->next);
 	}
+	return (0);
 }
