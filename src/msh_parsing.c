@@ -6,7 +6,7 @@
 /*   By: ede-thom <ede-thom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/18 18:18:38 by ede-thom          #+#    #+#             */
-/*   Updated: 2021/02/07 16:38:48 by ede-thom         ###   ########.fr       */
+/*   Updated: 2021/02/07 17:49:37 by ede-thom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -246,7 +246,7 @@ t_list *parse_token(char *str)
 			start = i + 1;
 		}
 	}
-	if (!(tmp = ft_substr(str, start, i - start - tokensize)))
+	if (!(tmp = ft_substr(str, start, i - start)))
 		error_exit(MALLOC_FAIL_ERROR);
 	lst_append(&newlst, add_txt(tmp));
 	return (newlst);
