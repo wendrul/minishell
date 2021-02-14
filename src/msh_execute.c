@@ -6,7 +6,7 @@
 /*   By: ede-thom <ede-thom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/22 23:07:18 by ede-thom          #+#    #+#             */
-/*   Updated: 2021/02/07 17:45:39 by ede-thom         ###   ########.fr       */
+/*   Updated: 2021/02/14 21:34:58 by ede-thom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,13 +130,12 @@ void execute_pipe(t_list *cmd, t_command cmd_meta, t_builtin builtins)
 int redirect(char *filename, int type, t_command cmd_meta)
 {
 	int fd;
-	char buf[BUFFER_SIZE];
 
 	if ((type == GREAT || type == GREATGREAT) && g_msh->redir_out_fd != -1)
 		close(g_msh->redir_out_fd);
 	if (type == GREAT)
 	{
-		if ((fd = open(filename, O_CREAT | O_RDWR)) == -1)
+		if ((fd = open(filename, O_CREAT | O_RDWR | O_TRUNC, 0777)) == -1)
 		{
 			shell_error(strerror(errno), cmd_meta.num);
 			return(0);
@@ -146,12 +145,11 @@ int redirect(char *filename, int type, t_command cmd_meta)
 	}
 	else if (type == GREATGREAT)
 	{
-		if ((fd = open(filename, O_CREAT | O_RDWR)) == -1)
+		if ((fd = open(filename, O_CREAT | O_APPEND | O_RDWR, 0777)) == -1)
 		{
 			shell_error(strerror(errno), cmd_meta.num);
 			return(0);
 		}
-		while (read(fd, buf, BUFFER_SIZE));		
 		g_msh->redir_out_fd = fd;
 		dup2(fd, STDOUT_FILENO);
 	}
