@@ -6,7 +6,7 @@
 /*   By: ede-thom <ede-thom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/18 16:59:06 by wendrul           #+#    #+#             */
-/*   Updated: 2021/02/14 21:20:12 by ede-thom         ###   ########.fr       */
+/*   Updated: 2021/02/15 00:24:23 by ede-thom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,6 @@ int		shell(t_builtin builtins)
 			close (g_msh->redir_in_fd);
 		g_msh->redir_out_fd = -1;
 		g_msh->redir_in_fd = -1;
-		fprintf(stderr, "closing redirected: -%d- -%d-\n", og_inout[0], og_inout[1]);
 		dup2(og_inout[0], STDOUT_FILENO);
 		dup2(og_inout[1], STDIN_FILENO);
 		close(og_inout[0]);
