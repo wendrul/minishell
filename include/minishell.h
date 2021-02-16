@@ -57,6 +57,7 @@ typedef struct  s_msh
     t_var_dict  dict[HASHSIZE];
 	int			redir_out_fd;
 	int			redir_in_fd;
+	int			err_no;
 }           *   t_msh;
 
 t_msh   g_msh;
@@ -71,7 +72,7 @@ int		    shell(t_builtin builtins);
 void	    run_cmd(t_list *cmd, t_command cmd_meta, t_builtin builtins);
 void	    execute_pipe(t_list *cmd, t_command cmd_meta, t_builtin builtins);
 void	    set_env_vars(char **envp);
-void	    execute(t_command cmd);
+int			execute(t_command cmd);
 void		dispatch(t_list *cmd, t_command cmd_meta, t_builtin builtins);
 int			redirections(t_list **cmd, t_command cmd_meta);
 

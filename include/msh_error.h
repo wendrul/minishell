@@ -6,7 +6,7 @@
 /*   By: ede-thom <ede-thom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/18 17:46:23 by ede-thom          #+#    #+#             */
-/*   Updated: 2021/02/06 21:59:57 by ede-thom         ###   ########.fr       */
+/*   Updated: 2021/02/16 21:56:54 by ede-thom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,12 @@
 # define NOT_FOUND_ERROR "not found"
 # define SYNTAX_ERROR "Syntax error."
 # define SYNTAX_ERROR_UNEXPECTED "Syntax error: unexpected "
+# define IS_DIRECTORY_ERROR "Is a directory dumbass"
+# define HOME_IS_NOT_SET "HOME is not set"
+# define UNSPECIFIED_ERROR "Unspecified msh error"
+
+# define NO_HOME_VAR 10
+
  
 # define EXPECTED_KEY_EQUALS_VALUE_STRING "Expected string of type \
 								'[KEY]=[VALUE]' but no `=` was found"
@@ -32,5 +38,6 @@
 void		error_exit(char *str);
 void		simple_error(char *msg, int cmd_no, char *cmd_name);
 void		shell_error(char *msg, int cmd_no);
+char		*msh_strerror(int error);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: ede-thom <ede-thom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/18 17:00:48 by ede-thom          #+#    #+#             */
-/*   Updated: 2021/02/05 23:13:13 by ede-thom         ###   ########.fr       */
+/*   Updated: 2021/02/16 22:01:16 by ede-thom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,9 @@ void	handle_signal(int signo)
 
 int		main(int argc, char **argv, char **envp)
 {
-	t_builtin builtins;
+	t_builtin	builtins;
+	int			status;
+	char		*status_str;
 
 	g_msh = malloc(sizeof(struct s_msh));
 	g_msh->env = envp;
@@ -45,8 +47,14 @@ int		main(int argc, char **argv, char **envp)
 	signal(SIGINT, handle_signal);
 	signal(SIGQUIT, handle_signal);
 	set_env_vars(g_msh->env);
+	dict_put("?", "0");
 	while (1)
-		shell(builtins);
+		if ((status = shell(builtins)) != 0)
+		{
+			if (!(status_str = ft_itoa(status)))
+				error_exit(MALLOC_FAIL_ERROR);
+			dict_put("?", status_str);
+		}
 	free(g_msh);
 	return (0);
 }
@@ -64,7 +72,7 @@ void	error_exit(char *str)
 {
 	ft_putstr_fd(str, STDERR_FILENO);
 	ft_putchar_fd('\n', STDERR_FILENO);
-	exit(0);
+	exit(1);
 }
 
 void	simple_error(char *msg, int cmd_no, char *cmd_name)
@@ -86,4 +94,11 @@ void	shell_error(char *msg, int cmd_no)
 	ft_putstr_fd(": ", STDERR_FILENO);
 	ft_putstr_fd(msg, STDERR_FILENO);
 	ft_putchar_fd('\n', STDERR_FILENO);
+}
+
+char	*msh_strerror(int error)
+{
+	if (error == NO_HOME_VAR)
+		return (HOME_IS_NOT_SET);
+	return (UNSPECIFIED_ERROR);
 }

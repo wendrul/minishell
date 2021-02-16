@@ -6,55 +6,54 @@
 /*   By: ede-thom <ede-thom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/22 23:07:18 by ede-thom          #+#    #+#             */
-/*   Updated: 2021/02/14 21:34:58 by ede-thom         ###   ########.fr       */
+/*   Updated: 2021/02/16 21:55:05 by ede-thom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void execute(t_command cmd)
+int execute(t_command cmd)
 {
 	pid_t child_pid;
 	int status;
 
+	status = 130;
 	child_pid = fork();
 	if (child_pid == 0) /* Inside of child */
 	{
 		if (execve(getcmd_path(cmd), cmd.argv, g_msh->env) == -1)
 		{
-			if (g_msh->verbose)
-				printf("errno: %d: %s\n", errno, strerror(errno));
-			simple_error(NOT_FOUND_ERROR, cmd.num, cmd.argv[0]);
-			exit(0);
+			simple_error(strerror(errno), cmd.num, cmd.argv[0]);
+			if (errno == EACCES)
+				exit(126);
+			exit(127);
 		}
+		exit(1);
 	}
 	else if (child_pid == -1)
 		simple_error(strerror(errno), cmd.num, cmd.name);
 	else
 	{
-		/* Inside of parent */
-		if (waitpid(child_pid, &status, 0) == child_pid)
-		{
-			if (g_msh->verbose)
-			{
-				printf("status: %d\n", status);
-			}
-		}
-		else
+		if (waitpid(child_pid, &status, 0) != child_pid)
 			simple_error(strerror(errno), cmd.num, cmd.name);
 	}
+	return (status);
 }
 
 void run_cmd(t_list *cmd, t_command cmd_meta, t_builtin builtins)
 {
+	int status;
+	char *status_str;
+
 	cmd_meta.argc = parse_into_args(cmd, &cmd_meta.argv);
 	cmd_meta.name = cmd_meta.argv[0];	
 	if (cmd_meta.argc >= 1)
 	{
-		if (!run_builtin(builtins, cmd_meta.argv[0], cmd_meta))
-		{
-			execute(cmd_meta);
-		}
+		if (!run_builtin(builtins, cmd_meta.argv[0], cmd_meta, &status))
+			status = WEXITSTATUS(execute(cmd_meta));
+		if (!(status_str = ft_itoa(status)))
+			error_exit(MALLOC_FAIL_ERROR);
+		dict_put("?", status_str);
 	}
 }
 
@@ -73,7 +72,7 @@ int		next_token(t_list *cmd)
 }
 
 void dispatch(t_list *cmd, t_command cmd_meta, t_builtin builtins)
-{	
+{
 	if (next_token(cmd) == PIPE)
 		execute_pipe(cmd, cmd_meta, builtins);
 	else

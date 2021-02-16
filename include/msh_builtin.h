@@ -6,7 +6,7 @@
 /*   By: ede-thom <ede-thom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/18 16:59:20 by wendrul           #+#    #+#             */
-/*   Updated: 2021/01/28 22:33:03 by ede-thom         ###   ########.fr       */
+/*   Updated: 2021/02/16 17:19:09 by ede-thom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int		name_cmp(char *str1, char *str2);
 void	free_arr(char **ptr);
 void	print_arr(char **s);
 
-int		run_builtin(t_builtin builtin, char *name, t_command cmd);
+int		run_builtin(t_builtin builtin, char *name, t_command cmd, int *status);
 void	add_builtin(t_builtin *list, char *name, int (*method)(int, char**));
 
 int		msh_exit(int argc, char **argv);

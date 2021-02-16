@@ -6,7 +6,7 @@
 /*   By: ede-thom <ede-thom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/18 20:19:07 by ede-thom          #+#    #+#             */
-/*   Updated: 2021/02/07 00:08:16 by ede-thom         ###   ########.fr       */
+/*   Updated: 2021/02/16 21:56:38 by ede-thom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,14 +40,22 @@ void	add_builtin(t_builtin *list, char *name, int (*method)(int, char**))
 	cur->next = create(name, method, NULL);
 }
 
-int		run_builtin(t_builtin builtin, char *name, t_command cmd)
+int		run_builtin(t_builtin builtin, char *name, t_command cmd, int *status)
 {
 	while (builtin != NULL)
 	{
 		if (name_cmp(name, builtin->name))
 		{
-			if (builtin->method(cmd.argc, cmd.argv))
-				simple_error(strerror(errno), cmd.num, cmd.name);
+			if ((*status = builtin->method(cmd.argc, cmd.argv)))
+			{
+				if (*status == -1)
+				{
+					*status = 1;
+					simple_error(msh_strerror(g_msh->err_no), cmd.num, cmd.name);
+				}
+				else
+					simple_error(strerror(errno), cmd.num, cmd.name);
+			}
 			return (1);
 		}
 		builtin = builtin->next;

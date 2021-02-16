@@ -6,17 +6,19 @@
 /*   By: ede-thom <ede-thom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/18 16:59:06 by wendrul           #+#    #+#             */
-/*   Updated: 2021/02/15 00:24:23 by ede-thom         ###   ########.fr       */
+/*   Updated: 2021/02/16 22:05:22 by ede-thom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static char	*gnl()
+static char	*gnl(char **old)
 {
 	char	*line;
 	int		gnl_ret;
 
+	if (old != NULL)
+		free(*old);
 	write(STDOUT_FILENO, PROMPT_TOKEN, ft_strlen(PROMPT_TOKEN));
 	gnl_ret = get_next_line(STDIN_FILENO, &line);
 	if (gnl_ret == -1)
@@ -52,11 +54,14 @@ int		shell(t_builtin builtins)
 	int			og_inout[2];
 
 	(void)&builtins;
-	line = gnl();
+	line = gnl(NULL);
+	while (*line == '\0')
+		line = gnl(&line);
 	cmd_num++;
 	cmd_meta.num = cmd_num;
 	if (!(elements = parse_quotes(line, cmd_meta)))
 		return (2);
+	free(line);
 	elements = parse_tokens(elements, cmd_meta);
 	if (!syntax_check(elements, cmd_meta))
 		return (2);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   msh_parsing.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: agoodwin <agoodwin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ede-thom <ede-thom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/18 18:18:38 by ede-thom          #+#    #+#             */
-/*   Updated: 2021/02/07 23:30:06 by agoodwin         ###   ########.fr       */
+/*   Updated: 2021/02/16 21:22:00 by ede-thom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int parse_into_args(t_list *cmd, char ***argv)
 	t_cmd_element e;
 
 	size = ft_lstsize(cmd);
-	*argv = (char**)malloc(sizeof(char*) * (size + 1));
+	*argv = (char **)malloc(sizeof(char *) * (size + 1));
 	i = 0;
 	while (cmd)
 	{
@@ -173,13 +173,43 @@ t_list *parse_quotes(char *line, t_command cmd)
 	return (elements);
 }
 
-void	replace_evar(char **str, int *var_start)
+void replace_special(char **str, int *var_start)
 {
-	char	*key;
-	char	*val;
-	char	*old;
-	int		var_end;
-	int		len;
+	char *key;
+	char *val;
+	char *old;
+	int var_end;
+	int len;
+
+	old = *str;
+	len = ft_strlen(old);
+	var_end = *var_start + 2;
+	if (!(key = ft_substr(*str, *var_start + 1, var_end - *var_start - 1)))
+		error_exit(MALLOC_FAIL_ERROR);
+	len -= (ft_strlen(key) + 1);
+	if (!(dict_get(key)))
+		val = "";
+	else
+		val = dict_get(key)->value;
+	len += ft_strlen(val);
+	if (!(*str = malloc(sizeof(char) * (len + 1))))
+		error_exit(MALLOC_FAIL_ERROR);
+	ft_bzero(*str, len + 1);
+	ft_memmove(*str, old, *var_start);
+	ft_memmove(*str + *var_start, val, ft_strlen(val));
+	ft_memmove(*str + *var_start + ft_strlen(val), old + var_end, ft_strlen(old) - var_end);
+	free(key);
+	free(old);
+	*var_start += ft_strlen(val) - 1;
+}
+
+void replace_evar(char **str, int *var_start)
+{
+	char *key;
+	char *val;
+	char *old;
+	int var_end;
+	int len;
 
 	old = *str;
 	len = ft_strlen(old);
@@ -204,10 +234,10 @@ void	replace_evar(char **str, int *var_start)
 	*var_start += ft_strlen(val) - 1;
 }
 
-char	*place_vars(char *str)
+char *place_vars(char *str)
 {
-	int		i;
-	char	*ret;
+	int i;
+	char *ret;
 
 	i = -1;
 	if (!(ret = ft_strdup(str)))
@@ -216,9 +246,14 @@ char	*place_vars(char *str)
 	{
 		if (ret[i] == '$')
 		{
-			if (!ft_isalpha(ret[i + 1]) || ft_iswhitespace(ret[i + 1]) || !ret[i + 1])
-				continue ;
-			replace_evar(&ret, &i);
+			if (ret[i + 1] == '?')
+				replace_special(&ret, &i);
+			else
+			{
+				if (!ft_isalpha(ret[i + 1]) || ft_iswhitespace(ret[i + 1]) || !ret[i + 1])
+					continue;
+				replace_evar(&ret, &i);
+			}
 		}
 	}
 	return (ret);
@@ -246,7 +281,7 @@ t_list *add_txt(char *line)
 	return (newlst);
 }
 
-int		typeof_token(char *str)
+int typeof_token(char *str)
 {
 	if (str[0] == '|')
 		return (PIPE);
@@ -320,7 +355,7 @@ t_list *parse_tokens(t_list *old_lst, t_command cmd)
 	return (newlst);
 }
 
-int		count_semicolons(t_list *elements)
+int count_semicolons(t_list *elements)
 {
 	int size;
 	t_cmd_element e;
@@ -336,20 +371,20 @@ int		count_semicolons(t_list *elements)
 	return (size);
 }
 
-t_list	**get_cmds(t_list *elements)
+t_list **get_cmds(t_list *elements)
 {
-	int		size;
-	t_list	**cmds;
-	t_list	*cur;
-	int		i;
+	int size;
+	t_list **cmds;
+	t_list *cur;
+	int i;
 
 	size = count_semicolons(elements);
-	if(!(cmds = (t_list**)malloc(sizeof(*cmds) * (size + 1))))
+	if (!(cmds = (t_list **)malloc(sizeof(*cmds) * (size + 1))))
 		error_exit(MALLOC_FAIL_ERROR);
 	i = -1;
 	while (++i < size + 1)
 	{
-		if (!(cmds[i] = (t_list*)malloc(sizeof(**cmds))))
+		if (!(cmds[i] = (t_list *)malloc(sizeof(**cmds))))
 			error_exit(MALLOC_FAIL_ERROR);
 		cmds[i] = elements;
 		cur = elements;
@@ -369,7 +404,7 @@ t_list	**get_cmds(t_list *elements)
 	return (cmds);
 }
 
-int		syntaxerror_msg(int type, t_command cmd)
+int syntaxerror_msg(int type, t_command cmd)
 {
 	char *msg;
 	char *token;
@@ -392,7 +427,7 @@ int		syntaxerror_msg(int type, t_command cmd)
 	return (0);
 }
 
-int		syntax_check(t_list *elements, t_command cmd)
+int syntax_check(t_list *elements, t_command cmd)
 {
 	t_cmd_element prev;
 	t_cmd_element e;
