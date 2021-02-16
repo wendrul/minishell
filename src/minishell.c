@@ -6,7 +6,7 @@
 /*   By: ede-thom <ede-thom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/18 17:00:48 by ede-thom          #+#    #+#             */
-/*   Updated: 2021/02/16 22:01:16 by ede-thom         ###   ########.fr       */
+/*   Updated: 2021/02/16 22:13:07 by ede-thom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,39 +66,4 @@ void	set_env_vars(char **envp)
 		dict_strput(*envp)->is_env = 1;
 		envp++;
 	}
-}
-
-void	error_exit(char *str)
-{
-	ft_putstr_fd(str, STDERR_FILENO);
-	ft_putchar_fd('\n', STDERR_FILENO);
-	exit(1);
-}
-
-void	simple_error(char *msg, int cmd_no, char *cmd_name)
-{
-	ft_putstr_fd("msh: ", STDERR_FILENO);
-	ft_putnbr_fd(cmd_no, STDERR_FILENO);
-	ft_putstr_fd(": ", STDERR_FILENO);
-	ft_putstr_fd(cmd_name, STDERR_FILENO);
-	ft_putstr_fd(": ", STDERR_FILENO);
-	ft_putstr_fd(msg, STDERR_FILENO);
-	ft_putchar_fd('\n', STDERR_FILENO);
-//	printf("msh: %d: %s: %s\n", cmd_no, cmd_name, msg);
-}
-
-void	shell_error(char *msg, int cmd_no)
-{
-	ft_putstr_fd("msh: ", STDERR_FILENO);
-	ft_putnbr_fd(cmd_no, STDERR_FILENO);
-	ft_putstr_fd(": ", STDERR_FILENO);
-	ft_putstr_fd(msg, STDERR_FILENO);
-	ft_putchar_fd('\n', STDERR_FILENO);
-}
-
-char	*msh_strerror(int error)
-{
-	if (error == NO_HOME_VAR)
-		return (HOME_IS_NOT_SET);
-	return (UNSPECIFIED_ERROR);
 }
