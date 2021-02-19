@@ -6,7 +6,7 @@
 /*   By: ede-thom <ede-thom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/18 18:18:38 by ede-thom          #+#    #+#             */
-/*   Updated: 2021/02/17 19:12:57 by ede-thom         ###   ########.fr       */
+/*   Updated: 2021/02/19 18:52:02 by ede-thom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,7 @@ char *getcmd_path(t_command cmd)
 				return (cmd.name);
 			}
 		}
+		closedir(dir);
 	}
 	closedir(dir);
 	free_arr(pathv);
@@ -141,7 +142,6 @@ t_list *parse_quotes(char *line, t_command cmd)
 	i = -1;
 	start = 0;
 	elements = NULL;
-	ft_lstnew(NULL);
 	while (line[++i])
 	{
 		if (line[i] == '\'' || line[i] == '"')
@@ -340,6 +340,7 @@ t_list *parse_token(char *str)
 	if (!(tmp = ft_substr(str, start, i - start)))
 		error_exit(MALLOC_FAIL_ERROR);
 	lst_append(&newlst, add_txt(tmp));
+	free(tmp);
 	return (newlst);
 }
 
@@ -389,13 +390,11 @@ t_list **get_cmds(t_list *elements)
 	int i;
 
 	size = count_semicolons(elements);
-	if (!(cmds = (t_list **)malloc(sizeof(*cmds) * (size + 1))))
+	if (!(cmds = (t_list **)malloc(sizeof(*cmds) * (size + 2))))
 		error_exit(MALLOC_FAIL_ERROR);
 	i = -1;
 	while (++i < size + 1)
 	{
-		if (!(cmds[i] = (t_list *)malloc(sizeof(**cmds))))
-			error_exit(MALLOC_FAIL_ERROR);
 		cmds[i] = elements;
 		cur = elements;
 		while (cur->next)
@@ -429,11 +428,15 @@ int syntaxerror_msg(int type, t_command cmd)
 		token = "\"<\"";
 	else if (type == SEMICOLON)
 		token = "\";\"";
-	msg = ft_strjoin(SYNTAX_ERROR_UNEXPECTED, token);
-	if (msg)
-		shell_error(msg, cmd.num);
 	else
+	{
 		shell_error(SYNTAX_ERROR, cmd.num);
+		return (0);
+	}
+	if (!(msg = ft_strjoin(SYNTAX_ERROR_UNEXPECTED, token)))
+		error_exit(MALLOC_FAIL_ERROR);
+	shell_error(msg, cmd.num);
+	free(msg);
 	return (0);
 }
 

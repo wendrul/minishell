@@ -6,7 +6,7 @@
 /*   By: ede-thom <ede-thom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/18 20:19:07 by ede-thom          #+#    #+#             */
-/*   Updated: 2021/02/16 21:56:38 by ede-thom         ###   ########.fr       */
+/*   Updated: 2021/02/19 18:19:52 by ede-thom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,13 @@
 static t_builtin	create(char *name, int (*method)(int, char**), t_builtin next)
 {
 	t_builtin new;
+	int i;
 
 	if (!(new = (t_builtin)malloc(sizeof(struct s_builtin))))
 		error_exit(MALLOC_FAIL_ERROR);
+	i = -1;
+	while (++i < 256)
+		new->name[i] = 0;
 	ft_memmove(new->name, name, ft_strlen(name));
 	new->method = method;
 	new->next = next;

@@ -6,7 +6,7 @@
 /*   By: ede-thom <ede-thom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/18 17:00:48 by ede-thom          #+#    #+#             */
-/*   Updated: 2021/02/16 22:13:07 by ede-thom         ###   ########.fr       */
+/*   Updated: 2021/02/19 19:35:11 by ede-thom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,12 @@ void	handle_signal(int signo)
 	if (signo == SIGINT)
 	{
 		i = -1;
-		write(STDOUT_FILENO, "\n", 1);
-		write(STDOUT_FILENO, PROMPT_TOKEN, ft_strlen(PROMPT_TOKEN));
+		write(STDERR_FILENO, "\n", 1);
+		write(STDERR_FILENO, PROMPT_TOKEN, ft_strlen(PROMPT_TOKEN));
+	}
+	if (signo == SIGQUIT)
+	{
+			
 	}
 }
 
@@ -31,11 +35,18 @@ int		main(int argc, char **argv, char **envp)
 	t_builtin	builtins;
 	int			status;
 	char		*status_str;
-
+	int i = -1;
+	
 	g_msh = malloc(sizeof(struct s_msh));
 	g_msh->env = envp;
+	g_msh->verbose = 0;
+	g_msh->err_no = -1;
+	g_msh->redir_in_fd = -1;
+	g_msh->redir_out_fd = -1;
 	if (argc > 1)
 		g_msh->verbose = name_cmp("-v", argv[1]);
+	while (++i < HASHSIZE)
+		g_msh->dict[i] = NULL;
 	builtins = NULL;
 	add_builtin(&builtins, "cd", msh_cd);
 	add_builtin(&builtins, "echo", msh_echo);

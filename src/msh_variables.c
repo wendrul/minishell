@@ -6,7 +6,7 @@
 /*   By: ede-thom <ede-thom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/22 20:08:41 by ede-thom          #+#    #+#             */
-/*   Updated: 2021/02/16 17:15:25 by ede-thom         ###   ########.fr       */
+/*   Updated: 2021/02/19 18:04:21 by ede-thom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,10 +45,10 @@ t_var_dict	dict_put(char *key, char *val)
 
     if (!(new = dict_get(key))) 
 	{
-        new = (t_var_dict) malloc(sizeof(*new));
-        if (!new || !(new->key = ft_strdup(key)))
+        new = (t_var_dict) malloc(sizeof(struct s_var_dict));
+		if (!new || !(new->key = ft_strdup(key)))
 			error_exit(MALLOC_FAIL_ERROR);
-        hash = get_hash(key);
+		hash = get_hash(key);
         new->next = g_msh->dict[hash];
 		new->is_env = 0;
         g_msh->dict[hash] = new;

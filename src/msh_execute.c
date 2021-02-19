@@ -6,7 +6,7 @@
 /*   By: ede-thom <ede-thom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/22 23:07:18 by ede-thom          #+#    #+#             */
-/*   Updated: 2021/02/16 21:55:05 by ede-thom         ###   ########.fr       */
+/*   Updated: 2021/02/19 18:44:28 by ede-thom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,9 @@ void run_cmd(t_list *cmd, t_command cmd_meta, t_builtin builtins)
 		if (!(status_str = ft_itoa(status)))
 			error_exit(MALLOC_FAIL_ERROR);
 		dict_put("?", status_str);
+		free(status_str);
 	}
+	free_arr(cmd_meta.argv);
 }
 
 int		next_token(t_list *cmd)

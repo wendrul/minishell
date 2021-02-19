@@ -6,7 +6,7 @@
 /*   By: ede-thom <ede-thom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/18 16:59:06 by wendrul           #+#    #+#             */
-/*   Updated: 2021/02/16 22:05:22 by ede-thom         ###   ########.fr       */
+/*   Updated: 2021/02/19 19:04:02 by ede-thom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static char	*gnl(char **old)
 
 	if (old != NULL)
 		free(*old);
-	write(STDOUT_FILENO, PROMPT_TOKEN, ft_strlen(PROMPT_TOKEN));
+	ft_putstr_fd(PROMPT_TOKEN, STDERR_FILENO);
 	gnl_ret = get_next_line(STDIN_FILENO, &line);
 	if (gnl_ret == -1)
 		error_exit(FAILED_TO_GET_NEXT_LINE);
@@ -41,6 +41,7 @@ void	clear_list_arr(t_list ***lst)
 		ft_lstclear(tmp, del_element);
 		tmp++;
 	}
+	free(*lst);
 }
 
 int		shell(t_builtin builtins)
