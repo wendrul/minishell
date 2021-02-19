@@ -6,7 +6,7 @@
 /*   By: ede-thom <ede-thom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/18 18:18:38 by ede-thom          #+#    #+#             */
-/*   Updated: 2021/02/16 21:22:00 by ede-thom         ###   ########.fr       */
+/*   Updated: 2021/02/17 19:12:57 by ede-thom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,6 +135,8 @@ t_list *parse_quotes(char *line, t_command cmd)
 	int i;
 	int j;
 	int start;
+	char quote;
+	char *str;
 
 	i = -1;
 	start = 0;
@@ -144,6 +146,7 @@ t_list *parse_quotes(char *line, t_command cmd)
 	{
 		if (line[i] == '\'' || line[i] == '"')
 		{
+			quote = line[i];
 			if (!(tmp = ft_substr(line, start, i - start)))
 				error_exit(MALLOC_FAIL_ERROR);
 			add_el(&elements, tmp, UNPARSED);
@@ -159,7 +162,14 @@ t_list *parse_quotes(char *line, t_command cmd)
 			}
 			if (!(tmp = ft_substr(line, i + 1, j - i - 1)))
 				error_exit(MALLOC_FAIL_ERROR);
-			add_el(&elements, tmp, TEXT);
+			if (quote == '"')
+			{
+				str = place_vars(tmp);
+				add_el(&elements, str, TEXT);
+				free(str);
+			}
+			else
+				add_el(&elements, tmp, TEXT);
 			free(tmp);
 			start = j + 1;
 			i = start - 1;
