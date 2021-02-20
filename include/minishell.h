@@ -6,7 +6,7 @@
 /*   By: ede-thom <ede-thom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/20 13:46:54 by ede=thom          #+#    #+#             */
-/*   Updated: 2021/02/20 16:08:44 by ede-thom         ###   ########.fr       */
+/*   Updated: 2021/02/20 16:10:03 by ede-thom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,5 +79,8 @@ void					dispatch(t_list *cmd, t_command cmd_meta, t_builtin b);
 int						redirections(t_list **cmd, t_command cmd_meta);
 void					handle_signal(int signo);
 void					sig_when_waiting(int signo);
+
+char					*type_name(int type);
+void					add_el(t_list **lst, char *str, int type);
 
 #endif
