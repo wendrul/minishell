@@ -6,7 +6,7 @@
 /*   By: ede-thom <ede-thom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/28 19:53:39 by ede-thom          #+#    #+#             */
-/*   Updated: 2021/02/20 16:07:20 by ede-thom         ###   ########.fr       */
+/*   Updated: 2021/02/20 18:00:12 by ede-thom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 static int	errorset(int error)
 {
-	fprintf(stderr, "this is the err: %d\n", error);
 	g_msh->err_no = error;
 	return (-1);
 }

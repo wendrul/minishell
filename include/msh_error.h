@@ -6,7 +6,7 @@
 /*   By: ede-thom <ede-thom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/18 17:46:23 by ede-thom          #+#    #+#             */
-/*   Updated: 2021/02/20 15:45:53 by ede-thom         ###   ########.fr       */
+/*   Updated: 2021/02/20 18:04:09 by ede-thom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,10 +29,12 @@
 # define SYNTAX_ERROR "Syntax error."
 # define SYNTAX_ERROR_UNEXPECTED "Syntax error: unexpected "
 # define IS_DIRECTORY_ERROR "Is a directory dumbass"
+
 # define HOME_IS_NOT_SET "HOME is not set"
 # define INVALID_PARAMETER_MESSAGE "Invalid parameter"
 # define BAD_VARIABLE_MESSAGE "Bad variable name"
 # define EMPTY_VARIABLE_MESSAGE "Variable name was left blank"
+# define PWD_TOO_BIG_MESSAGE "Current directory path is too big to display"
 # define UNSPECIFIED_ERROR "Unspecified msh error"
 
 /*
@@ -51,6 +53,7 @@
 # define INVALID_PARAMETER 11
 # define BAD_VAR_NAME 12
 # define EMPTY_VAR_NAME 13
+# define PWD_TOO_BIG 14
 
 # define EXPECTED_KEY_EQUALS_VALUE_STRING "Expected format of '[KEY]=[VALUE]'"
 

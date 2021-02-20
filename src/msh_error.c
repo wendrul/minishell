@@ -6,7 +6,7 @@
 /*   By: ede-thom <ede-thom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/16 22:12:10 by ede-thom          #+#    #+#             */
-/*   Updated: 2021/02/20 15:47:36 by ede-thom         ###   ########.fr       */
+/*   Updated: 2021/02/20 18:03:23 by ede-thom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,8 @@ char	*msh_strerror(int error)
 		return (BAD_VARIABLE_MESSAGE);
 	else if (error == EMPTY_VAR_NAME)
 		return (EMPTY_VARIABLE_MESSAGE);
+	else if (error == PWD_TOO_BIG)
+		return (PWD_TOO_BIG_MESSAGE);
 	return (UNSPECIFIED_ERROR);
 }
 
