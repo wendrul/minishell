@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: agoodwin <agoodwin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ede-thom <ede-thom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/20 13:46:54 by agoodwin          #+#    #+#             */
-/*   Updated: 2021/02/20 13:51:40 by agoodwin         ###   ########.fr       */
+/*   Updated: 2021/02/20 15:39:19 by ede-thom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,9 @@
 # define ENV_OLDPWD "OLDPWD"
 # define ENV_HOME "HOME"
 # define ENV_PATH "PATH"
+
+# define _AVC_ "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789_"
+# define ALLOWED_VAR_CHARS _AVC_
 
 # include <dirent.h>
 # include <errno.h>

@@ -6,7 +6,7 @@
 /*   By: ede-thom <ede-thom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/16 22:12:10 by ede-thom          #+#    #+#             */
-/*   Updated: 2021/02/20 14:34:14 by ede-thom         ###   ########.fr       */
+/*   Updated: 2021/02/20 15:47:36 by ede-thom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,12 @@ char	*msh_strerror(int error)
 {
 	if (error == NO_HOME_VAR)
 		return (HOME_IS_NOT_SET);
+	else if (error == INVALID_PARAMETER)
+		return (INVALID_PARAMETER_MESSAGE);
+	else if (error == BAD_VAR_NAME)
+		return (BAD_VARIABLE_MESSAGE);
+	else if (error == EMPTY_VAR_NAME)
+		return (EMPTY_VARIABLE_MESSAGE);
 	return (UNSPECIFIED_ERROR);
 }
 
