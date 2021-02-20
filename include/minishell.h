@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: ede-thom <ede-thom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/02/20 13:46:54 by agoodwin          #+#    #+#             */
-/*   Updated: 2021/02/20 15:39:19 by ede-thom         ###   ########.fr       */
+/*   Created: 2021/02/20 13:46:54 by ede=thom          #+#    #+#             */
+/*   Updated: 2021/02/20 16:08:44 by ede-thom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,6 @@ typedef struct			s_var_dict
 
 typedef struct			s_msh
 {
-	int					verbose;
 	char				**env;
 	t_var_dict			dict[HASHSIZE];
 	int					redir_out_fd;

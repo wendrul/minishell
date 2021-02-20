@@ -6,7 +6,7 @@
 /*   By: agoodwin <agoodwin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/20 14:17:25 by agoodwin          #+#    #+#             */
-/*   Updated: 2021/02/20 14:17:35 by agoodwin         ###   ########.fr       */
+/*   Updated: 2021/02/20 15:18:23 by agoodwin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,11 +42,7 @@ t_var_dict	dict_strput(char *str)
 	int			pos;
 
 	if ((pos = ft_indexof('=', str)) == -1)
-	{
-		if (g_msh->verbose)
-			simple_error(EXPECTED_KEY_EQUALS_VALUE_STRING, -69, "debug");
 		return (NULL);
-	}
 	if (!(key = ft_substr(str, 0, pos)))
 		error_exit(MALLOC_FAIL_ERROR);
 	if (!(val = ft_substr(str, pos + 1, ft_strlen(str))))

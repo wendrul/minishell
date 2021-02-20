@@ -6,7 +6,7 @@
 #    By: agoodwin <agoodwin@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/11/16 17:26:10 by ede-thom          #+#    #+#              #
-#    Updated: 2021/02/20 14:18:24 by agoodwin         ###   ########.fr        #
+#    Updated: 2021/02/20 15:09:33 by agoodwin         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,6 +15,8 @@ SRCS		=	src/minishell.c\
 				src/msh_parsing.c\
 				src/builtin/common.c\
 				src/msh_execute.c\
+				src/msh_execute2.c\
+				src/msh_redirector.c\
 				src/msh_variables.c\
 				src/msh_variables2.c\
 				src/utils.c\
