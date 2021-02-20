@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   msh_parsing5.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: agoodwin <agoodwin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ede-thom <ede-thom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/20 15:32:12 by agoodwin          #+#    #+#             */
-/*   Updated: 2021/02/20 16:20:40 by agoodwin         ###   ########.fr       */
+/*   Updated: 2021/02/20 18:15:00 by ede-thom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int		count_semicolons(t_list *elements)
+int				count_semicolons(t_list *elements)
 {
 	int				size;
 	t_cmd_element	e;
@@ -28,7 +28,17 @@ int		count_semicolons(t_list *elements)
 	return (size);
 }
 
-t_list	**get_cmds(t_list *elements)
+static t_list	*replace_thingy(t_list *cur)
+{
+	t_list *elements;
+
+	elements = cur->next->next;
+	ft_lstdelone(cur->next, del_element);
+	cur->next = NULL;
+	return (elements);
+}
+
+t_list			**get_cmds(t_list *elements)
 {
 	int		size;
 	t_list	**cmds;
@@ -47,9 +57,7 @@ t_list	**get_cmds(t_list *elements)
 		{
 			if (((t_cmd_element)cur->next->content)->type == SEMICOLON)
 			{
-				elements = cur->next->next;
-				ft_lstdelone(cur->next, del_element);
-				cur->next = NULL;
+				elements = replace_thingy(cur);
 				break ;
 			}
 			cur = cur->next;
@@ -59,7 +67,7 @@ t_list	**get_cmds(t_list *elements)
 	return (cmds);
 }
 
-int		syntaxerror_msg(int type, t_command cmd)
+int				syntaxerror_msg(int type, t_command cmd)
 {
 	char *msg;
 	char *token;
@@ -86,7 +94,7 @@ int		syntaxerror_msg(int type, t_command cmd)
 	return (0);
 }
 
-int		syntax_check(t_list *elements, t_command cmd)
+int				syntax_check(t_list *elements, t_command cmd)
 {
 	t_cmd_element prev;
 	t_cmd_element e;
