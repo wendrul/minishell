@@ -6,19 +6,18 @@
 /*   By: agoodwin <agoodwin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/20 15:32:10 by agoodwin          #+#    #+#             */
-/*   Updated: 2021/02/20 15:33:24 by agoodwin         ###   ########.fr       */
+/*   Updated: 2021/02/20 16:19:31 by agoodwin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-
 t_list	*add_txt(char *line)
 {
-	t_list *newlst;
-	char **arr;
-	char **ptr;
-	char *str;
+	t_list	*newlst;
+	char	**arr;
+	char	**ptr;
+	char	*str;
 
 	newlst = NULL;
 	if (!(arr = ft_split_charset(line, " \f\t\n\r\v")))
@@ -52,12 +51,12 @@ int		typeof_token(char *str)
 
 t_list	*parse_token(char *str)
 {
-	t_list *newlst;
-	int i;
-	int type;
-	char *tmp;
-	int start;
-	int tokensize;
+	t_list	*newlst;
+	int		i;
+	int		type;
+	char	*tmp;
+	int		start;
+	int		tokensize;
 
 	i = -1;
 	start = 0;
@@ -90,9 +89,9 @@ t_list	*parse_token(char *str)
 
 t_list	*parse_tokens(t_list *old_lst, t_command cmd)
 {
-	t_list *newlst;
-	t_list *cur;
-	t_cmd_element e;
+	t_list			*newlst;
+	t_list			*cur;
+	t_cmd_element	e;
 
 	(void)&cmd;
 	cur = old_lst;

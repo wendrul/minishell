@@ -6,7 +6,7 @@
 /*   By: agoodwin <agoodwin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/20 15:32:12 by agoodwin          #+#    #+#             */
-/*   Updated: 2021/02/20 15:32:52 by agoodwin         ###   ########.fr       */
+/*   Updated: 2021/02/20 16:20:40 by agoodwin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 int		count_semicolons(t_list *elements)
 {
-	int size;
-	t_cmd_element e;
+	int				size;
+	t_cmd_element	e;
 
 	size = 0;
 	while (elements->next)
@@ -30,10 +30,10 @@ int		count_semicolons(t_list *elements)
 
 t_list	**get_cmds(t_list *elements)
 {
-	int size;
-	t_list **cmds;
-	t_list *cur;
-	int i;
+	int		size;
+	t_list	**cmds;
+	t_list	*cur;
+	int		i;
 
 	size = count_semicolons(elements);
 	if (!(cmds = (t_list **)malloc(sizeof(*cmds) * (size + 2))))
@@ -50,7 +50,7 @@ t_list	**get_cmds(t_list *elements)
 				elements = cur->next->next;
 				ft_lstdelone(cur->next, del_element);
 				cur->next = NULL;
-				break;
+				break ;
 			}
 			cur = cur->next;
 		}

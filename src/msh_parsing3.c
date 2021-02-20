@@ -6,7 +6,7 @@
 /*   By: agoodwin <agoodwin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/20 15:32:08 by agoodwin          #+#    #+#             */
-/*   Updated: 2021/02/20 15:33:50 by agoodwin         ###   ########.fr       */
+/*   Updated: 2021/02/20 16:15:59 by agoodwin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,16 +14,16 @@
 
 void	replace_special(char **str, int *var_start)
 {
-	char *key;
-	char *val;
-	char *old;
-	int var_end;
-	int len;
+	char	*key;
+	char	*val;
+	char	*o;
+	int		ve;
+	int		len;
 
-	old = *str;
-	len = ft_strlen(old);
-	var_end = *var_start + 2;
-	if (!(key = ft_substr(*str, *var_start + 1, var_end - *var_start - 1)))
+	o = *str;
+	len = ft_strlen(o);
+	ve = *var_start + 2;
+	if (!(key = ft_substr(*str, *var_start + 1, ve - *var_start - 1)))
 		error_exit(MALLOC_FAIL_ERROR);
 	len -= (ft_strlen(key) + 1);
 	if (!(dict_get(key)))
@@ -34,27 +34,28 @@ void	replace_special(char **str, int *var_start)
 	if (!(*str = malloc(sizeof(char) * (len + 1))))
 		error_exit(MALLOC_FAIL_ERROR);
 	ft_bzero(*str, len + 1);
-	ft_memmove(*str, old, *var_start);
+	ft_memmove(*str, o, *var_start);
 	ft_memmove(*str + *var_start, val, ft_strlen(val));
-	ft_memmove(*str + *var_start + ft_strlen(val), old + var_end, ft_strlen(old) - var_end);
+	ft_memmove(*str + *var_start + ft_strlen(val), o + ve, ft_strlen(o) - ve);
 	free(key);
-	free(old);
+	free(o);
 	*var_start += ft_strlen(val) - 1;
 }
 
 void	replace_evar(char **str, int *var_start)
 {
-	char *key;
-	char *val;
-	char *old;
-	int var_end;
-	int len;
+	char	*key;
+	char	*val;
+	char	*o;
+	int		ve;
+	int		len;
 
-	old = *str;
-	len = ft_strlen(old);
-	var_end = *var_start;
-	while ((*str)[++var_end] && ft_isalnum((*str)[var_end]));
-	if (!(key = ft_substr(*str, *var_start + 1, var_end - *var_start - 1)))
+	o = *str;
+	len = ft_strlen(o);
+	ve = *var_start;
+	while ((*str)[++ve] && ft_isalnum((*str)[ve]))
+		;
+	if (!(key = ft_substr(*str, *var_start + 1, ve - *var_start - 1)))
 		error_exit(MALLOC_FAIL_ERROR);
 	len -= (ft_strlen(key) + 1);
 	if (!(dict_get(key)))
@@ -65,18 +66,18 @@ void	replace_evar(char **str, int *var_start)
 	if (!(*str = malloc(sizeof(char) * (len + 1))))
 		error_exit(MALLOC_FAIL_ERROR);
 	ft_bzero(*str, len + 1);
-	ft_memmove(*str, old, *var_start);
+	ft_memmove(*str, o, *var_start);
 	ft_memmove(*str + *var_start, val, ft_strlen(val));
-	ft_memmove(*str + *var_start + ft_strlen(val), old + var_end, ft_strlen(old) - var_end);
+	ft_memmove(*str + *var_start + ft_strlen(val), o + ve, ft_strlen(o) - ve);
 	free(key);
-	free(old);
+	free(o);
 	*var_start += ft_strlen(val) - 1;
 }
 
 char	*place_vars(char *str)
 {
-	int i;
-	char *ret;
+	int		i;
+	char	*ret;
 
 	i = -1;
 	if (!(ret = ft_strdup(str)))
@@ -89,7 +90,8 @@ char	*place_vars(char *str)
 				replace_special(&ret, &i);
 			else
 			{
-				if (!ft_isalpha(ret[i + 1]) || ft_iswhitespace(ret[i + 1]) || !ret[i + 1])
+				if (!ft_isalpha(ret[i + 1]) || ft_iswhitespace(ret[i + 1])
+											|| !ret[i + 1])
 					continue;
 				replace_evar(&ret, &i);
 			}
