@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   msh_execute.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ede-thom <ede-thom@student.42.fr>          +#+  +:+       +#+        */
+/*   By: agoodwin <agoodwin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/22 23:07:18 by ede-thom          #+#    #+#             */
-/*   Updated: 2021/02/20 12:37:54 by ede-thom         ###   ########.fr       */
+/*   Updated: 2021/02/20 13:59:18 by agoodwin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,6 +92,8 @@ void execute_pipe(t_list *cmd, t_command cmd_meta, t_builtin builtins)
 	t_list	*right;
 	int		stdout_cpy;
 
+	left = NULL;
+	right = NULL;
 	if (!separate_at(lst_indexof(PIPE, cmd), cmd, &left, &right))
 	{
 		run_cmd(cmd, cmd_meta, builtins);

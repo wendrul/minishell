@@ -3,18 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ede-thom <ede-thom@student.42.fr>          +#+  +:+       +#+        */
+/*   By: agoodwin <agoodwin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/02 19:18:14 by ede-thom          #+#    #+#             */
-/*   Updated: 2021/02/07 16:37:04 by ede-thom         ###   ########.fr       */
+/*   Updated: 2021/02/20 13:58:48 by agoodwin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void 	lst_append(t_list **head, t_list *tail)
+void	lst_append(t_list **head, t_list *tail)
 {
 	t_list	*cur;
+
 	if (!head)
 		return ;
 	if (!*head)
@@ -30,8 +31,8 @@ void 	lst_append(t_list **head, t_list *tail)
 
 int		lst_indexof(int type, t_list *cmd)
 {
-	int i;
-	t_cmd_element e;
+	int				i;
+	t_cmd_element	e;
 
 	i = 0;
 	while (cmd)
@@ -45,26 +46,10 @@ int		lst_indexof(int type, t_list *cmd)
 	return (-1);
 }
 
-int		separate(char **half1, char **half2, char sep, char *line)
-{
-	//can probably be deleted
-	int		pos;
-
-	if ((pos = ft_indexof(sep, line)) == -1 )
-		return (0);
-	*half1 = ft_substr(line, 0, pos);
-	*half2 = ft_substr(line, pos + 1, ft_strlen(line));
-	if (!*half1 || !*half2)
-		error_exit(MALLOC_FAIL_ERROR);
-	return (1);
-}
-
 int		separate_at(int index, t_list *cmd, t_list **left, t_list **right)
 {
 	int	i;
 
-	*right = NULL;
-	*left = NULL;
 	if (index < 0)
 		return (0);
 	if (index == 0)
@@ -86,6 +71,6 @@ int		separate_at(int index, t_list *cmd, t_list **left, t_list **right)
 		cmd->next = NULL;
 		return (1);
 	}
-	else 
+	else
 		return (0);
 }
