@@ -75,5 +75,7 @@ void	    set_env_vars(char **envp);
 int			execute(t_command cmd);
 void		dispatch(t_list *cmd, t_command cmd_meta, t_builtin builtins);
 int			redirections(t_list **cmd, t_command cmd_meta);
+void		handle_signal(int signo);
+void		sig_when_waiting(int signo);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: ede-thom <ede-thom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/18 16:59:06 by wendrul           #+#    #+#             */
-/*   Updated: 2021/02/19 19:04:02 by ede-thom         ###   ########.fr       */
+/*   Updated: 2021/02/20 13:25:11 by ede-thom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,9 @@ static char	*gnl(char **old)
 	if (old != NULL)
 		free(*old);
 	ft_putstr_fd(PROMPT_TOKEN, STDERR_FILENO);
+	signal(SIGINT, handle_signal);
 	gnl_ret = get_next_line(STDIN_FILENO, &line);
+	signal(SIGINT, sig_when_waiting);
 	if (gnl_ret == -1)
 		error_exit(FAILED_TO_GET_NEXT_LINE);
 	if (gnl_ret == 0)
@@ -60,12 +62,16 @@ int		shell(t_builtin builtins)
 		line = gnl(&line);
 	cmd_num++;
 	cmd_meta.num = cmd_num;
-	if (!(elements = parse_quotes(line, cmd_meta)))
-		return (2);
+	elements = parse_quotes(line, cmd_meta);
 	free(line);
+	if (!elements)
+		return (2);
 	elements = parse_tokens(elements, cmd_meta);
 	if (!syntax_check(elements, cmd_meta))
+	{
+		ft_lstclear(&elements, del_element);
 		return (2);
+	}
 	cmds = get_cmds(elements);
 	i = 0;
 	while (cmds[i])
@@ -78,7 +84,10 @@ int		shell(t_builtin builtins)
 			write(STDOUT_FILENO, "\n", 1);
 		}
 		if (redirections(&cmds[i], cmd_meta) == -1)
+		{
+			clear_list_arr(&cmds);
 			return (2);
+		}
 		dispatch(cmds[i], cmd_meta, builtins);
 		if (g_msh->redir_out_fd != -1)
 			close (g_msh->redir_out_fd);

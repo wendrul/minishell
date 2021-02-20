@@ -6,7 +6,7 @@
 /*   By: ede-thom <ede-thom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/18 17:00:48 by ede-thom          #+#    #+#             */
-/*   Updated: 2021/02/20 12:36:44 by ede-thom         ###   ########.fr       */
+/*   Updated: 2021/02/20 13:12:27 by ede-thom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,11 @@ void	handle_signal(int signo)
 	{
 			
 	}
+}
+
+void	sig_when_waiting(int signo)
+{
+	(void)signo;
 }
 
 int		main(int argc, char **argv, char **envp)
@@ -55,8 +60,8 @@ int		main(int argc, char **argv, char **envp)
 	add_builtin(&builtins, "pwd", msh_pwd);
 	add_builtin(&builtins, "unset", msh_unset);
 	add_builtin(&builtins, "export", msh_export);
-	signal(SIGINT, handle_signal);
-	signal(SIGQUIT, handle_signal);
+	signal(SIGINT, sig_when_waiting);
+	signal(SIGQUIT, sig_when_waiting);
 	set_env_vars(g_msh->env);
 	dict_put("?", "0");
 	while (1)

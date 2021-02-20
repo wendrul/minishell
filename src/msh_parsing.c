@@ -6,7 +6,7 @@
 /*   By: ede-thom <ede-thom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/18 18:18:38 by ede-thom          #+#    #+#             */
-/*   Updated: 2021/02/19 18:52:02 by ede-thom         ###   ########.fr       */
+/*   Updated: 2021/02/20 13:26:15 by ede-thom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,6 @@ char *getcmd_path(t_command cmd)
 		}
 		closedir(dir);
 	}
-	closedir(dir);
 	free_arr(pathv);
 	return (cmd.name);
 }
