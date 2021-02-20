@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   msh_parsing6.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: agoodwin <agoodwin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ede-thom <ede-thom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/20 15:36:02 by agoodwin          #+#    #+#             */
-/*   Updated: 2021/02/20 15:36:15 by agoodwin         ###   ########.fr       */
+/*   Updated: 2021/02/20 16:11:53 by ede-thom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	del_element(void *ptr)
+void			del_element(void *ptr)
 {
 	t_cmd_element e;
 
