@@ -14,18 +14,17 @@
 
 int		msh_export(int argc, char **argv)
 {
-	int i;
-	int	pos;
-	t_var_dict var;
+	int			i;
+	int			pos;
+	t_var_dict	var;
 
 	i = 1;
 	while (i < argc)
 	{
 		if (!(pos = ft_indexof('=', argv[i]) == -1))
 			dict_strput(argv[i])->is_env = 1;
-		else
-			if ((var = dict_get(argv[1])))
-				var->is_env = 1;
+		else if ((var = dict_get(argv[1])))
+			var->is_env = 1;
 		i++;
 	}
 	return (0);

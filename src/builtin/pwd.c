@@ -12,7 +12,7 @@
 
 #include "minishell.h"
 
-int		msh_pwd()
+int		msh_pwd(void)
 {
 	char dir[PWD_BUFF_SIZE];
 

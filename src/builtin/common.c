@@ -6,16 +6,17 @@
 /*   By: ede-thom <ede-thom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/18 20:19:07 by ede-thom          #+#    #+#             */
-/*   Updated: 2021/02/19 18:19:52 by ede-thom         ###   ########.fr       */
+/*   Updated: 2021/02/20 14:02:17 by ede-thom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static t_builtin	create(char *name, int (*method)(int, char**), t_builtin next)
+static t_builtin	create(char *name, int (*method)(int, char**),
+							t_builtin next)
 {
-	t_builtin new;
-	int i;
+	t_builtin	new;
+	int			i;
 
 	if (!(new = (t_builtin)malloc(sizeof(struct s_builtin))))
 		error_exit(MALLOC_FAIL_ERROR);
@@ -28,7 +29,8 @@ static t_builtin	create(char *name, int (*method)(int, char**), t_builtin next)
 	return (new);
 }
 
-void	add_builtin(t_builtin *list, char *name, int (*method)(int, char**))
+void				add_builtin(t_builtin *list, char *name,
+							int (*method)(int, char**))
 {
 	t_builtin cur;
 
@@ -40,11 +42,11 @@ void	add_builtin(t_builtin *list, char *name, int (*method)(int, char**))
 	cur = *list;
 	while (cur->next != NULL)
 		cur = cur->next;
-
 	cur->next = create(name, method, NULL);
 }
 
-int		run_builtin(t_builtin builtin, char *name, t_command cmd, int *status)
+int					run_builtin(t_builtin builtin, char *name,
+							t_command cmd, int *status)
 {
 	while (builtin != NULL)
 	{
@@ -55,7 +57,8 @@ int		run_builtin(t_builtin builtin, char *name, t_command cmd, int *status)
 				if (*status == -1)
 				{
 					*status = 1;
-					simple_error(msh_strerror(g_msh->err_no), cmd.num, cmd.name);
+					simple_error(msh_strerror(g_msh->err_no),
+												cmd.num, cmd.name);
 				}
 				else
 					simple_error(strerror(errno), cmd.num, cmd.name);
@@ -67,40 +70,11 @@ int		run_builtin(t_builtin builtin, char *name, t_command cmd, int *status)
 	return (0);
 }
 
-int		name_cmp(char *str1, char *str2)
+int					name_cmp(char *str1, char *str2)
 {
 	int		len;
 
 	len = ft_min(ft_strlen(str1), ft_strlen(str2));
 	len++;
 	return (ft_strncmp(str1, str2, len) == 0);
-}
-
-void	free_arr(char **ptr)
-{
-	char	**start;
-
-	start = ptr; 
-	while (*ptr)
-	{
-		free(*ptr);
-		ptr++;
-	}
-	free(start);
-}
-
-void	print_arr(char **s)
-{
-	while (*s)
-		printf("%s\n", *(s++));
-}
-
-int		arr_len(char **arr)
-{
-	int i;
-
-	i = 0;
-	while (arr[i])
-		i++;
-	return (i);
 }

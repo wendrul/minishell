@@ -12,7 +12,7 @@
 
 #include "minishell.h"
 
-int		msh_env()
+int		msh_env(void)
 {
 	dict_print(g_msh->dict);
 	return (0);

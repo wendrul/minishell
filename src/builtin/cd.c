@@ -14,26 +14,26 @@
 
 int		msh_cd(int argc, char **argv)
 {
-    char old_pwd[PWD_BUFF_SIZE];
-    char new_pwd[PWD_BUFF_SIZE];
-    char *path;
+	char old_pwd[PWD_BUFF_SIZE];
+	char new_pwd[PWD_BUFF_SIZE];
+	char *path;
 
-    if (!getcwd(old_pwd, PWD_BUFF_SIZE))
-        return (1);
-    if (!dict_get(ENV_HOME))
+	if (!getcwd(old_pwd, PWD_BUFF_SIZE))
+		return (1);
+	if (!dict_get(ENV_HOME))
 	{
 		g_msh->err_no = NO_HOME_VAR;
-	    return (-1);
+		return (-1);
 	}
 	if (argc == 1)
-        path = dict_get(ENV_HOME)->value;
-    else
-        path = argv[1];
-    if (chdir(path))
-        return (1);
-    if (!getcwd(new_pwd, PWD_BUFF_SIZE))
-        return (1);
-    dict_put(ENV_OLDPWD, old_pwd);
-    dict_put(ENV_PWD, new_pwd);
-    return (0);
+		path = dict_get(ENV_HOME)->value;
+	else
+		path = argv[1];
+	if (chdir(path))
+		return (1);
+	if (!getcwd(new_pwd, PWD_BUFF_SIZE))
+		return (1);
+	dict_put(ENV_OLDPWD, old_pwd);
+	dict_put(ENV_PWD, new_pwd);
+	return (0);
 }
