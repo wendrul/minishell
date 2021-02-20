@@ -6,7 +6,7 @@
 /*   By: ede-thom <ede-thom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/20 13:59:27 by ede-thom          #+#    #+#             */
-/*   Updated: 2021/02/20 13:59:38 by ede-thom         ###   ########.fr       */
+/*   Updated: 2021/02/20 14:07:02 by ede-thom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	free_arr(char **ptr)
 {
 	char	**start;
 
-	start = ptr; 
+	start = ptr;
 	while (*ptr)
 	{
 		free(*ptr);
