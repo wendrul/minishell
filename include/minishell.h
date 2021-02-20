@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ede-thom <ede-thom@student.42.fr>          +#+  +:+       +#+        */
+/*   By: agoodwin <agoodwin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/01/18 17:00:26 by ede-thom          #+#    #+#             */
-/*   Updated: 2021/01/18 17:00:26 by ede-thom         ###   ########.fr       */
+/*   Created: 2021/02/20 13:46:54 by agoodwin          #+#    #+#             */
+/*   Updated: 2021/02/20 13:51:40 by agoodwin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,40 +42,40 @@
 # include "msh_builtin.h"
 # include "utils.h"
 
-typedef struct	s_var_dict
+typedef struct			s_var_dict
 {
 	struct s_var_dict	*next;
 	char				*key;
 	char				*value;
-    int                 is_env;
-}			*	t_var_dict;
+	int					is_env;
+}					*	t_var_dict;
 
-typedef struct  s_msh
+typedef struct			s_msh
 {
-    int         verbose;
-    char        **env;
-    t_var_dict  dict[HASHSIZE];
-	int			redir_out_fd;
-	int			redir_in_fd;
-	int			err_no;
-}           *   t_msh;
+	int					verbose;
+	char				**env;
+	t_var_dict			dict[HASHSIZE];
+	int					redir_out_fd;
+	int					redir_in_fd;
+	int					err_no;
+}					*	t_msh;
 
-t_msh   g_msh;
+t_msh					g_msh;
 
-t_var_dict	dict_get(char *s);
-t_var_dict	dict_put(char *key, char *val);
-void        dict_print(t_var_dict *dict);
-int			dict_rm(char *key);
-t_var_dict	dict_strput(char *str);
+t_var_dict				dict_get(char *s);
+t_var_dict				dict_put(char *key, char *val);
+void					dict_print(t_var_dict *dict);
+int						dict_rm(char *key);
+t_var_dict				dict_strput(char *str);
 
-int		    shell(t_builtin builtins);
-void	    run_cmd(t_list *cmd, t_command cmd_meta, t_builtin builtins);
-void	    execute_pipe(t_list *cmd, t_command cmd_meta, t_builtin builtins);
-void	    set_env_vars(char **envp);
-int			execute(t_command cmd);
-void		dispatch(t_list *cmd, t_command cmd_meta, t_builtin builtins);
-int			redirections(t_list **cmd, t_command cmd_meta);
-void		handle_signal(int signo);
-void		sig_when_waiting(int signo);
+int						shell(t_builtin builtins);
+void					run_cmd(t_list *cmd, t_command cmd_meta, t_builtin b);
+void					execute_pipe(t_list *c, t_command m, t_builtin b);
+void					set_env_vars(char **envp);
+int						execute(t_command cmd);
+void					dispatch(t_list *cmd, t_command cmd_meta, t_builtin b);
+int						redirections(t_list **cmd, t_command cmd_meta);
+void					handle_signal(int signo);
+void					sig_when_waiting(int signo);
 
 #endif
