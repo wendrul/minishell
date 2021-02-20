@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   msh_parsing3.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: agoodwin <agoodwin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ede-thom <ede-thom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/20 15:32:08 by agoodwin          #+#    #+#             */
-/*   Updated: 2021/02/20 16:15:59 by agoodwin         ###   ########.fr       */
+/*   Updated: 2021/02/20 17:49:41 by ede-thom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ void	replace_evar(char **str, int *var_start)
 	o = *str;
 	len = ft_strlen(o);
 	ve = *var_start;
-	while ((*str)[++ve] && ft_isalnum((*str)[ve]))
+	while ((*str)[++ve] && (ft_indexof((*str)[ve], ALLOWED_VAR_CHARS) != -1))
 		;
 	if (!(key = ft_substr(*str, *var_start + 1, ve - *var_start - 1)))
 		error_exit(MALLOC_FAIL_ERROR);
@@ -90,8 +90,8 @@ char	*place_vars(char *str)
 				replace_special(&ret, &i);
 			else
 			{
-				if (!ft_isalpha(ret[i + 1]) || ft_iswhitespace(ret[i + 1])
-											|| !ret[i + 1])
+				if (!(ft_isalpha(ret[i + 1]) || ret[i + 1] == '_') 
+						|| ft_iswhitespace(ret[i + 1]) || !ret[i + 1])
 					continue;
 				replace_evar(&ret, &i);
 			}
