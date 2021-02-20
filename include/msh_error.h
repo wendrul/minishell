@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   msh_error.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: agoodwin <agoodwin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ede-thom <ede-thom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/18 17:46:23 by ede-thom          #+#    #+#             */
-/*   Updated: 2021/02/20 13:43:38 by agoodwin         ###   ########.fr       */
+/*   Updated: 2021/02/20 14:33:23 by ede-thom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,10 +36,12 @@
 ** Exit statuses
 */
 # define SEGFAULT_STATUS 139
-# define SIGQUIT_STATUS -1
+# define SIGQUIT_STATUS 131
+# define SIGINT_STATUS 2
 
 # define SEGFAULT_MESSAGE "Segfault (core dumped)"
 # define SIGQUIT_MESSAGE "Quit (dump)"
+# define SIGINT_MESSAGE ""
 # define UNKNOWN_STATUS_EXIT_MESSAGE "Unexpected exit with status: "
 
 # define NO_HOME_VAR 10
