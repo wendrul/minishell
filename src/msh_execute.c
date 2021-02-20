@@ -6,7 +6,7 @@
 /*   By: ede-thom <ede-thom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/22 23:07:18 by ede-thom          #+#    #+#             */
-/*   Updated: 2021/02/19 18:44:28 by ede-thom         ###   ########.fr       */
+/*   Updated: 2021/02/20 12:37:54 by ede-thom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,9 @@ int execute(t_command cmd)
 		if (waitpid(child_pid, &status, 0) != child_pid)
 			simple_error(strerror(errno), cmd.num, cmd.name);
 	}
+	if (WIFEXITED(status))
+		return (WEXITSTATUS(status));
+	status_msg(status);
 	return (status);
 }
 
@@ -50,7 +53,7 @@ void run_cmd(t_list *cmd, t_command cmd_meta, t_builtin builtins)
 	if (cmd_meta.argc >= 1)
 	{
 		if (!run_builtin(builtins, cmd_meta.argv[0], cmd_meta, &status))
-			status = WEXITSTATUS(execute(cmd_meta));
+			status = execute(cmd_meta);
 		if (!(status_str = ft_itoa(status)))
 			error_exit(MALLOC_FAIL_ERROR);
 		dict_put("?", status_str);

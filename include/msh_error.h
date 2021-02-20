@@ -6,7 +6,7 @@
 /*   By: ede-thom <ede-thom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/18 17:46:23 by ede-thom          #+#    #+#             */
-/*   Updated: 2021/02/16 21:56:54 by ede-thom         ###   ########.fr       */
+/*   Updated: 2021/02/20 12:40:32 by ede-thom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,14 @@
 # define HOME_IS_NOT_SET "HOME is not set"
 # define UNSPECIFIED_ERROR "Unspecified msh error"
 
+/* Exit statuses */
+# define SEGFAULT_STATUS 139
+# define SIGQUIT_STATUS -1
+
+# define SEGFAULT_MESSAGE "Segfault (core dumped)"
+# define SIGQUIT_MESSAGE "Quit (dump)"
+# define UNKNOWN_STATUS_EXIT_MESSAGE "Unexpected exit with status: "
+
 # define NO_HOME_VAR 10
 
  
@@ -39,5 +47,6 @@ void		error_exit(char *str);
 void		simple_error(char *msg, int cmd_no, char *cmd_name);
 void		shell_error(char *msg, int cmd_no);
 char		*msh_strerror(int error);
+void		status_msg(int status);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: ede-thom <ede-thom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/18 17:00:48 by ede-thom          #+#    #+#             */
-/*   Updated: 2021/02/19 19:35:11 by ede-thom         ###   ########.fr       */
+/*   Updated: 2021/02/20 12:36:44 by ede-thom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,12 +60,14 @@ int		main(int argc, char **argv, char **envp)
 	set_env_vars(g_msh->env);
 	dict_put("?", "0");
 	while (1)
+	{
 		if ((status = shell(builtins)) != 0)
 		{
 			if (!(status_str = ft_itoa(status)))
 				error_exit(MALLOC_FAIL_ERROR);
 			dict_put("?", status_str);
 		}
+	}
 	free(g_msh);
 	return (0);
 }

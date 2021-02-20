@@ -6,7 +6,7 @@
 /*   By: ede-thom <ede-thom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/16 22:12:10 by ede-thom          #+#    #+#             */
-/*   Updated: 2021/02/16 22:12:37 by ede-thom         ###   ########.fr       */
+/*   Updated: 2021/02/20 12:43:23 by ede-thom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,4 +44,18 @@ char	*msh_strerror(int error)
 	if (error == NO_HOME_VAR)
 		return (HOME_IS_NOT_SET);
 	return (UNSPECIFIED_ERROR);
+}
+
+void	status_msg(int status)
+{
+	if (status == SEGFAULT_STATUS)
+		ft_putstr_fd(SEGFAULT_MESSAGE, STDERR_FILENO);
+	else if (status == SIGQUIT_STATUS)
+		ft_putstr_fd(SIGQUIT_MESSAGE, STDERR_FILENO);
+	else
+	{
+		ft_putstr_fd(UNKNOWN_STATUS_EXIT_MESSAGE, STDERR_FILENO);
+		ft_putnbr_fd(status, STDERR_FILENO);
+	}
+	write(STDERR_FILENO, "\n", 1);
 }
