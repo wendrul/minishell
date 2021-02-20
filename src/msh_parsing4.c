@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   msh_parsing4.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: agoodwin <agoodwin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ede-thom <ede-thom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/20 15:32:10 by agoodwin          #+#    #+#             */
-/*   Updated: 2021/02/20 16:19:31 by agoodwin         ###   ########.fr       */
+/*   Updated: 2021/02/20 18:47:04 by ede-thom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_list	*add_txt(char *line)
+t_list		*add_txt(char *line)
 {
 	t_list	*newlst;
 	char	**arr;
@@ -34,7 +34,7 @@ t_list	*add_txt(char *line)
 	return (newlst);
 }
 
-int		typeof_token(char *str)
+int			typeof_token(char *str)
 {
 	if (str[0] == '|')
 		return (PIPE);
@@ -49,36 +49,44 @@ int		typeof_token(char *str)
 	return (-1);
 }
 
-t_list	*parse_token(char *str)
+static int	token_loop_logic(char *str, t_list **newlst, int *start, int i)
+{
+	char	*tmp;
+	int		tokensize;
+	int		type;
+
+	if (ft_indexof(str[i], "|><;") != -1)
+	{
+		tokensize = 0;
+		type = typeof_token(&str[i]);
+		if (type == GREATGREAT)
+		{
+			i++;
+			tokensize++;
+		}
+		if (!(tmp = ft_substr(str, *start, i - *start - tokensize)))
+			error_exit(MALLOC_FAIL_ERROR);
+		lst_append(newlst, add_txt(tmp));
+		free(tmp);
+		add_el(newlst, "-TOKEN-", type);
+		*start = i + 1;
+	}
+	return (i);
+}
+
+t_list		*parse_token(char *str)
 {
 	t_list	*newlst;
 	int		i;
-	int		type;
 	char	*tmp;
 	int		start;
-	int		tokensize;
 
 	i = -1;
 	start = 0;
 	newlst = NULL;
 	while (str[++i])
 	{
-		if (ft_indexof(str[i], "|><;") != -1)
-		{
-			tokensize = 0;
-			type = typeof_token(&str[i]);
-			if (type == GREATGREAT)
-			{
-				i++;
-				tokensize++;
-			}
-			if (!(tmp = ft_substr(str, start, i - start - tokensize)))
-				error_exit(MALLOC_FAIL_ERROR);
-			lst_append(&newlst, add_txt(tmp));
-			free(tmp);
-			add_el(&newlst, "-TOKEN-", type);
-			start = i + 1;
-		}
+		i = token_loop_logic(str, &newlst, &start, i);
 	}
 	if (!(tmp = ft_substr(str, start, i - start)))
 		error_exit(MALLOC_FAIL_ERROR);
@@ -87,7 +95,7 @@ t_list	*parse_token(char *str)
 	return (newlst);
 }
 
-t_list	*parse_tokens(t_list *old_lst, t_command cmd)
+t_list		*parse_tokens(t_list *old_lst, t_command cmd)
 {
 	t_list			*newlst;
 	t_list			*cur;
