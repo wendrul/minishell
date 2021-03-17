@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   msh_variables.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: agoodwin <agoodwin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ede-thom <ede-thom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/22 20:08:41 by ede-thom          #+#    #+#             */
-/*   Updated: 2021/02/20 14:17:23 by agoodwin         ###   ########.fr       */
+/*   Updated: 2021/03/18 00:22:09 by ede-thom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,12 +60,19 @@ t_var_dict	dict_put(char *key, char *val)
 	return (new);
 }
 
-int			del_if_match(char *key, t_var_dict var, t_var_dict prev)
+int			del_if_match(char *key, t_var_dict *var_ptr, t_var_dict prev)
 {
+	t_var_dict var;
+
+	var = *var_ptr;
 	if (name_cmp(key, var->key))
 	{
 		if (prev != NULL)
 			prev->next = var->next;
+		else
+		{
+			g_msh->dict[get_hash(key)] = var->next;
+		}
 		free(var->key);
 		free(var->value);
 		free(var);
@@ -82,11 +89,9 @@ int			dict_rm(char *key)
 	prev = NULL;
 	if (!(var = g_msh->dict[get_hash(key)]))
 		return (0);
-	if (del_if_match(key, var, prev))
-		return (1);
 	while (var)
 	{
-		if (del_if_match(key, var, prev))
+		if (del_if_match(key, &var, prev))
 			return (1);
 		prev = var;
 		var = var->next;
