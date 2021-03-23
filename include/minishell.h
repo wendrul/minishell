@@ -6,7 +6,7 @@
 /*   By: ede-thom <ede-thom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/20 19:19:14 by ede-thom          #+#    #+#             */
-/*   Updated: 2021/02/20 19:19:15 by ede-thom         ###   ########.fr       */
+/*   Updated: 2021/03/23 20:31:17 by ede-thom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 # define MSH_CMD_NAME_SIZE 256
 # define SH_NAME msh
 # define PROMPT_TOKEN "\033[1;36mm$ \033[0;m"
-# define HASHSIZE 101
+# define HASHSIZE 4096
 
 # define ENV_PWD "PWD"
 # define ENV_OLDPWD "OLDPWD"
