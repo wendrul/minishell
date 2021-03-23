@@ -6,7 +6,7 @@
 /*   By: ede-thom <ede-thom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/18 16:59:06 by wendrul           #+#    #+#             */
-/*   Updated: 2021/02/20 14:28:49 by ede-thom         ###   ########.fr       */
+/*   Updated: 2021/03/23 21:45:35 by ede-thom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static char	*gnl(char **old)
 		error_exit(FAILED_TO_GET_NEXT_LINE);
 	if (gnl_ret == 0)
 	{
-		write(STDOUT_FILENO, "exit\n", 6);
+		write(STDERR_FILENO, "exit\n", 6);
 		exit(0);
 	}
 	return (line);
