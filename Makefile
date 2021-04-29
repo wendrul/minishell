@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: agoodwin <agoodwin@student.42.fr>          +#+  +:+       +#+         #
+#    By: ede-thom <ede-thom@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/11/16 17:26:10 by ede-thom          #+#    #+#              #
-#    Updated: 2021/02/20 15:44:08 by agoodwin         ###   ########.fr        #
+#    Updated: 2021/04/29 16:48:08 by ede-thom         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -65,7 +65,7 @@ LFT_RULE	=	$(LFT_PATH)/$(LFT_NAME)
 OBJS		=	$(patsubst src/%.c, $(OBJ_DIR)/%.o, $(SRCS))
 OBJS_NODIR	=	$(patsubst %.o, $(OBJ_DIR)/%.o, $(notdir $(OBJS)))
 
-LIB			=	$(LFT_LIB)
+LIB			=	$(LFT_LIB) -lncurses
 INC			=	-I $(INC_DIR) $(LFT_INC)
 
 # COLORS

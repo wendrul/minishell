@@ -6,7 +6,7 @@
 /*   By: ede-thom <ede-thom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/18 16:59:06 by wendrul           #+#    #+#             */
-/*   Updated: 2021/03/23 21:45:35 by ede-thom         ###   ########.fr       */
+/*   Updated: 2021/04/29 17:47:54 by ede-thom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,14 +46,35 @@ void		clear_list_arr(t_list ***lst)
 	free(*lst);
 }
 
+struct termios	set_up_termcaps(char *term_name)
+{
+	struct termios  termios_new;
+    struct termios  termios_backup;
+
+	tgetent(NULL, term_name);
+    tcgetattr(STDIN_FILENO, &termios_backup);
+    termios_new = termios_backup;
+	termios_new.c_lflag &= ~(ICANON);
+    termios_new.c_lflag &= ~(ECHO);
+    termios_new.c_cc[VMIN] = 1;
+    termios_new.c_cc[VTIME] = 0;
+	tcsetattr(STDERR_FILENO, TCSAFLUSH, &termios_new);
+	return (termios_backup);
+}
+
 t_list		**read_and_syntax(t_command cmd_meta)
 {
 	t_list	*elements;
 	char	*line;
+	struct termios termios_backup;
 
+	if (dict_get("TERM") != NULL)
+		termios_backup = set_up_termcaps(dict_get("TERM")->value);
 	line = gnl(NULL);
 	while (*line == '\0')
 		line = gnl(&line);
+	if (dict_get("TERM") != NULL)
+		tcsetattr(STDIN_FILENO, TCSAFLUSH, &termios_backup);
 	elements = parse_quotes(line, cmd_meta);
 	free(line);
 	if (!elements)

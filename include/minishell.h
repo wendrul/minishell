@@ -6,7 +6,7 @@
 /*   By: ede-thom <ede-thom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/20 19:19:14 by ede-thom          #+#    #+#             */
-/*   Updated: 2021/03/23 20:31:17 by ede-thom         ###   ########.fr       */
+/*   Updated: 2021/04/29 17:57:45 by ede-thom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,8 @@
 # include <sys/resource.h>
 # include <sys/stat.h>
 # include <unistd.h>
+# include <curses.h>
+# include <term.h>
 
 # include "libft.h"
 # include "get_next_line.h"
