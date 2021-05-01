@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ede-thom <ede-thom@student.42.fr>          +#+  +:+       +#+        */
+/*   By: agoodwin <agoodwin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/20 19:19:14 by ede-thom          #+#    #+#             */
-/*   Updated: 2021/04/29 17:57:45 by ede-thom         ###   ########.fr       */
+/*   Updated: 2021/05/01 21:40:01 by agoodwin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,10 +55,19 @@ typedef struct			s_var_dict
 	int					is_env;
 }					*	t_var_dict;
 
+typedef struct			s_node
+{
+	struct s_node		*next;
+	struct s_node		*prev;
+	char				*value;
+}					*	t_node;
+
 typedef struct			s_msh
 {
 	char				**env;
 	t_var_dict			dict[HASHSIZE];
+	t_node				head;
+	t_node				cur;
 	int					redir_out_fd;
 	int					redir_in_fd;
 	int					err_no;
