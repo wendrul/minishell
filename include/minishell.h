@@ -6,7 +6,7 @@
 /*   By: agoodwin <agoodwin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/20 19:19:14 by ede-thom          #+#    #+#             */
-/*   Updated: 2021/05/01 21:40:01 by agoodwin         ###   ########.fr       */
+/*   Updated: 2021/05/01 21:54:44 by agoodwin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,10 @@ t_var_dict				dict_put(char *key, char *val);
 void					dict_print(t_var_dict *dict);
 int						dict_rm(char *key);
 t_var_dict				dict_strput(char *str);
+
+void					insert_front(char *value);
+char    				*on_down_arrow();
+char    				*on_up_arrow();
 
 int						shell(t_builtin builtins);
 void					run_cmd(t_list *cmd, t_command cmd_meta, t_builtin b);

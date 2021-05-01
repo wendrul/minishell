@@ -6,7 +6,7 @@
 /*   By: agoodwin <agoodwin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/18 17:00:48 by ede-thom          #+#    #+#             */
-/*   Updated: 2021/02/20 15:22:43 by agoodwin         ###   ########.fr       */
+/*   Updated: 2021/05/01 21:50:07 by agoodwin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,8 @@ int		main(int argc, char **argv, char **envp)
 	(void)argv;
 	g_msh = malloc(sizeof(struct s_msh));
 	g_msh->env = envp;
+	g_msh->head = NULL;
+	g_msh->cur = NULL;
 	g_msh->err_no = -1;
 	g_msh->redir_in_fd = -1;
 	g_msh->redir_out_fd = -1;
