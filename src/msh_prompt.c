@@ -6,26 +6,50 @@
 /*   By: ede-thom <ede-thom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/18 16:59:06 by wendrul           #+#    #+#             */
-/*   Updated: 2021/04/29 17:47:54 by ede-thom         ###   ########.fr       */
+/*   Updated: 2021/05/01 22:21:30 by ede-thom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+struct termios	set_up_termcaps(char *term_name)
+{
+	struct termios  termios_new;
+    struct termios  termios_backup;
+
+	tgetent(NULL, term_name);
+    tcgetattr(STDIN_FILENO, &termios_backup);
+    termios_new = termios_backup;
+	termios_new.c_lflag &= ~(ICANON);
+    termios_new.c_lflag &= ~(ECHO);
+	termios_new.c_oflag |= ISIG;
+    //termios_new.c_cc[VMIN] = 1;
+    //termios_new.c_cc[VTIME] = 0;
+	tcsetattr(STDERR_FILENO, TCSAFLUSH, &termios_new);
+	return (termios_backup);
+}
+
 static char	*gnl(char **old)
 {
 	char	*line;
 	int		gnl_ret;
+	struct termios termios_backup;
 
 	if (old != NULL)
 		free(*old);
 	ft_putstr_fd(PROMPT_TOKEN, STDERR_FILENO);
 	signal(SIGINT, handle_signal);
-	gnl_ret = get_next_line(STDIN_FILENO, &line);
+	
+	if (dict_get("TERM") != NULL)
+		termios_backup = set_up_termcaps(dict_get("TERM")->value);
+	gnl_ret = get_line(&line, "");
+	if (dict_get("TERM") != NULL)
+		tcsetattr(STDIN_FILENO, TCSAFLUSH, &termios_backup);
+	
 	signal(SIGINT, sig_when_waiting);
-	if (gnl_ret == -1)
+	if (gnl_ret == MALLOC_ERROR)
 		error_exit(FAILED_TO_GET_NEXT_LINE);
-	if (gnl_ret == 0)
+	if (gnl_ret == EOF_RETURN)
 	{
 		write(STDERR_FILENO, "exit\n", 6);
 		exit(0);
@@ -46,35 +70,19 @@ void		clear_list_arr(t_list ***lst)
 	free(*lst);
 }
 
-struct termios	set_up_termcaps(char *term_name)
-{
-	struct termios  termios_new;
-    struct termios  termios_backup;
 
-	tgetent(NULL, term_name);
-    tcgetattr(STDIN_FILENO, &termios_backup);
-    termios_new = termios_backup;
-	termios_new.c_lflag &= ~(ICANON);
-    termios_new.c_lflag &= ~(ECHO);
-    termios_new.c_cc[VMIN] = 1;
-    termios_new.c_cc[VTIME] = 0;
-	tcsetattr(STDERR_FILENO, TCSAFLUSH, &termios_new);
-	return (termios_backup);
-}
 
 t_list		**read_and_syntax(t_command cmd_meta)
 {
 	t_list	*elements;
 	char	*line;
-	struct termios termios_backup;
 
-	if (dict_get("TERM") != NULL)
-		termios_backup = set_up_termcaps(dict_get("TERM")->value);
+
+	
 	line = gnl(NULL);
 	while (*line == '\0')
 		line = gnl(&line);
-	if (dict_get("TERM") != NULL)
-		tcsetattr(STDIN_FILENO, TCSAFLUSH, &termios_backup);
+	
 	elements = parse_quotes(line, cmd_meta);
 	free(line);
 	if (!elements)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: agoodwin <agoodwin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ede-thom <ede-thom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/20 19:19:14 by ede-thom          #+#    #+#             */
-/*   Updated: 2021/05/01 21:54:44 by agoodwin         ###   ########.fr       */
+/*   Updated: 2021/05/01 22:33:06 by ede-thom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@
 # include "msh_parsing.h"
 # include "msh_builtin.h"
 # include "utils.h"
+# include "get_line.h"
 
 typedef struct			s_var_dict
 {

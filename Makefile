@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: agoodwin <agoodwin@student.42.fr>          +#+  +:+       +#+         #
+#    By: ede-thom <ede-thom@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/11/16 17:26:10 by ede-thom          #+#    #+#              #
-#    Updated: 2021/05/01 21:39:17 by agoodwin         ###   ########.fr        #
+#    Updated: 2021/05/01 22:16:09 by ede-thom         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,7 +27,8 @@ SRCS		=	src/minishell.c\
 				src/msh_variables3.c\
 				src/utils.c\
 				src/msh_error.c\
-				src/char_array.c
+				src/char_array.c\
+				src/gnl/get_line.c
 
 SRCS		+=	src/gnl/get_next_line.c\
 				src/gnl/get_next_line_utils.c

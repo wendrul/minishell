@@ -3,14 +3,27 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: agoodwin <agoodwin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ede-thom <ede-thom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/14 19:14:56 by ede-thom          #+#    #+#             */
-/*   Updated: 2021/02/07 22:40:21 by agoodwin         ###   ########.fr       */
+/*   Updated: 2021/04/29 20:12:36 by ede-thom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
+#include "minishell.h"
+
+int put_thechar(int c)
+{
+	ft_putchar_fd(c, STDERR_FILENO);
+	return (c);
+}
+
+
+void show_buf(char *buf)
+{
+	tputs(buf, 1, put_thechar);
+}
 
 int		get_next_line(int fd, char **line)
 {
@@ -32,6 +45,7 @@ int		get_next_line(int fd, char **line)
 		if (bytes_read == -1)
 			return (-1);
 		buf[bytes_read] = '\0';
+		show_buf(buf);
 		gnl_memmove(last_buf, buf, BUFFER_SIZE + 1);
 		if (ft_strjoin_endl(line, last_buf, &error_no))
 			return (error_no);
