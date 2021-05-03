@@ -6,7 +6,7 @@
 /*   By: ede-thom <ede-thom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/01 21:33:35 by ede-thom          #+#    #+#             */
-/*   Updated: 2021/05/03 18:02:13 by ede-thom         ###   ########.fr       */
+/*   Updated: 2021/05/03 18:18:55 by ede-thom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,8 +116,6 @@ int	get_line(char **line, const char *substitute)
 			return (READ_ERROR);
 		if (buf[cur] == 127 || buf[cur] == '\b')
 			erase_char(buf, &cur);
-		else if (cur < LINE_BUFFER_SIZE && ft_isprint(buf[cur]))
-			write(STDERR_FILENO, buf + cur, 1);
 		else if (buf[cur] == ASCII_ESC)
 		{
 			if ((ret = escape_seq(buf, &cur)) != NORMAL_RETURN)
@@ -131,6 +129,8 @@ int	get_line(char **line, const char *substitute)
 			screen_clear(buf, cur);
 		else if (buf[cur] == ASCII_TAB)
 			buf[cur--] = 0;
+		else if (cur < LINE_BUFFER_SIZE)
+			write(STDERR_FILENO, buf + cur, 1);
 		if (cur < LINE_BUFFER_SIZE)
 			cur++;
 	}
