@@ -6,7 +6,7 @@
 /*   By: ede-thom <ede-thom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/01 21:35:21 by ede-thom          #+#    #+#             */
-/*   Updated: 2021/05/03 16:57:22 by ede-thom         ###   ########.fr       */
+/*   Updated: 2021/05/03 17:54:01 by ede-thom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@
 # define ASCII_ESC 27
 # define ASCII_EOT 4
 # define ASCII_FF 12
+# define ASCII_TAB 9
 
 
 int	get_line(char **line, const char *substitute);

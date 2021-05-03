@@ -6,7 +6,7 @@
 /*   By: ede-thom <ede-thom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/01 21:33:35 by ede-thom          #+#    #+#             */
-/*   Updated: 2021/05/03 17:36:36 by ede-thom         ###   ########.fr       */
+/*   Updated: 2021/05/03 17:59:06 by ede-thom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,11 +43,12 @@ void clear_line(int len)
 	}
 }
 
-int escape_seq(char *buf, int cur)
+int escape_seq(char *buf, int *cur)
 {
 	char c;
 
-	buf[cur] = '\0';
+	buf[*cur] = '\0';
+	(*cur)--;
 	if (read(STDIN_FILENO, &c, 1) != 1)
 		return (READ_ERROR);
 	if (c != 91)
@@ -84,10 +85,11 @@ int	put_the_char(int c)
 	return (c);
 }
 
-void screen_clear(char *buf)
+void screen_clear(char *buf, int cur)
 {
 	char *clear;
 
+	buf[cur] = '\0';
 	clear = tgetstr("cl", NULL);
 	tputs(clear, 1, put_the_char);
 	ft_putstr_fd(PROMPT_TOKEN, STDERR_FILENO);
@@ -118,7 +120,7 @@ int	get_line(char **line, const char *substitute)
 			write(STDERR_FILENO, buf + cur, 1);
 		else if (buf[cur] == ASCII_ESC)
 		{
-			if ((ret = escape_seq(buf, cur)) != NORMAL_RETURN)
+			if ((ret = escape_seq(buf, &cur)) != NORMAL_RETURN)
 				return (ret);
 		}
 		else if (buf[cur] == '\n')
@@ -126,7 +128,9 @@ int	get_line(char **line, const char *substitute)
 		else if (buf[cur] == ASCII_EOT && cur == 0)
 			return (EOF_RETURN);
 		else if (buf[cur] == ASCII_FF)
-			screen_clear(buf);
+			screen_clear(buf, cur);
+		else if (buf[cur] == ASCII_TAB)
+			buf[cur--] = 0;
 		if (cur < LINE_BUFFER_SIZE)
 			cur++;
 	}
