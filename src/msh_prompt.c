@@ -6,7 +6,7 @@
 /*   By: ede-thom <ede-thom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/18 16:59:06 by wendrul           #+#    #+#             */
-/*   Updated: 2021/05/03 17:43:32 by ede-thom         ###   ########.fr       */
+/*   Updated: 2021/05/04 00:08:18 by ede-thom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,22 +40,26 @@ static char	*gnl(char **old)
 		free(*old);
 	ft_putstr_fd(PROMPT_TOKEN, STDERR_FILENO);
 	signal(SIGINT, handle_signal);
-	
-	if (dict_get("TERM") != NULL)
-		termios_backup = set_up_termcaps(dict_get("TERM")->value);
+
 	line = NULL;
-	gnl_ret = get_line(&line, "");
-	while (gnl_ret == UP_ARROW_RETURN || gnl_ret == DOWN_ARROW_RETURN)
-	{
-		if (gnl_ret == UP_ARROW_RETURN)
-			substitute = on_up_arrow();
-		else if (gnl_ret == DOWN_ARROW_RETURN)
-			substitute = on_down_arrow();
-		gnl_ret = get_line(&line, substitute);
-	}
-	if (dict_get("TERM") != NULL)
-		tcsetattr(STDIN_FILENO, TCSAFLUSH, &termios_backup);
 	
+	if (dict_get("TERM") != NULL)
+	{
+		termios_backup = set_up_termcaps(dict_get("TERM")->value);
+		gnl_ret = get_line(&line, "");
+		while (gnl_ret == UP_ARROW_RETURN || gnl_ret == DOWN_ARROW_RETURN)
+		{
+			if (gnl_ret == UP_ARROW_RETURN)
+				substitute = on_up_arrow();
+			else if (gnl_ret == DOWN_ARROW_RETURN)
+				substitute = on_down_arrow();
+			gnl_ret = get_line(&line, substitute);
+		}
+		tcsetattr(STDIN_FILENO, TCSAFLUSH, &termios_backup);
+	}
+	else
+		gnl_ret = get_next_line(STDIN_FILENO, &line);
+
 	signal(SIGINT, sig_when_waiting);
 	if (gnl_ret == MALLOC_ERROR || gnl_ret == READ_ERROR)
 		error_exit(FAILED_TO_GET_NEXT_LINE);

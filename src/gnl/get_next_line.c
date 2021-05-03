@@ -6,24 +6,12 @@
 /*   By: ede-thom <ede-thom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/14 19:14:56 by ede-thom          #+#    #+#             */
-/*   Updated: 2021/04/29 20:12:36 by ede-thom         ###   ########.fr       */
+/*   Updated: 2021/05/04 00:03:55 by ede-thom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 #include "minishell.h"
-
-int put_thechar(int c)
-{
-	ft_putchar_fd(c, STDERR_FILENO);
-	return (c);
-}
-
-
-void show_buf(char *buf)
-{
-	tputs(buf, 1, put_thechar);
-}
 
 int		get_next_line(int fd, char **line)
 {
@@ -36,22 +24,21 @@ int		get_next_line(int fd, char **line)
 	if (!(last_buf = get_last_from_fd(fd, &hist)))
 		return (-1);
 	if (!(*line = (char*)malloc(sizeof(char))))
-		return (-1);
+		return (MALLOC_ERROR);
 	(*line)[0] = '\0';
 	if (ft_strjoin_endl(line, last_buf, &error_no))
 		return (error_no);
 	while ((bytes_read = read(fd, buf, BUFFER_SIZE)))
 	{
 		if (bytes_read == -1)
-			return (-1);
+			return (READ_ERROR);
 		buf[bytes_read] = '\0';
-		show_buf(buf);
 		gnl_memmove(last_buf, buf, BUFFER_SIZE + 1);
 		if (ft_strjoin_endl(line, last_buf, &error_no))
 			return (error_no);
 	}
 	hist = remove_fd_from_hist(fd, hist);
-	return (0);
+	return (EOF_RETURN);
 }
 
 char	*joinem(char *s1, char *s2, int s1_len, int s2_len)
@@ -81,13 +68,13 @@ int		ft_strjoin_endl(char **line, char *s2, int *error_no)
 	while (s2[s2_len] && s2[s2_len] != '\n')
 		s2_len++;
 	if (!(new = joinem(s1, s2, line_len, s2_len)) &&
-		(*error_no = -1))
+		(*error_no = MALLOC_ERROR))
 		return (1);
 	free(s1);
 	*line = new;
 	if (s2[s2_len] == '\n')
 	{
-		*error_no = 1;
+		*error_no = NORMAL_RETURN;
 		gnl_memmove(s2, s2 + s2_len + 1, BUFFER_SIZE + 2 - s2_len);
 		return (1);
 	}

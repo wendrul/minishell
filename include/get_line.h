@@ -6,7 +6,7 @@
 /*   By: ede-thom <ede-thom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/01 21:35:21 by ede-thom          #+#    #+#             */
-/*   Updated: 2021/05/03 17:54:01 by ede-thom         ###   ########.fr       */
+/*   Updated: 2021/05/03 23:55:21 by ede-thom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 # define NORMAL_RETURN 0
 # define UP_ARROW_RETURN 65
 # define DOWN_ARROW_RETURN 66
-# define EOF_RETURN 1
+# define EOF_RETURN 6
 # define MALLOC_ERROR -1
 # define READ_ERROR -2
 
