@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   msh_variables3.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: agoodwin <agoodwin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ede-thom <ede-thom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/01 21:30:06 by agoodwin          #+#    #+#             */
-/*   Updated: 2021/05/01 22:30:40 by agoodwin         ###   ########.fr       */
+/*   Updated: 2021/05/03 17:28:00 by ede-thom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,9 @@ void	insert_front(char *value)
 	tmp = (t_node)malloc(sizeof(struct s_node));
 	if (!tmp)
 		error_exit(MALLOC_FAIL_ERROR);
-	tmp->value = value;
+	tmp->value = ft_strdup(value);
+	if (tmp->value == NULL)
+		error_exit(MALLOC_FAIL_ERROR);
 	tmp->prev = NULL;
 	tmp->next = NULL;
 	if (g_msh->head == NULL)

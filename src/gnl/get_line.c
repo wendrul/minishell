@@ -6,7 +6,7 @@
 /*   By: ede-thom <ede-thom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/01 21:33:35 by ede-thom          #+#    #+#             */
-/*   Updated: 2021/05/01 23:23:22 by ede-thom         ###   ########.fr       */
+/*   Updated: 2021/05/03 17:36:36 by ede-thom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,19 +26,55 @@ void erase_char(char *buf, int *cur)
 		write(STDERR_FILENO, "\a", 1);
 }
 
+void clear_line(int len)
+{
+	int i;
+	int k;
+	char *del_seq;
+
+	i = 0;
+	del_seq = "\b \b";
+	while (i < (int)ft_strlen(del_seq))
+	{
+		k = -1;
+		while (++k < len)
+			write(STDERR_FILENO, del_seq + i, 1);
+		i++;
+	}
+}
+
 int escape_seq(char *buf, int cur)
 {
-	(void)buf;
-	(void)cur;
+	char c;
+
+	buf[cur] = '\0';
+	if (read(STDIN_FILENO, &c, 1) != 1)
+		return (READ_ERROR);
+	if (c != 91)
+		return (NORMAL_RETURN);
+	if (read(STDIN_FILENO, &c, 1) != 1)
+		return (READ_ERROR);
+	if (c == 65)
+	{
+		clear_line(ft_strlen(buf));
+		return (UP_ARROW_RETURN);
+	}
+	else if (c == 66)
+	{
+		clear_line(ft_strlen(buf));
+		return (DOWN_ARROW_RETURN);
+	}
 	return (NORMAL_RETURN);
 }
 
-static int alloc_line_and_quit(char *buf, char **line)
+static int alloc_line_and_quit(char *buf, char **line, int cur)
 {
+	buf[cur] = '\0';
 	write(STDERR_FILENO, "\n", 1);
 	*line = ft_strdup(buf);
 	if (line == NULL)
 		return (MALLOC_ERROR);
+	insert_front(*line);
 	return (NORMAL_RETURN);
 }
 
@@ -61,27 +97,32 @@ void screen_clear(char *buf)
 
 int	get_line(char **line, const char *substitute)
 {
-	char buf[LINE_BUFFER_SIZE];
-	int cur;
+	static char buf[LINE_BUFFER_SIZE];
+	static int cur = 0;
 	int ret;
 
-	ft_bzero(buf, LINE_BUFFER_SIZE);
-	ft_memmove(buf, substitute, ft_strlen(substitute));
-	cur = ft_strlen(substitute);
-	ft_putstr_fd(buf, STDIN_FILENO);
-	while (read(STDIN_FILENO, buf + cur, 1))
+	if (substitute != NULL)
 	{
+		ft_bzero(buf, LINE_BUFFER_SIZE);
+		ft_memmove(buf, substitute, ft_strlen(substitute));
+		cur = ft_strlen(substitute);
+	}
+	ft_putstr_fd(buf, STDIN_FILENO);
+	while ((ret = read(STDIN_FILENO, buf + cur, 1)))
+	{
+		if (ret == -1)
+			return (READ_ERROR);
 		if (buf[cur] == 127 || buf[cur] == '\b')
 			erase_char(buf, &cur);
 		else if (cur < LINE_BUFFER_SIZE && ft_isprint(buf[cur]))
 			write(STDERR_FILENO, buf + cur, 1);
-		else if (cur == ASCII_ESC)
+		else if (buf[cur] == ASCII_ESC)
 		{
 			if ((ret = escape_seq(buf, cur)) != NORMAL_RETURN)
 				return (ret);
 		}
 		else if (buf[cur] == '\n')
-			return (alloc_line_and_quit(buf, line));
+			return (alloc_line_and_quit(buf, line, cur));
 		else if (buf[cur] == ASCII_EOT && cur == 0)
 			return (EOF_RETURN);
 		else if (buf[cur] == ASCII_FF)

@@ -6,7 +6,7 @@
 /*   By: ede-thom <ede-thom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/18 16:59:06 by wendrul           #+#    #+#             */
-/*   Updated: 2021/05/01 22:21:30 by ede-thom         ###   ########.fr       */
+/*   Updated: 2021/05/03 17:43:32 by ede-thom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ static char	*gnl(char **old)
 {
 	char	*line;
 	int		gnl_ret;
+	char	*substitute;
 	struct termios termios_backup;
 
 	if (old != NULL)
@@ -42,12 +43,21 @@ static char	*gnl(char **old)
 	
 	if (dict_get("TERM") != NULL)
 		termios_backup = set_up_termcaps(dict_get("TERM")->value);
+	line = NULL;
 	gnl_ret = get_line(&line, "");
+	while (gnl_ret == UP_ARROW_RETURN || gnl_ret == DOWN_ARROW_RETURN)
+	{
+		if (gnl_ret == UP_ARROW_RETURN)
+			substitute = on_up_arrow();
+		else if (gnl_ret == DOWN_ARROW_RETURN)
+			substitute = on_down_arrow();
+		gnl_ret = get_line(&line, substitute);
+	}
 	if (dict_get("TERM") != NULL)
 		tcsetattr(STDIN_FILENO, TCSAFLUSH, &termios_backup);
 	
 	signal(SIGINT, sig_when_waiting);
-	if (gnl_ret == MALLOC_ERROR)
+	if (gnl_ret == MALLOC_ERROR || gnl_ret == READ_ERROR)
 		error_exit(FAILED_TO_GET_NEXT_LINE);
 	if (gnl_ret == EOF_RETURN)
 	{
