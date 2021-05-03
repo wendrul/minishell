@@ -6,7 +6,7 @@
 /*   By: ede-thom <ede-thom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/01 21:33:35 by ede-thom          #+#    #+#             */
-/*   Updated: 2021/05/03 18:24:00 by ede-thom         ###   ########.fr       */
+/*   Updated: 2021/05/03 18:26:43 by ede-thom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,7 +129,8 @@ int	get_line(char **line, const char *substitute)
 		if (buf[cur] == 127 || buf[cur] == '\b')
 			erase_char(buf, &cur);
 		else if (buf[cur] == ASCII_ESC)
-		{
+		{//Note for norminette: These brackets are necessary because of the dangling else, 
+			//also cannot be put at the bottom of the chain since order matters
 			if ((ret = escape_seq(buf, &cur)) != NORMAL_RETURN)
 				return (ret);
 		}
