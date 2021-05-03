@@ -6,7 +6,7 @@
 /*   By: ede-thom <ede-thom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/20 19:19:14 by ede-thom          #+#    #+#             */
-/*   Updated: 2021/05/01 22:33:06 by ede-thom         ###   ########.fr       */
+/*   Updated: 2021/05/03 18:21:32 by ede-thom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,7 @@ typedef struct			s_msh
 	int					redir_out_fd;
 	int					redir_in_fd;
 	int					err_no;
+	int					clear_buf;
 }					*	t_msh;
 
 t_msh					g_msh;

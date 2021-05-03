@@ -6,7 +6,7 @@
 /*   By: ede-thom <ede-thom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/01 21:33:35 by ede-thom          #+#    #+#             */
-/*   Updated: 2021/05/03 18:18:55 by ede-thom         ###   ########.fr       */
+/*   Updated: 2021/05/03 18:24:00 by ede-thom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,6 +97,16 @@ void screen_clear(char *buf, int cur)
 	ft_putstr_fd(buf, STDERR_FILENO);
 }
 
+void clear_buf(char *buf, int *cur)
+{
+	char c;
+	c = buf[*cur];
+	ft_bzero(buf, ft_strlen(buf));
+	*cur = 0;
+	buf[*cur] = c;
+	g_msh->clear_buf = 0;
+}
+
 int	get_line(char **line, const char *substitute)
 {
 	static char buf[LINE_BUFFER_SIZE];
@@ -112,6 +122,8 @@ int	get_line(char **line, const char *substitute)
 	ft_putstr_fd(buf, STDIN_FILENO);
 	while ((ret = read(STDIN_FILENO, buf + cur, 1)))
 	{
+		if (g_msh->clear_buf)
+			clear_buf(buf, &cur);
 		if (ret == -1)
 			return (READ_ERROR);
 		if (buf[cur] == 127 || buf[cur] == '\b')
