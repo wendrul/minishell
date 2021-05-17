@@ -6,7 +6,7 @@
 /*   By: ede-thom <ede-thom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/01 21:30:06 by agoodwin          #+#    #+#             */
-/*   Updated: 2021/05/03 17:28:00 by ede-thom         ###   ########.fr       */
+/*   Updated: 2021/05/17 16:43:15 by ede-thom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,4 +61,11 @@ void	insert_front(char *value)
 	tmp->next = g_msh->head;
 	g_msh->head = tmp;
 	g_msh->cur = NULL;
+}
+
+int	is_same_as_last(char *s)
+{
+	if (g_msh->head == NULL)
+		return (0);
+	return (name_cmp(s, g_msh->head->value));
 }

@@ -6,7 +6,7 @@
 /*   By: ede-thom <ede-thom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/20 19:19:14 by ede-thom          #+#    #+#             */
-/*   Updated: 2021/05/03 18:21:32 by ede-thom         ###   ########.fr       */
+/*   Updated: 2021/05/17 16:43:08 by ede-thom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,7 @@ t_var_dict				dict_strput(char *str);
 void					insert_front(char *value);
 char    				*on_down_arrow();
 char    				*on_up_arrow();
+int						is_same_as_last(char *s);
 
 int						shell(t_builtin builtins);
 void					run_cmd(t_list *cmd, t_command cmd_meta, t_builtin b);

@@ -6,7 +6,7 @@
 /*   By: ede-thom <ede-thom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/01 21:33:35 by ede-thom          #+#    #+#             */
-/*   Updated: 2021/05/17 13:01:39 by ede-thom         ###   ########.fr       */
+/*   Updated: 2021/05/17 16:46:41 by ede-thom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,8 +75,9 @@ static int alloc_line_and_quit(char *buf, char **line, int cur)
 	*line = ft_strdup(buf);
 	if (line == NULL)
 		return (MALLOC_ERROR);
-	if (ft_strlen(buf) > 0)
+	if (ft_strlen(buf) > 0 && !is_same_as_last(*line))
 		insert_front(*line);
+	g_msh->cur = NULL;
 	return (NORMAL_RETURN);
 }
 
