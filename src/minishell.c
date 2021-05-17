@@ -6,7 +6,7 @@
 /*   By: ede-thom <ede-thom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/18 17:00:48 by ede-thom          #+#    #+#             */
-/*   Updated: 2021/05/03 18:21:48 by ede-thom         ###   ########.fr       */
+/*   Updated: 2021/05/17 12:45:11 by ede-thom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,7 @@ int		main(int argc, char **argv, char **envp)
 	g_msh->err_no = -1;
 	g_msh->redir_in_fd = -1;
 	g_msh->redir_out_fd = -1;
+	g_msh->clear_buf = 0;
 	prepare_shell(&builtins);
 	while (1)
 	{

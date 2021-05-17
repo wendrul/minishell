@@ -6,7 +6,7 @@
 /*   By: ede-thom <ede-thom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/01 21:33:35 by ede-thom          #+#    #+#             */
-/*   Updated: 2021/05/03 23:50:42 by ede-thom         ###   ########.fr       */
+/*   Updated: 2021/05/17 13:01:39 by ede-thom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,21 +75,23 @@ static int alloc_line_and_quit(char *buf, char **line, int cur)
 	*line = ft_strdup(buf);
 	if (line == NULL)
 		return (MALLOC_ERROR);
-	insert_front(*line);
+	if (ft_strlen(buf) > 0)
+		insert_front(*line);
 	return (NORMAL_RETURN);
 }
 
-int	put_the_char(int c)
+int put_the_char(int c)
 {
 	write(STDERR_FILENO, &c, 1);
 	return (c);
 }
 
-void screen_clear(char *buf, int cur)
+void screen_clear(char *buf, int *cur)
 {
 	char *clear;
 
-	buf[cur] = '\0';
+	buf[*cur] = '\0';
+	(*cur)--;
 	clear = tgetstr("cl", NULL);
 	tputs(clear, 1, put_the_char);
 	ft_putstr_fd(PROMPT_TOKEN, STDERR_FILENO);
@@ -107,7 +109,7 @@ void clear_buf(char *buf, int *cur)
 	g_msh->clear_buf = 0;
 }
 
-int	get_line(char **line, const char *substitute)
+int get_line(char **line, const char *substitute)
 {
 	static char buf[LINE_BUFFER_SIZE];
 	static int cur = 0;
@@ -129,7 +131,7 @@ int	get_line(char **line, const char *substitute)
 		if (buf[cur] == 127 || buf[cur] == '\b')
 			erase_char(buf, &cur);
 		else if (buf[cur] == ASCII_ESC)
-		{//Note for norminette: These brackets are necessary because of the dangling else, 
+		{ //Note for norminette: These brackets are necessary because of the dangling else,
 			//also cannot be put at the bottom of the chain since order matters
 			if ((ret = escape_seq(buf, &cur)) != NORMAL_RETURN)
 				return (ret);
@@ -139,7 +141,7 @@ int	get_line(char **line, const char *substitute)
 		else if (buf[cur] == ASCII_EOT && cur == 0)
 			return (EOF_RETURN);
 		else if (buf[cur] == ASCII_FF)
-			screen_clear(buf, cur);
+			screen_clear(buf, &cur);
 		else if (buf[cur] == ASCII_TAB)
 			buf[cur--] = 0;
 		else if (cur < LINE_BUFFER_SIZE)
