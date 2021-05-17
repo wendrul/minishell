@@ -6,7 +6,7 @@
 /*   By: ede-thom <ede-thom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/16 22:12:10 by ede-thom          #+#    #+#             */
-/*   Updated: 2021/02/20 18:03:23 by ede-thom         ###   ########.fr       */
+/*   Updated: 2021/05/17 16:00:10 by ede-thom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,8 @@ void	status_msg(int status)
 		ft_putstr_fd(SIGQUIT_MESSAGE, STDERR_FILENO);
 	else if (status == SIGINT_STATUS)
 		ft_putstr_fd(SIGINT_MESSAGE, STDERR_FILENO);
+	else if (status == 13)
+		return ;
 	else
 	{
 		ft_putstr_fd(UNKNOWN_STATUS_EXIT_MESSAGE, STDERR_FILENO);

@@ -6,7 +6,7 @@
 /*   By: ede-thom <ede-thom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/18 17:46:23 by ede-thom          #+#    #+#             */
-/*   Updated: 2021/02/20 18:04:09 by ede-thom         ###   ########.fr       */
+/*   Updated: 2021/05/17 16:05:46 by ede-thom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,8 @@
 ** Normal Errors
 */
 # define NOT_FOUND_ERROR "not found"
-# define SYNTAX_ERROR "Syntax error."
-# define SYNTAX_ERROR_UNEXPECTED "Syntax error: unexpected "
+# define SYNTAX_ERROR "Syntax error asshole."
+# define SYNTAX_ERROR_UNEXPECTED "Syntax error asshole: unexpected "
 # define IS_DIRECTORY_ERROR "Is a directory dumbass"
 
 # define HOME_IS_NOT_SET "HOME is not set"
@@ -44,8 +44,8 @@
 # define SIGQUIT_STATUS 131
 # define SIGINT_STATUS 2
 
-# define SEGFAULT_MESSAGE "Segfault (core dumped)"
-# define SIGQUIT_MESSAGE "Quit (dump)"
+# define SEGFAULT_MESSAGE "uh oh, stinky segfault (core dumped)"
+# define SIGQUIT_MESSAGE "Oh no! it `Quit` (core dumped)"
 # define SIGINT_MESSAGE ""
 # define UNKNOWN_STATUS_EXIT_MESSAGE "Unexpected exit with status: "
 
@@ -55,7 +55,7 @@
 # define EMPTY_VAR_NAME 13
 # define PWD_TOO_BIG 14
 
-# define EXPECTED_KEY_EQUALS_VALUE_STRING "Expected format of '[KEY]=[VALUE]'"
+# define EXPECTED_KEY_EQUALS_VALUE_STRING "Expected format of `[KEY]=[VALUE]`"
 
 void		error_exit(char *str);
 void		simple_error(char *msg, int cmd_no, char *cmd_name);
