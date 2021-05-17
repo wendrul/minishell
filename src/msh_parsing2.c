@@ -6,19 +6,11 @@
 /*   By: ede-thom <ede-thom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/20 15:32:04 by agoodwin          #+#    #+#             */
-/*   Updated: 2021/02/20 19:15:11 by ede-thom         ###   ########.fr       */
+/*   Updated: 2021/05/17 13:54:43 by ede-thom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-void		print_el(void *ptr)
-{
-	t_cmd_element e;
-
-	e = (t_cmd_element)ptr;
-	printf("(%s, %s), ", e->str, type_name(e->type));
-}
 
 void		add_el(t_list **lst, char *str, int type)
 {

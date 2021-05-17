@@ -6,7 +6,7 @@
 /*   By: ede-thom <ede-thom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/20 13:59:27 by ede-thom          #+#    #+#             */
-/*   Updated: 2021/02/20 14:07:02 by ede-thom         ###   ########.fr       */
+/*   Updated: 2021/05/17 13:50:02 by ede-thom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	free_arr(char **ptr)
 void	print_arr(char **s)
 {
 	while (*s)
-		printf("%s\n", *(s++));
+		ft_putendl_fd(*(s++), STDOUT_FILENO);
 }
 
 int		arr_len(char **arr)

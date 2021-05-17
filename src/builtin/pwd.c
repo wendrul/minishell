@@ -6,7 +6,7 @@
 /*   By: ede-thom <ede-thom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/27 22:03:39 by ede-thom          #+#    #+#             */
-/*   Updated: 2021/02/20 18:01:41 by ede-thom         ###   ########.fr       */
+/*   Updated: 2021/05/17 13:47:42 by ede-thom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,6 @@ int		msh_pwd(void)
 		g_msh->err_no = PWD_TOO_BIG;
 		return (-1);
 	}
-	printf("%s\n", dir);
+	ft_putendl_fd(dir, STDOUT_FILENO);
 	return (0);
 }

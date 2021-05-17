@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   msh_parsing.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: agoodwin <agoodwin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ede-thom <ede-thom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/18 16:59:16 by wendrul           #+#    #+#             */
-/*   Updated: 2021/02/20 13:35:17 by agoodwin         ###   ########.fr       */
+/*   Updated: 2021/05/17 13:50:37 by ede-thom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,6 @@ int				parse_into_args(t_list *cmd, char ***argv);
 char			*getcmd_path(t_command cmd);
 void			del_element(void *ptr);
 t_cmd_element	new_el(char *str, int type);
-void			print_el(void *ptr);
 
 t_list			*parse_quotes(char *line, t_command cmd);
 t_list			*parse_tokens(t_list *old_lst, t_command cmd);

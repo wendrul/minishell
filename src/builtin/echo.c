@@ -6,7 +6,7 @@
 /*   By: ede-thom <ede-thom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/18 23:43:58 by ede-thom          #+#    #+#             */
-/*   Updated: 2021/03/23 21:52:59 by ede-thom         ###   ########.fr       */
+/*   Updated: 2021/05/17 13:35:37 by ede-thom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,12 @@ int		msh_echo(int argc, char **argv)
 	int endl;
 
 	endl = 1;
+
+	if (argc == 1)
+	{
+		ft_putstr_fd("\n", STDOUT_FILENO);
+		return (0);
+	}
 	if (argc >= 2)
 		endl = !name_cmp(argv[1], "-n");
 	i = 0;

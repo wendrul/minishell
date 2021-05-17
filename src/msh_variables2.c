@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   msh_variables2.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: agoodwin <agoodwin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ede-thom <ede-thom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/20 14:17:25 by agoodwin          #+#    #+#             */
-/*   Updated: 2021/02/20 15:18:23 by agoodwin         ###   ########.fr       */
+/*   Updated: 2021/05/17 13:54:03 by ede-thom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,11 @@ void		dict_print(t_var_dict *dict)
 		while (j)
 		{
 			if (j->is_env)
-				printf("%s=%s\n", j->key, j->value);
+			{
+				ft_putstr_fd(j->key, STDOUT_FILENO);
+				ft_putstr_fd("=", STDOUT_FILENO);
+				ft_putendl_fd(j->value, STDOUT_FILENO);
+			}
 			j = j->next;
 		}
 		c++;
