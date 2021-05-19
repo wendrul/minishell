@@ -6,7 +6,7 @@
 /*   By: ede-thom <ede-thom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/18 17:00:48 by ede-thom          #+#    #+#             */
-/*   Updated: 2021/05/17 12:45:11 by ede-thom         ###   ########.fr       */
+/*   Updated: 2021/05/19 18:13:47 by ede-thom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ void	prepare_shell(t_builtin *b)
 	add_builtin(b, "export", msh_export);
 	signal(SIGINT, sig_when_waiting);
 	signal(SIGQUIT, sig_when_waiting);
+	signal(SIGPIPE, sig_when_waiting);
 	set_env_vars(g_msh->env);
 	dict_put("?", "0");
 }
@@ -73,6 +74,7 @@ int		main(int argc, char **argv, char **envp)
 			if (!(status_str = ft_itoa(status)))
 				error_exit(MALLOC_FAIL_ERROR);
 			dict_put("?", status_str);
+			free(status_str);
 		}
 	}
 	free(g_msh);

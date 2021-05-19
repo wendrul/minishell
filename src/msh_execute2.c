@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   msh_execute2.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: agoodwin <agoodwin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ede-thom <ede-thom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/20 15:03:58 by agoodwin          #+#    #+#             */
-/*   Updated: 2021/02/20 15:06:47 by agoodwin         ###   ########.fr       */
+/*   Updated: 2021/05/19 18:04:57 by ede-thom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ void	handle_child(int pipefd[2], t_list *right,
 	dup2(pipefd[0], STDIN_FILENO);
 	dispatch(right, cmd_meta, b);
 	close(pipefd[0]);
+	ft_lstclear(&right, del_element);
 	exit(0);
 }
 
@@ -61,4 +62,5 @@ void	execute_pipe(t_list *cmd, t_command cmd_meta, t_builtin b)
 		handle_child(pipefd, right, cmd_meta, b);
 	else
 		handle_parent(pipefd, left, cmd_meta, b);
+	ft_lstclear(&right, del_element);
 }
