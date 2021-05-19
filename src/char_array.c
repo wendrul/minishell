@@ -6,7 +6,7 @@
 /*   By: ede-thom <ede-thom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/20 13:59:27 by ede-thom          #+#    #+#             */
-/*   Updated: 2021/05/17 13:50:02 by ede-thom         ###   ########.fr       */
+/*   Updated: 2021/05/19 19:23:27 by ede-thom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,9 +31,9 @@ void	print_arr(char **s)
 		ft_putendl_fd(*(s++), STDOUT_FILENO);
 }
 
-int		arr_len(char **arr)
+int	arr_len(char **arr)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (arr[i])

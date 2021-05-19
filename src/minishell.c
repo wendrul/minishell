@@ -6,7 +6,7 @@
 /*   By: ede-thom <ede-thom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/18 17:00:48 by ede-thom          #+#    #+#             */
-/*   Updated: 2021/05/19 18:13:47 by ede-thom         ###   ########.fr       */
+/*   Updated: 2021/05/19 19:29:49 by ede-thom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 void	handle_signal(int signo)
 {
-
 	if (signo == SIGINT)
 	{
 		g_msh->clear_buf = 1;
@@ -30,7 +29,7 @@ void	sig_when_waiting(int signo)
 
 void	prepare_shell(t_builtin *b)
 {
-	int i;
+	int	i;
 
 	i = -1;
 	while (++i < HASHSIZE)
@@ -50,7 +49,7 @@ void	prepare_shell(t_builtin *b)
 	dict_put("?", "0");
 }
 
-int		main(int argc, char **argv, char **envp)
+int	main(int argc, char **argv, char **envp)
 {
 	t_builtin	builtins;
 	int			status;
@@ -69,15 +68,16 @@ int		main(int argc, char **argv, char **envp)
 	prepare_shell(&builtins);
 	while (1)
 	{
-		if ((status = shell(builtins)) != 0)
+		status = shell(builtins);
+		if (status != 0)
 		{
-			if (!(status_str = ft_itoa(status)))
+			status_str = ft_itoa(status);
+			if (!status_str)
 				error_exit(MALLOC_FAIL_ERROR);
 			dict_put("?", status_str);
 			free(status_str);
 		}
 	}
-	free(g_msh);
 	return (0);
 }
 
