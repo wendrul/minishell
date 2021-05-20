@@ -6,7 +6,7 @@
 /*   By: ede-thom <ede-thom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/01 21:30:06 by agoodwin          #+#    #+#             */
-/*   Updated: 2021/05/17 16:43:15 by ede-thom         ###   ########.fr       */
+/*   Updated: 2021/05/20 10:51:57 by ede-thom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ char	*on_down_arrow(void)
 
 void	insert_front(char *value)
 {
-	t_node tmp;
+	t_node	tmp;
 
 	tmp = (t_node)malloc(sizeof(struct s_node));
 	if (!tmp)

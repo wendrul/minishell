@@ -6,13 +6,13 @@
 /*   By: ede-thom <ede-thom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/20 14:17:25 by agoodwin          #+#    #+#             */
-/*   Updated: 2021/05/17 13:54:03 by ede-thom         ###   ########.fr       */
+/*   Updated: 2021/05/20 10:51:40 by ede-thom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void		dict_print(t_var_dict *dict)
+void	dict_print(t_var_dict *dict)
 {
 	t_var_dict	*i;
 	t_var_dict	j;
@@ -45,11 +45,14 @@ t_var_dict	dict_strput(char *str)
 	char		*val;
 	int			pos;
 
-	if ((pos = ft_indexof('=', str)) == -1)
+	pos = ft_indexof('=', str);
+	if (pos == -1)
 		return (NULL);
-	if (!(key = ft_substr(str, 0, pos)))
+	key = ft_substr(str, 0, pos);
+	if (!key)
 		error_exit(MALLOC_FAIL_ERROR);
-	if (!(val = ft_substr(str, pos + 1, ft_strlen(str))))
+	val = ft_substr(str, pos + 1, ft_strlen(str));
+	if (!val)
 		error_exit(MALLOC_FAIL_ERROR);
 	entry = dict_put(key, val);
 	free(key);

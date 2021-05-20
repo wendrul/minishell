@@ -6,16 +6,16 @@
 /*   By: ede-thom <ede-thom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/22 20:08:41 by ede-thom          #+#    #+#             */
-/*   Updated: 2021/03/18 00:22:09 by ede-thom         ###   ########.fr       */
+/*   Updated: 2021/05/20 10:49:23 by ede-thom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-unsigned	get_hash(char *key)
+unsigned int	get_hash(char *key)
 {
-	int			i;
-	unsigned	hash;
+	int				i;
+	unsigned int	hash;
 
 	i = -1;
 	hash = 0;
@@ -26,7 +26,7 @@ unsigned	get_hash(char *key)
 
 t_var_dict	dict_get(char *key)
 {
-	t_var_dict var;
+	t_var_dict	var;
 
 	var = g_msh->dict[get_hash(key)];
 	while (var)
@@ -40,13 +40,17 @@ t_var_dict	dict_get(char *key)
 
 t_var_dict	dict_put(char *key, char *val)
 {
-	t_var_dict	new;
-	unsigned	hash;
+	t_var_dict		new;
+	unsigned int	hash;
 
-	if (!(new = dict_get(key)))
+	new = dict_get(key);
+	if (!new)
 	{
 		new = (t_var_dict)malloc(sizeof(struct s_var_dict));
-		if (!new || !(new->key = ft_strdup(key)))
+		if (!new)
+			error_exit(MALLOC_FAIL_ERROR);
+		new->key = ft_strdup(key);
+		if (!new->key)
 			error_exit(MALLOC_FAIL_ERROR);
 		hash = get_hash(key);
 		new->next = g_msh->dict[hash];
@@ -55,14 +59,15 @@ t_var_dict	dict_put(char *key, char *val)
 	}
 	else
 		free((void *)new->value);
-	if (!(new->value = ft_strdup(val)))
+	new->value = ft_strdup(val);
+	if (!new->value)
 		error_exit(MALLOC_FAIL_ERROR);
 	return (new);
 }
 
-int			del_if_match(char *key, t_var_dict *var_ptr, t_var_dict prev)
+int	del_if_match(char *key, t_var_dict *var_ptr, t_var_dict prev)
 {
-	t_var_dict var;
+	t_var_dict	var;
 
 	var = *var_ptr;
 	if (name_cmp(key, var->key))
@@ -81,13 +86,14 @@ int			del_if_match(char *key, t_var_dict *var_ptr, t_var_dict prev)
 	return (0);
 }
 
-int			dict_rm(char *key)
+int	dict_rm(char *key)
 {
-	t_var_dict var;
-	t_var_dict prev;
+	t_var_dict	var;
+	t_var_dict	prev;
 
 	prev = NULL;
-	if (!(var = g_msh->dict[get_hash(key)]))
+	var = g_msh->dict[get_hash(key)];
+	if (!var)
 		return (0);
 	while (var)
 	{
