@@ -6,13 +6,13 @@
 /*   By: ede-thom <ede-thom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/20 15:32:12 by agoodwin          #+#    #+#             */
-/*   Updated: 2021/02/20 18:15:00 by ede-thom         ###   ########.fr       */
+/*   Updated: 2021/05/20 10:33:06 by ede-thom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int				count_semicolons(t_list *elements)
+int	count_semicolons(t_list *elements)
 {
 	int				size;
 	t_cmd_element	e;
@@ -30,7 +30,7 @@ int				count_semicolons(t_list *elements)
 
 static t_list	*replace_thingy(t_list *cur)
 {
-	t_list *elements;
+	t_list	*elements;
 
 	elements = cur->next->next;
 	ft_lstdelone(cur->next, del_element);
@@ -38,7 +38,7 @@ static t_list	*replace_thingy(t_list *cur)
 	return (elements);
 }
 
-t_list			**get_cmds(t_list *elements)
+t_list	**get_cmds(t_list *elements)
 {
 	int		size;
 	t_list	**cmds;
@@ -46,13 +46,13 @@ t_list			**get_cmds(t_list *elements)
 	int		i;
 
 	size = count_semicolons(elements);
-	if (!(cmds = (t_list **)malloc(sizeof(*cmds) * (size + 2))))
+	cmds = (t_list **)malloc(sizeof(*cmds) * (size + 2));
+	if (!cmds)
 		error_exit(MALLOC_FAIL_ERROR);
 	i = -1;
 	while (++i < size + 1)
 	{
-		cmds[i] = elements;
-		cur = elements;
+		cmds[i] = (cur = elements);
 		while (cur->next)
 		{
 			if (((t_cmd_element)cur->next->content)->type == SEMICOLON)
@@ -67,10 +67,10 @@ t_list			**get_cmds(t_list *elements)
 	return (cmds);
 }
 
-int				syntaxerror_msg(int type, t_command cmd)
+int	syntaxerror_msg(int type, t_command cmd)
 {
-	char *msg;
-	char *token;
+	char	*msg;
+	char	*token;
 
 	if (type == PIPE)
 		token = "\"|\"";
@@ -87,17 +87,18 @@ int				syntaxerror_msg(int type, t_command cmd)
 		shell_error(SYNTAX_ERROR, cmd.num);
 		return (0);
 	}
-	if (!(msg = ft_strjoin(SYNTAX_ERROR_UNEXPECTED, token)))
+	msg = ft_strjoin(SYNTAX_ERROR_UNEXPECTED, token);
+	if (!msg)
 		error_exit(MALLOC_FAIL_ERROR);
 	shell_error(msg, cmd.num);
 	free(msg);
 	return (0);
 }
 
-int				syntax_check(t_list *elements, t_command cmd)
+int	syntax_check(t_list *elements, t_command cmd)
 {
-	t_cmd_element prev;
-	t_cmd_element e;
+	t_cmd_element	prev;
+	t_cmd_element	e;
 
 	prev = NULL;
 	while (elements)

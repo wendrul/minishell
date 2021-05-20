@@ -6,19 +6,20 @@
 /*   By: ede-thom <ede-thom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/20 15:32:04 by agoodwin          #+#    #+#             */
-/*   Updated: 2021/05/17 13:54:43 by ede-thom         ###   ########.fr       */
+/*   Updated: 2021/05/20 10:17:39 by ede-thom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void		add_el(t_list **lst, char *str, int type)
+void	add_el(t_list **lst, char *str, int type)
 {
-	t_list *new;
+	t_list	*new;
 
 	if (!str || str[0] == '\0')
 		return ;
-	if (!(new = ft_lstnew(new_el(str, type))))
+	new = ft_lstnew(new_el(str, type));
+	if (!new)
 		error_exit(MALLOC_FAIL_ERROR);
 	ft_lstadd_back(lst, new);
 }
@@ -34,12 +35,15 @@ static int	quote_loop_logic(char *line, t_command cmd, int i,
 	j = i;
 	quote = line[i];
 	while (line[++j] != line[i])
+	{
 		if (!line[j])
 		{
 			shell_error(SYNTAX_ERROR, cmd.num);
 			return (-5);
 		}
-	if (!(tmp = ft_substr(line, i + 1, j - i - 1)))
+	}
+	tmp = ft_substr(line, i + 1, j - i - 1);
+	if (!tmp)
 		error_exit(MALLOC_FAIL_ERROR);
 	if (quote == '"')
 	{
@@ -53,7 +57,7 @@ static int	quote_loop_logic(char *line, t_command cmd, int i,
 	return (j);
 }
 
-t_list		*parse_quotes(char *line, t_command cmd)
+t_list	*parse_quotes(char *line, t_command cmd)
 {
 	t_list	*elements;
 	char	*tmp;
@@ -64,17 +68,22 @@ t_list		*parse_quotes(char *line, t_command cmd)
 	start = 0;
 	elements = NULL;
 	while (line[++i])
+	{
 		if (line[i] == '\'' || line[i] == '"')
 		{
-			if (!(tmp = ft_substr(line, start, i - start)))
+			tmp = ft_substr(line, start, i - start);
+			if (!tmp)
 				error_exit(MALLOC_FAIL_ERROR);
 			add_el(&elements, tmp, UNPARSED);
 			free(tmp);
-			if ((start = quote_loop_logic(line, cmd, i, &elements) + 1) < 0)
+			start = quote_loop_logic(line, cmd, i, &elements) + 1;
+			if (start < 0)
 				return (NULL);
 			i = start - 1;
 		}
-	if (!(tmp = ft_substr(line, start, i - start)))
+	}
+	tmp = ft_substr(line, start, i - start);
+	if (!tmp)
 		error_exit(MALLOC_FAIL_ERROR);
 	add_el(&elements, tmp, UNPARSED);
 	free(tmp);
