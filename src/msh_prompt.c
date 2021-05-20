@@ -6,7 +6,7 @@
 /*   By: ede-thom <ede-thom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/18 16:59:06 by wendrul           #+#    #+#             */
-/*   Updated: 2021/05/04 00:08:18 by ede-thom         ###   ########.fr       */
+/*   Updated: 2021/05/20 11:03:46 by ede-thom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,35 +14,31 @@
 
 struct termios	set_up_termcaps(char *term_name)
 {
-	struct termios  termios_new;
-    struct termios  termios_backup;
+	struct termios	termios_new;
+	struct termios	termios_backup;
 
 	tgetent(NULL, term_name);
-    tcgetattr(STDIN_FILENO, &termios_backup);
-    termios_new = termios_backup;
+	tcgetattr(STDIN_FILENO, &termios_backup);
+	termios_new = termios_backup;
 	termios_new.c_lflag &= ~(ICANON);
-    termios_new.c_lflag &= ~(ECHO);
+	termios_new.c_lflag &= ~(ECHO);
 	termios_new.c_oflag |= ISIG;
-    //termios_new.c_cc[VMIN] = 1;
-    //termios_new.c_cc[VTIME] = 0;
 	tcsetattr(STDERR_FILENO, TCSAFLUSH, &termios_new);
 	return (termios_backup);
 }
 
 static char	*gnl(char **old)
 {
-	char	*line;
-	int		gnl_ret;
-	char	*substitute;
-	struct termios termios_backup;
+	char			*line;
+	int				gnl_ret;
+	char			*substitute;
+	struct termios	termios_backup;
 
 	if (old != NULL)
 		free(*old);
 	ft_putstr_fd(PROMPT_TOKEN, STDERR_FILENO);
 	signal(SIGINT, handle_signal);
-
 	line = NULL;
-	
 	if (dict_get("TERM") != NULL)
 	{
 		termios_backup = set_up_termcaps(dict_get("TERM")->value);
@@ -59,7 +55,6 @@ static char	*gnl(char **old)
 	}
 	else
 		gnl_ret = get_next_line(STDIN_FILENO, &line);
-
 	signal(SIGINT, sig_when_waiting);
 	if (gnl_ret == MALLOC_ERROR || gnl_ret == READ_ERROR)
 		error_exit(FAILED_TO_GET_NEXT_LINE);
@@ -71,7 +66,7 @@ static char	*gnl(char **old)
 	return (line);
 }
 
-void		clear_list_arr(t_list ***lst)
+void	clear_list_arr(t_list ***lst)
 {
 	t_list	**tmp;
 
@@ -84,19 +79,14 @@ void		clear_list_arr(t_list ***lst)
 	free(*lst);
 }
 
-
-
-t_list		**read_and_syntax(t_command cmd_meta)
+t_list	**read_and_syntax(t_command cmd_meta)
 {
 	t_list	*elements;
 	char	*line;
 
-
-	
 	line = gnl(NULL);
 	while (*line == '\0')
 		line = gnl(&line);
-	
 	elements = parse_quotes(line, cmd_meta);
 	free(line);
 	if (!elements)
@@ -110,7 +100,7 @@ t_list		**read_and_syntax(t_command cmd_meta)
 	return (get_cmds(elements));
 }
 
-void		reset_io_fds(int og_inout[2])
+void	reset_io_fds(int og_inout[2])
 {
 	if (g_msh->redir_out_fd != -1)
 		close(g_msh->redir_out_fd);
@@ -124,7 +114,7 @@ void		reset_io_fds(int og_inout[2])
 	close(og_inout[1]);
 }
 
-int			shell(t_builtin builtins)
+int	shell(t_builtin builtins)
 {
 	static int	cmd_num = 0;
 	t_command	cmd_meta;
@@ -132,9 +122,9 @@ int			shell(t_builtin builtins)
 	int			i;
 	int			og_inout[2];
 
-	cmd_num++;
-	cmd_meta.num = cmd_num;
-	if (!(cmds = read_and_syntax(cmd_meta)))
+	cmd_meta.num = ++cmd_num;
+	cmds = read_and_syntax(cmd_meta);
+	if (!cmds)
 		return (2);
 	i = -1;
 	while (cmds[++i])
