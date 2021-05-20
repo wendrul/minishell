@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   msh_parsing.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: agoodwin <agoodwin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ede-thom <ede-thom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/18 18:18:38 by ede-thom          #+#    #+#             */
-/*   Updated: 2021/02/20 16:02:01 by agoodwin         ###   ########.fr       */
+/*   Updated: 2021/05/20 10:12:26 by ede-thom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int		parse_into_args(t_list *cmd, char ***argv)
+int	parse_into_args(t_list *cmd, char ***argv)
 {
 	int				size;
 	int				i;
@@ -24,7 +24,8 @@ int		parse_into_args(t_list *cmd, char ***argv)
 	while (cmd)
 	{
 		e = (t_cmd_element)cmd->content;
-		if (!((*argv)[i] = ft_strdup(e->str)))
+		(*argv)[i] = ft_strdup(e->str);
+		if (!(*argv)[i])
 			error_exit(MALLOC_FAIL_ERROR);
 		i++;
 		cmd = cmd->next;
@@ -33,23 +34,27 @@ int		parse_into_args(t_list *cmd, char ***argv)
 	return (size);
 }
 
-int		check_dir(t_command *cmd, DIR *dir, char *cur_path)
+int	check_dir(t_command *cmd, DIR *dir, char *cur_path)
 {
 	t_dirent	*dir_ent;
 	char		*path;
 
-	while ((dir_ent = readdir(dir)))
+	dir_ent = readdir(dir);
+	while (dir_ent)
 	{
 		if (name_cmp(dir_ent->d_name, cmd->name))
 		{
-			if ((path = ft_strjoin(cur_path, "/")) == NULL)
+			path = ft_strjoin(cur_path, "/");
+			if (path == NULL)
 				error_exit(MALLOC_FAIL_ERROR);
-			if ((cmd->name = ft_strjoin(path, cmd->name)) == NULL)
+			cmd->name = ft_strjoin(path, cmd->name);
+			if (cmd->name == NULL)
 				error_exit(MALLOC_FAIL_ERROR);
 			free(path);
 			closedir(dir);
 			return (1);
 		}
+		dir_ent = readdir(dir);
 	}
 	return (0);
 }
@@ -64,18 +69,17 @@ char	*getcmd_path(t_command cmd)
 	if (!dict_get(ENV_PATH))
 		return (cmd.name);
 	path = dict_get(ENV_PATH)->value;
-	if (!(pathv = ft_split(path, ':')))
+	pathv = ft_split(path, ':');
+	if (!pathv)
 		error_exit(SPLIT_FAIL_ERROR);
 	i = -1;
 	while (pathv[++i])
 	{
-		if ((dir = opendir(pathv[i])) == NULL)
+		dir = opendir(pathv[i]);
+		if (dir == NULL)
 			continue ;
 		if (check_dir(&cmd, dir, pathv[i]))
-		{
-			free_arr(pathv);
-			return (cmd.name);
-		}
+			break ;
 		closedir(dir);
 	}
 	free_arr(pathv);

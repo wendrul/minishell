@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   msh_execute.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: agoodwin <agoodwin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ede-thom <ede-thom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/22 23:07:18 by ede-thom          #+#    #+#             */
-/*   Updated: 2021/02/20 15:06:44 by agoodwin         ###   ########.fr       */
+/*   Updated: 2021/05/20 09:48:49 by ede-thom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int		exec_child(t_command cmd)
+int	exec_child(t_command cmd)
 {
 	if (execve(getcmd_path(cmd), cmd.argv, g_msh->env) == -1)
 	{
@@ -24,7 +24,7 @@ int		exec_child(t_command cmd)
 	exit(1);
 }
 
-int		execute(t_command cmd)
+int	execute(t_command cmd)
 {
 	pid_t	child_pid;
 	int		status;
@@ -57,7 +57,8 @@ void	run_cmd(t_list *cmd, t_command cmd_meta, t_builtin builtins)
 	{
 		if (!run_builtin(builtins, cmd_meta.argv[0], cmd_meta, &status))
 			status = execute(cmd_meta);
-		if (!(status_str = ft_itoa(status)))
+		status_str = ft_itoa(status);
+		if (!status_str)
 			error_exit(MALLOC_FAIL_ERROR);
 		dict_put("?", status_str);
 		free(status_str);
@@ -65,9 +66,9 @@ void	run_cmd(t_list *cmd, t_command cmd_meta, t_builtin builtins)
 	free_arr(cmd_meta.argv);
 }
 
-int		next_token(t_list *cmd)
+int	next_token(t_list *cmd)
 {
-	t_cmd_element e;
+	t_cmd_element	e;
 
 	while (cmd)
 	{

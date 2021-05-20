@@ -6,7 +6,7 @@
 /*   By: ede-thom <ede-thom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/20 15:03:58 by agoodwin          #+#    #+#             */
-/*   Updated: 2021/05/19 18:04:57 by ede-thom         ###   ########.fr       */
+/*   Updated: 2021/05/20 09:49:53 by ede-thom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	handle_child(int pipefd[2], t_list *right,
 void	handle_parent(int pipefd[2], t_list *left,
 						t_command cmd_meta, t_builtin b)
 {
-	int stdout_cpy;
+	int	stdout_cpy;
 
 	close(pipefd[0]);
 	stdout_cpy = dup(STDOUT_FILENO);
