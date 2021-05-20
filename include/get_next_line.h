@@ -6,7 +6,7 @@
 /*   By: ede-thom <ede-thom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/14 19:15:17 by ede-thom          #+#    #+#             */
-/*   Updated: 2021/04/29 21:23:00 by ede-thom         ###   ########.fr       */
+/*   Updated: 2021/05/20 11:13:49 by ede-thom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,12 +20,12 @@
 # include <stdlib.h>
 # include <unistd.h>
 
-typedef	struct			s_buf_hist
+typedef struct s_buf_hist
 {
 	int					fd;
 	char				buf[BUFFER_SIZE + 1];
 	struct s_buf_hist	*next;
-}					*	t_buf_hist;
+}*t_buf_hist;
 
 int						ft_strjoin_endl(char **line, char *s2, int *error_no);
 void					*gnl_memmove(void *dest, const void *src, size_t n);

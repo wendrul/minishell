@@ -6,7 +6,7 @@
 /*   By: ede-thom <ede-thom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/18 16:59:16 by wendrul           #+#    #+#             */
-/*   Updated: 2021/05/17 13:50:37 by ede-thom         ###   ########.fr       */
+/*   Updated: 2021/05/20 11:13:13 by ede-thom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,19 +21,19 @@
 # define LESS 5
 # define SEMICOLON 6
 
-typedef struct	s_command
+typedef struct s_command
 {
 	char		*name;
 	int			argc;
 	char		**argv;
 	int			num;
-}				t_command;
+}t_command;
 
-typedef struct	s_cmd_element
+typedef struct s_cmd_element
 {
 	char		*str;
 	int			type;
-}			*	t_cmd_element;
+}*t_cmd_element;
 
 typedef struct dirent	t_dirent;
 
