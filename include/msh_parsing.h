@@ -6,7 +6,7 @@
 /*   By: ede-thom <ede-thom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/18 16:59:16 by wendrul           #+#    #+#             */
-/*   Updated: 2021/05/20 11:13:13 by ede-thom         ###   ########.fr       */
+/*   Updated: 2021/05/25 13:43:56 by ede-thom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ typedef struct s_cmd_element
 	int			type;
 }*t_cmd_element;
 
-typedef struct dirent	t_dirent;
+typedef typeof(struct dirent)	t_dirent;
 
 int				parse_into_args(t_list *cmd, char ***argv);
 char			*getcmd_path(t_command cmd);

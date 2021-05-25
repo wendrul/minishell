@@ -6,7 +6,7 @@
 /*   By: ede-thom <ede-thom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/20 19:19:14 by ede-thom          #+#    #+#             */
-/*   Updated: 2021/05/17 16:43:08 by ede-thom         ###   ########.fr       */
+/*   Updated: 2021/05/25 13:46:15 by ede-thom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 # define MINISHELL_H
 
 # define MSH_CMD_NAME_SIZE 256
-# define SH_NAME msh
 # define PROMPT_TOKEN "\033[1;36mm$ \033[0;m"
 # define HASHSIZE 4096
 
@@ -48,22 +47,22 @@
 # include "utils.h"
 # include "get_line.h"
 
-typedef struct			s_var_dict
+typedef struct s_var_dict
 {
 	struct s_var_dict	*next;
 	char				*key;
 	char				*value;
 	int					is_env;
-}					*	t_var_dict;
+}*t_var_dict;
 
-typedef struct			s_node
+typedef struct s_node
 {
 	struct s_node		*next;
 	struct s_node		*prev;
 	char				*value;
-}					*	t_node;
+}*t_node;
 
-typedef struct			s_msh
+typedef struct s_msh
 {
 	char				**env;
 	t_var_dict			dict[HASHSIZE];
@@ -73,7 +72,7 @@ typedef struct			s_msh
 	int					redir_in_fd;
 	int					err_no;
 	int					clear_buf;
-}					*	t_msh;
+}*t_msh;
 
 t_msh					g_msh;
 
@@ -84,8 +83,8 @@ int						dict_rm(char *key);
 t_var_dict				dict_strput(char *str);
 
 void					insert_front(char *value);
-char    				*on_down_arrow();
-char    				*on_up_arrow();
+char					*on_down_arrow(void);
+char					*on_up_arrow(void);
 int						is_same_as_last(char *s);
 
 int						shell(t_builtin builtins);
