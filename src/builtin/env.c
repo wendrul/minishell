@@ -12,8 +12,10 @@
 
 #include "minishell.h"
 
-int	msh_env(void)
+int	msh_env(int argc, char **argv)
 {
+	(void)argc;
+	(void)argv;
 	dict_print(g_msh->dict);
 	return (0);
 }

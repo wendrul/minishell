@@ -33,8 +33,8 @@ void			add_builtin(t_builtin *list, char *n, int (*m)(int, char**));
 
 int				msh_exit(int argc, char **argv);
 int				msh_echo(int argc, char **argv);
-int				msh_env(void);
-int				msh_pwd(void);
+int				msh_env(int argc, char **argv);
+int				msh_pwd(int argc, char **argv);
 int				msh_cd(int argc, char **argv);
 int				msh_unset(int argc, char **argv);
 int				msh_export(int argc, char **argv);

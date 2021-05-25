@@ -12,10 +12,12 @@
 
 #include "minishell.h"
 
-int	msh_pwd(void)
+int	msh_pwd(int argc, char **argv)
 {
 	char	dir[PWD_BUFF_SIZE];
 
+	(void)argc;
+	(void)argv;
 	if (getcwd(dir, PWD_BUFF_SIZE) == NULL)
 	{
 		g_msh->err_no = PWD_TOO_BIG;
