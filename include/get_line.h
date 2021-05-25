@@ -6,7 +6,7 @@
 /*   By: ede-thom <ede-thom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/01 21:35:21 by ede-thom          #+#    #+#             */
-/*   Updated: 2021/05/20 11:08:00 by ede-thom         ###   ########.fr       */
+/*   Updated: 2021/05/25 11:38:34 by ede-thom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 # define GET_LINE_H
 
 # define LINE_BUFFER_SIZE 8192
+
+# define DONT_RETURN 420
 # define NORMAL_RETURN 0
 # define UP_ARROW_RETURN 65
 # define DOWN_ARROW_RETURN 66
