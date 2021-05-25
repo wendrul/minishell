@@ -14,11 +14,11 @@
 
 void	ft_swap(void *data1, void *data2, size_t datasize)
 {
-	unsigned char *s1;
-	unsigned char *s2;
+	unsigned char	*s1;
+	unsigned char	*s2;
 
-	s1 = (unsigned char*)data1;
-	s2 = (unsigned char*)data2;
+	s1 = (unsigned char *)data1;
+	s2 = (unsigned char *)data2;
 	while (datasize--)
 	{
 		*s1 = *s1 ^ *s2;

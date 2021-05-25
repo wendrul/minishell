@@ -16,13 +16,13 @@
 
 char	*ft_strjoin(const char *s1, const char *s2)
 {
-	char *ret;
-	char *start;
+	char	*ret;
+	char	*start;
 
 	if (s1 == NULL || s2 == NULL)
-		return ((char*)NULL);
-	if (!(ret = (char*)malloc((ft_strlen(s1)
-		+ ft_strlen(s2) + 1) * sizeof(*ret))))
+		return ((char *) NULL);
+	ret = (char *)malloc((ft_strlen(s1) + ft_strlen(s2) + 1) * sizeof(*ret));
+	if (!ret)
 		return (NULL);
 	start = ret;
 	while (*s1)

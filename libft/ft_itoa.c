@@ -13,9 +13,9 @@
 #include "libft.h"
 #include <stdlib.h>
 
-static int		what_pow(unsigned int nb)
+static int	what_pow(unsigned int nb)
 {
-	int			pow;
+	int	pow;
 
 	pow = 0;
 	if (nb == 0)
@@ -45,7 +45,7 @@ static	void	fill_ret(int size, char *ret, unsigned int n)
 	}
 }
 
-char			*ft_itoa(int nb)
+char	*ft_itoa(int nb)
 {
 	char			*ret;
 	int				size;
@@ -62,7 +62,8 @@ char			*ft_itoa(int nb)
 		size = 0;
 	}
 	size += what_pow(n);
-	if (!(ret = (char*)malloc((size + 1) * sizeof(*ret))))
+	ret = (char *)malloc((size + 1) * sizeof(*ret));
+	if (!ret)
 		return (NULL);
 	fill_ret(size, ret, n);
 	return (ret);

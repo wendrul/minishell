@@ -15,9 +15,10 @@
 
 char	*ft_strdup(const char *s)
 {
-	char *dup;
+	char	*dup;
 
-	if ((dup = (char*)malloc((ft_strlen(s) + 1) * sizeof(*dup))) == NULL)
+	dup = (char *)malloc((ft_strlen(s) + 1) * sizeof(*dup));
+	if (!dup)
 		return (NULL);
 	ft_memmove(dup, s, ft_strlen(s) + 1);
 	return (dup);

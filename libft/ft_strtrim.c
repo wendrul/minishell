@@ -15,8 +15,8 @@
 
 static int	count_set(char const *str, char const *set)
 {
-	int count;
-	int i;
+	int	count;
+	int	i;
 
 	count = 0;
 	i = -1;
@@ -29,7 +29,7 @@ static int	count_set(char const *str, char const *set)
 	return (count);
 }
 
-char		*ft_strtrim(char const *str, char const *set)
+char	*ft_strtrim(char const *str, char const *set)
 {
 	char	*ret;
 	int		i;
@@ -37,9 +37,10 @@ char		*ft_strtrim(char const *str, char const *set)
 	int		end;
 
 	if (str == NULL)
-		return ((char*)NULL);
-	if ((ret = (char*)malloc((ft_strlen(str)
-		- count_set(str, set) + 1) * sizeof(*str))) == NULL)
+		return ((char *) NULL);
+	ret = (char *)malloc((ft_strlen(str)
+				- count_set(str, set) + 1) * sizeof(*str));
+	if (!ret)
 		return (NULL);
 	start = 0;
 	while (ft_indexof(str[start], set) != -1)

@@ -14,7 +14,7 @@
 
 int	ft_indexof(char needle, const char *hay)
 {
-	int i;
+	int	i;
 
 	i = -1;
 	while (hay[++i])

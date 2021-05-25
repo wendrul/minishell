@@ -14,8 +14,8 @@
 
 static int	base_is_valid(const char *base)
 {
-	int i;
-	int j;
+	int	i;
+	int	j;
 
 	if (ft_strlen(base) < 2)
 		return (0);
@@ -34,7 +34,7 @@ static int	base_is_valid(const char *base)
 	return (1);
 }
 
-int			ft_atoi_base(const char *nptr, const char *base)
+int	ft_atoi_base(const char *nptr, const char *base)
 {
 	int				sgn;
 	unsigned int	nb;

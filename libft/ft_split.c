@@ -14,9 +14,9 @@
 
 char	**ft_split(char const *s, char c)
 {
-	char blob[2];
+	char	blob[2];
 
 	blob[0] = c;
 	blob[1] = '\0';
-	return (ft_split_charset((char*)s, blob));
+	return (ft_split_charset((char *)s, blob));
 }

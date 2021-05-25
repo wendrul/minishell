@@ -13,10 +13,10 @@
 #include "libft.h"
 #include <stdlib.h>
 
-static int		word_count(char *str, char *charset)
+static int	word_count(char *str, char *charset)
 {
-	int n;
-	int i;
+	int	n;
+	int	i;
 
 	n = 0;
 	i = -1;
@@ -36,9 +36,9 @@ static int		word_count(char *str, char *charset)
 	return (n);
 }
 
-static int		word_length(char *start, char *charset)
+static int	word_length(char *start, char *charset)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (start[i] && ft_indexof(start[i], charset) == -1)
@@ -46,20 +46,21 @@ static int		word_length(char *start, char *charset)
 	return (i);
 }
 
-static char		**init(int *word, int *i, char *s, char *cs)
+static char	**init(int *word, int *i, char *s, char *cs)
 {
-	char **splut;
+	char	**splut;
 
 	if (s == NULL || cs == NULL)
-		return ((char**)NULL);
+		return ((char **) NULL);
 	*word = -1;
 	*i = 0;
-	if (!(splut = (char**)malloc(sizeof(char*) * (word_count(s, cs) + 1))))
+	splut = (char **)malloc(sizeof(char *) * (word_count(s, cs) + 1));
+	if (!splut)
 		return (0);
 	return (splut);
 }
 
-char			**ft_split_charset(char *str, char *charset)
+char	**ft_split_charset(char *str, char *charset)
 {
 	int		i;
 	int		word;
@@ -67,17 +68,20 @@ char			**ft_split_charset(char *str, char *charset)
 	char	**splut;
 	int		j;
 
-	if (!(splut = init(&word, &i, str, charset)))
+	splut = init(&word, &i, str, charset);
+	if (!splut)
 		return (NULL);
 	while (++word < word_count(str, charset))
 	{
 		while (ft_indexof(str[i], charset) != -1)
 			i++;
 		len = word_length(&str[i], charset);
-		if ((j = -1) && len >= 0)
+		if (len >= 0)
 		{
-			if (!(splut[word] = (char*)malloc(sizeof(char) * (len + 1))))
+			splut[word] = (char *)malloc(sizeof(char) * (len + 1));
+			if (!splut[word])
 				return (NULL);
+			j = -1;
 			while (++j < len)
 				splut[word][j] = str[i + j];
 			splut[word][j] = '\0';

@@ -19,11 +19,12 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 	size_t	size;
 
 	if (s == NULL)
-		return ((char*)NULL);
+		return ((char *) NULL);
 	if (start > ft_strlen(s))
 		return (ft_strdup(""));
 	size = ft_min(len, ft_strlen(s) - start);
-	if ((str = (char*)malloc((len + 1) * sizeof(*str))) == NULL)
+	str = (char *)malloc((len + 1) * sizeof(*str));
+	if (!str)
 		return (NULL);
 	ft_memcpy(str, &s[start], size + 1);
 	str[size] = '\0';

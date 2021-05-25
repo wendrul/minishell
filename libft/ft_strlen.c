@@ -14,7 +14,7 @@
 
 size_t	ft_strlen(char const *str)
 {
-	register char *cur;
+	register char	*cur;
 
 	cur = (char *)str;
 	while (*cur)
