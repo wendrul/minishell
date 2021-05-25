@@ -6,7 +6,7 @@
 /*   By: ede-thom <ede-thom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/14 19:15:07 by ede-thom          #+#    #+#             */
-/*   Updated: 2021/05/25 12:18:08 by ede-thom         ###   ########.fr       */
+/*   Updated: 2021/05/25 14:43:45 by ede-thom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,19 +19,24 @@ void	initialize_node(t_buf_hist cur, int fd)
 	cur->next = NULL;
 }
 
+static void	*aux1(int fd, t_buf_hist *hist)
+{
+	t_buf_hist	cur;
+
+	cur = (t_buf_hist)malloc(sizeof(*cur));
+	if (!cur)
+		return (NULL);
+	initialize_node(cur, fd);
+	*hist = cur;
+	return (cur->buf);
+}
+
 char	*get_last_from_fd(int fd, t_buf_hist *hist)
 {
 	t_buf_hist	cur;
 
 	if (*hist == NULL)
-	{
-		cur = (t_buf_hist)malloc(sizeof(*cur));
-		if (!cur)
-			return (NULL);
-		initialize_node(cur, fd);
-		*hist = cur;
-		return (cur->buf);
-	}
+		return (aux1(fd, hist));
 	cur = *hist;
 	if (cur && cur->fd == fd)
 		return (cur->buf);
