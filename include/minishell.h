@@ -6,7 +6,7 @@
 /*   By: ede-thom <ede-thom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/20 19:19:14 by ede-thom          #+#    #+#             */
-/*   Updated: 2021/05/25 13:46:15 by ede-thom         ###   ########.fr       */
+/*   Updated: 2021/05/25 14:15:56 by ede-thom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +96,12 @@ void					dispatch(t_list *cmd, t_command cmd_meta, t_builtin b);
 int						redirections(t_list **cmd, t_command cmd_meta);
 void					handle_signal(int signo);
 void					sig_when_waiting(int signo);
+
+void					erase_char(char *buf, int *cur);
+void					clear_line(int len);
+int						escape_seq(char *buf, int *cur);
+int						alloc_line_and_quit(char *buf, char **line, int cur);
+void					clear_buf(char *buf, int *cur);
 
 char					*type_name(int type);
 void					add_el(t_list **lst, char *str, int type);
