@@ -6,7 +6,7 @@
 /*   By: ede-thom <ede-thom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/18 20:19:07 by ede-thom          #+#    #+#             */
-/*   Updated: 2021/02/20 15:17:11 by ede-thom         ###   ########.fr       */
+/*   Updated: 2021/05/25 11:01:08 by ede-thom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,8 @@ static t_builtin	create(char *name, int (*method)(int, char**),
 	t_builtin	new;
 	int			i;
 
-	if (!(new = (t_builtin)malloc(sizeof(struct s_builtin))))
+	new = (t_builtin)malloc(sizeof(struct s_builtin));
+	if (!new)
 		error_exit(MALLOC_FAIL_ERROR);
 	i = -1;
 	while (++i < 256)
@@ -29,10 +30,10 @@ static t_builtin	create(char *name, int (*method)(int, char**),
 	return (new);
 }
 
-void				add_builtin(t_builtin *list, char *name,
+void	add_builtin(t_builtin *list, char *name,
 							int (*method)(int, char**))
 {
-	t_builtin cur;
+	t_builtin	cur;
 
 	if (*list == NULL)
 	{
@@ -45,20 +46,21 @@ void				add_builtin(t_builtin *list, char *name,
 	cur->next = create(name, method, NULL);
 }
 
-int					run_builtin(t_builtin builtin, char *name,
+int	run_builtin(t_builtin builtin, char *name,
 							t_command cmd, int *status)
 {
 	while (builtin != NULL)
 	{
 		if (name_cmp(name, builtin->name))
 		{
-			if ((*status = builtin->method(cmd.argc, cmd.argv)))
+			*status = builtin->method(cmd.argc, cmd.argv);
+			if (*status)
 			{
 				if (*status == -1)
 				{
 					*status = 1;
 					simple_error(msh_strerror(g_msh->err_no),
-												cmd.num, cmd.name);
+						cmd.num, cmd.name);
 				}
 				else
 					simple_error(strerror(errno), cmd.num, cmd.name);
@@ -70,7 +72,7 @@ int					run_builtin(t_builtin builtin, char *name,
 	return (0);
 }
 
-int					name_cmp(char *str1, char *str2)
+int	name_cmp(char *str1, char *str2)
 {
 	int		len;
 

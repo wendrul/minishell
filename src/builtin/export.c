@@ -6,7 +6,7 @@
 /*   By: ede-thom <ede-thom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/28 19:53:39 by ede-thom          #+#    #+#             */
-/*   Updated: 2021/02/20 18:25:20 by ede-thom         ###   ########.fr       */
+/*   Updated: 2021/05/25 10:58:44 by ede-thom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static int	is_valid_var_name(char *str)
 {
-	int j;
+	int	j;
 
 	j = -1;
 	while (str[++j])
@@ -32,19 +32,24 @@ static int	set_envvar(char *str)
 	int			pos;
 	t_var_dict	var;
 
-	if (!((pos = ft_indexof('=', str)) == -1))
+	pos = ft_indexof('=', str);
+	if (!(pos == -1))
 	{
 		if (pos == 0)
 			return (0);
 		else
 			dict_strput(str)->is_env = 1;
 	}
-	else if ((var = dict_get(str)))
-		var->is_env = 1;
+	else
+	{
+		var = dict_get(str);
+		if (var)
+			var->is_env = 1;
+	}
 	return (1);
 }
 
-int			msh_export(int argc, char **argv)
+int	msh_export(int argc, char **argv)
 {
 	int			i;
 	int			status;

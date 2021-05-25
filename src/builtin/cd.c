@@ -6,17 +6,17 @@
 /*   By: ede-thom <ede-thom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/27 22:02:13 by ede-thom          #+#    #+#             */
-/*   Updated: 2021/02/16 21:20:32 by ede-thom         ###   ########.fr       */
+/*   Updated: 2021/05/25 10:55:14 by ede-thom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int		msh_cd(int argc, char **argv)
+int	msh_cd(int argc, char **argv)
 {
-	char old_pwd[PWD_BUFF_SIZE];
-	char new_pwd[PWD_BUFF_SIZE];
-	char *path;
+	char	old_pwd[PWD_BUFF_SIZE];
+	char	new_pwd[PWD_BUFF_SIZE];
+	char	*path;
 
 	if (!getcwd(old_pwd, PWD_BUFF_SIZE))
 		return (1);

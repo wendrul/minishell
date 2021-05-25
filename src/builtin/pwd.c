@@ -6,15 +6,15 @@
 /*   By: ede-thom <ede-thom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/27 22:03:39 by ede-thom          #+#    #+#             */
-/*   Updated: 2021/05/17 13:47:42 by ede-thom         ###   ########.fr       */
+/*   Updated: 2021/05/25 10:58:59 by ede-thom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int		msh_pwd(void)
+int	msh_pwd(void)
 {
-	char dir[PWD_BUFF_SIZE];
+	char	dir[PWD_BUFF_SIZE];
 
 	if (getcwd(dir, PWD_BUFF_SIZE) == NULL)
 	{

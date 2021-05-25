@@ -6,19 +6,18 @@
 /*   By: ede-thom <ede-thom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/18 23:43:58 by ede-thom          #+#    #+#             */
-/*   Updated: 2021/05/17 13:35:37 by ede-thom         ###   ########.fr       */
+/*   Updated: 2021/05/25 10:59:29 by ede-thom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int		msh_echo(int argc, char **argv)
+int	msh_echo(int argc, char **argv)
 {
-	int i;
-	int endl;
+	int	i;
+	int	endl;
 
 	endl = 1;
-
 	if (argc == 1)
 	{
 		ft_putstr_fd("\n", STDOUT_FILENO);

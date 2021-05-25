@@ -6,17 +6,17 @@
 /*   By: ede-thom <ede-thom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/28 18:50:40 by ede-thom          #+#    #+#             */
-/*   Updated: 2021/02/20 15:27:13 by ede-thom         ###   ########.fr       */
+/*   Updated: 2021/05/25 10:56:42 by ede-thom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int			msh_unset(int argc, char **argv)
+int	msh_unset(int argc, char **argv)
 {
-	int i;
-	int j;
-	int status;
+	int	i;
+	int	j;
+	int	status;
 
 	i = 1;
 	status = 0;
