@@ -6,7 +6,7 @@
 /*   By: ede-thom <ede-thom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/13 21:11:29 by ede-thom          #+#    #+#             */
-/*   Updated: 2021/02/07 00:08:16 by ede-thom         ###   ########.fr       */
+/*   Updated: 2021/05/27 15:00:51 by ede-thom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,16 @@ static char	**init(int *word, int *i, char *s, char *cs)
 	return (splut);
 }
 
+static void	auxsplut(int len, int i, char *splut_at_word, char *str)
+{
+	int	j;
+
+	j = -1;
+	while (++j < len)
+		splut_at_word[j] = str[i + j];
+	splut_at_word[j] = '\0';
+}
+
 char	**ft_split_charset(char *str, char *charset)
 {
 	int		i;
@@ -81,10 +91,7 @@ char	**ft_split_charset(char *str, char *charset)
 			splut[word] = (char *)malloc(sizeof(char) * (len + 1));
 			if (!splut[word])
 				return (NULL);
-			j = -1;
-			while (++j < len)
-				splut[word][j] = str[i + j];
-			splut[word][j] = '\0';
+			auxsplut(len, i, splut[word], str);
 		}
 		i += len;
 	}
