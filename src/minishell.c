@@ -6,7 +6,7 @@
 /*   By: ede-thom <ede-thom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/18 17:00:48 by ede-thom          #+#    #+#             */
-/*   Updated: 2021/05/20 11:06:46 by ede-thom         ###   ########.fr       */
+/*   Updated: 2021/05/27 14:45:17 by ede-thom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,14 +49,8 @@ void	prepare_shell(t_builtin *b)
 	dict_put("?", "0");
 }
 
-int	main(int argc, char **argv, char **envp)
+static void	initialize_gmsh(char **envp)
 {
-	t_builtin	builtins;
-	int			status;
-	char		*status_str;
-
-	(void)argc;
-	(void)argv;
 	g_msh = malloc(sizeof(struct s_msh));
 	g_msh->env = envp;
 	g_msh->head = NULL;
@@ -65,6 +59,17 @@ int	main(int argc, char **argv, char **envp)
 	g_msh->redir_in_fd = -1;
 	g_msh->redir_out_fd = -1;
 	g_msh->clear_buf = 0;
+}
+
+int	main(int argc, char **argv, char **envp)
+{
+	t_builtin	builtins;
+	int			status;
+	char		*status_str;
+
+	(void)argc;
+	(void)argv;
+	initialize_gmsh(envp);
 	prepare_shell(&builtins);
 	while (1)
 	{

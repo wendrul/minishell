@@ -6,7 +6,7 @@
 /*   By: ede-thom <ede-thom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/20 15:32:08 by agoodwin          #+#    #+#             */
-/*   Updated: 2021/05/20 10:22:10 by ede-thom         ###   ########.fr       */
+/*   Updated: 2021/05/27 14:50:51 by ede-thom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,16 @@ void	replace_special(char **str, int *var_start)
 	*var_start += ft_strlen(val) - 1;
 }
 
+static int	evar_aux1(char **o, char **str, int *ve, int *var_start)
+{
+	int	len;
+
+	*o = *str;
+	len = ft_strlen(*o);
+	*ve = *var_start;
+	return (len);
+}
+
 void	replace_evar(char **str, int *var_start)
 {
 	char	*key;
@@ -65,9 +75,7 @@ void	replace_evar(char **str, int *var_start)
 	int		ve;
 	int		len;
 
-	o = *str;
-	len = ft_strlen(o);
-	ve = *var_start;
+	len = evar_aux1(&o, str, &ve, var_start);
 	while ((*str)[++ve] && (ft_indexof((*str)[ve], ALLOWED_VAR_CHARS) != -1))
 		;
 	key = ft_substr(*str, *var_start + 1, ve - *var_start - 1);
