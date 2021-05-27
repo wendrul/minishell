@@ -6,7 +6,7 @@
 /*   By: ede-thom <ede-thom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/20 15:32:04 by agoodwin          #+#    #+#             */
-/*   Updated: 2021/05/20 10:17:39 by ede-thom         ###   ########.fr       */
+/*   Updated: 2021/05/27 14:39:51 by ede-thom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,19 @@ void	add_el(t_list **lst, char *str, int type)
 	ft_lstadd_back(lst, new);
 }
 
+int	check_syntax_quote(char *line, int *j, int *i, t_command cmd)
+{
+	while (line[++(*j)] != line[*i])
+	{
+		if (!line[*j])
+		{
+			shell_error(SYNTAX_ERROR, cmd.num);
+			return (0);
+		}
+	}
+	return (1);
+}
+
 static int	quote_loop_logic(char *line, t_command cmd, int i,
 								t_list **elements)
 {
@@ -34,14 +47,8 @@ static int	quote_loop_logic(char *line, t_command cmd, int i,
 
 	j = i;
 	quote = line[i];
-	while (line[++j] != line[i])
-	{
-		if (!line[j])
-		{
-			shell_error(SYNTAX_ERROR, cmd.num);
-			return (-5);
-		}
-	}
+	if (!check_syntax_quote(line, &j, &i, cmd))
+		return (-5);
 	tmp = ft_substr(line, i + 1, j - i - 1);
 	if (!tmp)
 		error_exit(MALLOC_FAIL_ERROR);
@@ -57,10 +64,20 @@ static int	quote_loop_logic(char *line, t_command cmd, int i,
 	return (j);
 }
 
+void	add_substr_el(char *line, int start, int end, t_list **elements)
+{
+	char	*tmp;
+
+	tmp = ft_substr(line, start, end);
+	if (!tmp)
+		error_exit(MALLOC_FAIL_ERROR);
+	add_el(elements, tmp, UNPARSED);
+	free(tmp);
+}
+
 t_list	*parse_quotes(char *line, t_command cmd)
 {
 	t_list	*elements;
-	char	*tmp;
 	int		i;
 	int		start;
 
@@ -71,21 +88,16 @@ t_list	*parse_quotes(char *line, t_command cmd)
 	{
 		if (line[i] == '\'' || line[i] == '"')
 		{
-			tmp = ft_substr(line, start, i - start);
-			if (!tmp)
-				error_exit(MALLOC_FAIL_ERROR);
-			add_el(&elements, tmp, UNPARSED);
-			free(tmp);
+			add_substr_el(line, start, i - start, &elements);
 			start = quote_loop_logic(line, cmd, i, &elements) + 1;
 			if (start < 0)
+			{
+				ft_lstclear(&elements, del_element);
 				return (NULL);
+			}
 			i = start - 1;
 		}
 	}
-	tmp = ft_substr(line, start, i - start);
-	if (!tmp)
-		error_exit(MALLOC_FAIL_ERROR);
-	add_el(&elements, tmp, UNPARSED);
-	free(tmp);
+	add_substr_el(line, start, i - start, &elements);
 	return (elements);
 }
