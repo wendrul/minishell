@@ -6,7 +6,7 @@
 /*   By: ede-thom <ede-thom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/01 21:33:35 by ede-thom          #+#    #+#             */
-/*   Updated: 2021/05/25 14:14:38 by ede-thom         ###   ########.fr       */
+/*   Updated: 2021/05/27 14:06:21 by ede-thom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,10 @@ int	escape_seq(char *buf, int *cur)
 	if (read(STDIN_FILENO, &c, 1) != 1)
 		return (READ_ERROR);
 	if (c != 91)
+	{
+		(*cur)--;
 		return (NORMAL_RETURN);
+	}
 	if (read(STDIN_FILENO, &c, 1) != 1)
 		return (READ_ERROR);
 	if (c == 65)

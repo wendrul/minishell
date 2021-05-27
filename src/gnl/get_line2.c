@@ -6,7 +6,7 @@
 /*   By: ede-thom <ede-thom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/25 14:13:04 by ede-thom          #+#    #+#             */
-/*   Updated: 2021/05/25 14:13:35 by ede-thom         ###   ########.fr       */
+/*   Updated: 2021/05/27 13:57:49 by ede-thom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ static int	get_line2(char *buf, int *cur, char **line)
 		return (EOF_RETURN);
 	else if (buf[*cur] == ASCII_FF)
 		screen_clear(buf, cur);
-	else if (buf[*cur] == ASCII_TAB)
+	else if (!ft_isprint(buf[*cur]))
 		buf[(*cur)--] = 0;
 	else if (*cur < LINE_BUFFER_SIZE)
 		write(STDERR_FILENO, buf + *cur, 1);
