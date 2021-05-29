@@ -6,7 +6,7 @@
 /*   By: ede-thom <ede-thom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/18 17:00:48 by ede-thom          #+#    #+#             */
-/*   Updated: 2021/05/27 14:45:17 by ede-thom         ###   ########.fr       */
+/*   Updated: 2021/05/29 21:12:31 by ede-thom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,11 @@ void	handle_signal(int signo)
 	if (signo == SIGINT)
 	{
 		g_msh->clear_buf = 1;
-		write(STDERR_FILENO, "^C\n", 3);
-		write(STDERR_FILENO, PROMPT_TOKEN, ft_strlen(PROMPT_TOKEN));
+		if (isatty(STDERR_FILENO))
+		{
+			write(STDERR_FILENO, "^C\n", 3);
+			write(STDERR_FILENO, PROMPT_TOKEN, ft_strlen(PROMPT_TOKEN));
+		}
 	}
 }
 

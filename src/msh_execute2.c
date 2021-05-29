@@ -6,7 +6,7 @@
 /*   By: ede-thom <ede-thom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/20 15:03:58 by agoodwin          #+#    #+#             */
-/*   Updated: 2021/05/20 09:49:53 by ede-thom         ###   ########.fr       */
+/*   Updated: 2021/05/29 22:03:44 by ede-thom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,18 +15,25 @@
 void	handle_child(int pipefd[2], t_list *right,
 						t_command cmd_meta, t_builtin b)
 {
+	int	status;
+
 	close(pipefd[1]);
 	dup2(pipefd[0], STDIN_FILENO);
 	dispatch(right, cmd_meta, b);
 	close(pipefd[0]);
 	ft_lstclear(&right, del_element);
-	exit(0);
+	status = 0;
+	if (dict_get("?"))
+		status = ft_atoi(dict_get("?")->value);
+	exit(status);
 }
 
 void	handle_parent(int pipefd[2], t_list *left,
 						t_command cmd_meta, t_builtin b)
 {
-	int	stdout_cpy;
+	int		stdout_cpy;
+	int		status;
+	char	*status_str;
 
 	close(pipefd[0]);
 	stdout_cpy = dup(STDOUT_FILENO);
@@ -34,7 +41,15 @@ void	handle_parent(int pipefd[2], t_list *left,
 	run_cmd(left, cmd_meta, b);
 	close(pipefd[1]);
 	close(STDOUT_FILENO);
-	wait(NULL);
+	wait(&status);
+	if (WIFEXITED(status))
+		status_str = ft_itoa(WEXITSTATUS(status));
+	else
+		status_str = ft_itoa(status);
+	if (!status_str)
+		error_exit(MALLOC_FAIL_ERROR);
+	dict_put("?", status_str);
+	free(status_str);
 	dup2(stdout_cpy, STDOUT_FILENO);
 	close(stdout_cpy);
 }
