@@ -6,7 +6,7 @@
 /*   By: ede-thom <ede-thom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/18 21:09:50 by ede-thom          #+#    #+#             */
-/*   Updated: 2021/05/29 22:15:50 by ede-thom         ###   ########.fr       */
+/*   Updated: 2021/05/29 22:24:14 by ede-thom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int	msh_exit(int argc, char **argv)
 		g_msh->err_no = EXIT_TOO_MANY_ARGUMENTS;
 		return (-1);
 	}
-	exit_code = 0;
+	exit_code = keep_status();
 	if (argc == 2)
 	{
 		if (!is_numeric(argv[1]))

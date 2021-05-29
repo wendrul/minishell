@@ -6,7 +6,7 @@
 /*   By: ede-thom <ede-thom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/18 17:00:48 by ede-thom          #+#    #+#             */
-/*   Updated: 2021/05/29 21:12:31 by ede-thom         ###   ########.fr       */
+/*   Updated: 2021/05/29 22:25:16 by ede-thom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,6 @@ int	main(int argc, char **argv, char **envp)
 			free(status_str);
 		}
 	}
-	return (0);
 }
 
 void	set_env_vars(char **envp)

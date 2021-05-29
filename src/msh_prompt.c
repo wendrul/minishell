@@ -6,7 +6,7 @@
 /*   By: ede-thom <ede-thom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/18 16:59:06 by wendrul           #+#    #+#             */
-/*   Updated: 2021/05/29 18:59:56 by ede-thom         ###   ########.fr       */
+/*   Updated: 2021/05/29 22:23:23 by ede-thom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ static void	gnl_aux(int gnl_ret)
 	if (gnl_ret == EOF_RETURN)
 	{
 		write(STDERR_FILENO, "exit\n", 6);
-		exit(0);
+		exit(keep_status());
 	}
 }
 

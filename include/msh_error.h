@@ -6,7 +6,7 @@
 /*   By: ede-thom <ede-thom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/18 17:46:23 by ede-thom          #+#    #+#             */
-/*   Updated: 2021/05/29 15:33:55 by ede-thom         ###   ########.fr       */
+/*   Updated: 2021/05/29 22:27:36 by ede-thom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,6 @@
 # define EXIT_NUM "Exit codes are supposed to be numeric... I overestimated u"
 # define EXPECTED_KEY_EQUALS_VALUE_STRING "Expected format of `[KEY]=[VALUE]`"
 
-
 /*
 ** Exit statuses
 */
@@ -66,10 +65,7 @@
 */
 
 # define NOT_FOUND_NUM 2
-
-
 # define NOT_FOUND_BETTER_ERROR "That shit doesn't even exist"
-
 
 void		error_exit(char *str);
 void		simple_error(char *msg, int cmd_no, char *cmd_name);
@@ -77,5 +73,7 @@ void		shell_error(char *msg, int cmd_no);
 char		*msh_strerror(int error);
 void		status_msg(int status);
 char		*better_strerror(int error);
+
+int			keep_status(void);
 
 #endif

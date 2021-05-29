@@ -6,26 +6,31 @@
 /*   By: ede-thom <ede-thom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/20 15:03:58 by agoodwin          #+#    #+#             */
-/*   Updated: 2021/05/29 22:03:44 by ede-thom         ###   ########.fr       */
+/*   Updated: 2021/05/29 22:27:03 by ede-thom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	handle_child(int pipefd[2], t_list *right,
-						t_command cmd_meta, t_builtin b)
+int	keep_status(void)
 {
 	int	status;
 
+	status = 0;
+	if (dict_get("?"))
+		status = ft_atoi(dict_get("?")->value);
+	return (status);
+}
+
+void	handle_child(int pipefd[2], t_list *right,
+						t_command cmd_meta, t_builtin b)
+{
 	close(pipefd[1]);
 	dup2(pipefd[0], STDIN_FILENO);
 	dispatch(right, cmd_meta, b);
 	close(pipefd[0]);
 	ft_lstclear(&right, del_element);
-	status = 0;
-	if (dict_get("?"))
-		status = ft_atoi(dict_get("?")->value);
-	exit(status);
+	exit(keep_status());
 }
 
 void	handle_parent(int pipefd[2], t_list *left,
