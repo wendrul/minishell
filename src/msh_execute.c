@@ -6,7 +6,7 @@
 /*   By: ede-thom <ede-thom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/22 23:07:18 by ede-thom          #+#    #+#             */
-/*   Updated: 2021/05/20 09:48:49 by ede-thom         ###   ########.fr       */
+/*   Updated: 2021/05/29 15:19:37 by ede-thom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int	exec_child(t_command cmd)
 {
 	if (execve(getcmd_path(cmd), cmd.argv, g_msh->env) == -1)
 	{
-		simple_error(strerror(errno), cmd.num, cmd.argv[0]);
+		simple_error(better_strerror(errno), cmd.num, cmd.argv[0]);
 		if (errno == EACCES)
 			exit(126);
 		exit(127);

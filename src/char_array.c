@@ -6,7 +6,7 @@
 /*   By: ede-thom <ede-thom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/20 13:59:27 by ede-thom          #+#    #+#             */
-/*   Updated: 2021/05/19 19:23:27 by ede-thom         ###   ########.fr       */
+/*   Updated: 2021/05/29 15:29:14 by ede-thom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,4 +39,12 @@ int	arr_len(char **arr)
 	while (arr[i])
 		i++;
 	return (i);
+}
+
+char *better_strerror(int error)
+{
+	if (error == NOT_FOUND_NUM)
+		return (NOT_FOUND_BETTER_ERROR);
+	else
+		return (strerror(error));
 }

@@ -6,7 +6,7 @@
 /*   By: ede-thom <ede-thom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/18 20:19:07 by ede-thom          #+#    #+#             */
-/*   Updated: 2021/05/25 11:01:08 by ede-thom         ###   ########.fr       */
+/*   Updated: 2021/05/29 15:02:25 by ede-thom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ int	run_builtin(t_builtin builtin, char *name,
 						cmd.num, cmd.name);
 				}
 				else
-					simple_error(strerror(errno), cmd.num, cmd.name);
+					simple_error(better_strerror(errno), cmd.num, cmd.name);
 			}
 			return (1);
 		}

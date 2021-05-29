@@ -6,7 +6,7 @@
 /*   By: ede-thom <ede-thom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/20 15:04:33 by agoodwin          #+#    #+#             */
-/*   Updated: 2021/05/20 10:40:23 by ede-thom         ###   ########.fr       */
+/*   Updated: 2021/05/29 15:19:59 by ede-thom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int	handle_greats(char *filename, int type, t_command cmd_meta)
 	fd = open(filename, flags, 0777);
 	if (fd == -1)
 	{
-		shell_error(strerror(errno), cmd_meta.num);
+		shell_error(better_strerror(errno), cmd_meta.num);
 		return (0);
 	}
 	g_msh->redir_out_fd = fd;
@@ -44,7 +44,7 @@ int	handle_less(char *filename, t_command cmd_meta)
 	fd = open(filename, O_RDONLY);
 	if (fd == -1)
 	{
-		shell_error(strerror(errno), cmd_meta.num);
+		shell_error(better_strerror(errno), cmd_meta.num);
 		return (0);
 	}
 	g_msh->redir_in_fd = fd;

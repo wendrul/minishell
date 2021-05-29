@@ -6,7 +6,7 @@
 /*   By: ede-thom <ede-thom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/18 17:46:23 by ede-thom          #+#    #+#             */
-/*   Updated: 2021/05/29 14:49:23 by ede-thom         ###   ########.fr       */
+/*   Updated: 2021/05/29 15:33:55 by ede-thom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,12 +32,14 @@
 
 # define HOME_IS_NOT_SET "HOME is not set"
 # define INVALID_PARAMETER_MESSAGE "Invalid parameter"
-# define BAD_VARIABLE_MESSAGE "Bad variable name"
+# define BAD_VARIABLE_MESSAGE "Bad variable name, cunt"
 # define EMPTY_VARIABLE_MESSAGE "Variable name was left blank"
 # define PWD_TOO_BIG_MESSAGE "Current directory path is too big to display"
 # define UNSPECIFIED_ERROR "Unspecified msh error"
 # define EXIT_MANY_ARGS "Bitch choose a code first and then I'll quit u prick"
 # define EXIT_NUM "Exit codes are supposed to be numeric... I overestimated u"
+# define EXPECTED_KEY_EQUALS_VALUE_STRING "Expected format of `[KEY]=[VALUE]`"
+
 
 /*
 ** Exit statuses
@@ -59,12 +61,21 @@
 # define EXIT_TOO_MANY_ARGUMENTS 15
 # define EXIT_NOT_NUMERIC 16
 
-# define EXPECTED_KEY_EQUALS_VALUE_STRING "Expected format of `[KEY]=[VALUE]`"
+/*
+** Better strerror
+*/
+
+# define NOT_FOUND_NUM 2
+
+
+# define NOT_FOUND_BETTER_ERROR "That shit doesn't even exist"
+
 
 void		error_exit(char *str);
 void		simple_error(char *msg, int cmd_no, char *cmd_name);
 void		shell_error(char *msg, int cmd_no);
 char		*msh_strerror(int error);
 void		status_msg(int status);
+char		*better_strerror(int error);
 
 #endif
