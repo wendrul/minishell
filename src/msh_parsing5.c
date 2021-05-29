@@ -6,7 +6,7 @@
 /*   By: ede-thom <ede-thom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/20 15:32:12 by agoodwin          #+#    #+#             */
-/*   Updated: 2021/05/28 10:18:41 by ede-thom         ###   ########.fr       */
+/*   Updated: 2021/05/29 14:11:53 by ede-thom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,7 +108,8 @@ int	syntax_check(t_list *elements, t_command cmd)
 		{
 			if (e->type == GREATGREAT || e->type == GREAT || e->type == LESS)
 			{
-				if (prev && prev->type != SEMICOLON && prev->type != TEXT)
+				if (!elements->next
+					|| (prev && prev->type != SEMICOLON && prev->type != TEXT))
 					return (syntaxerror_msg(e->type, cmd));
 			}
 			else if (!prev || prev->type != TEXT)
