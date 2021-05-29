@@ -6,7 +6,7 @@
 /*   By: ede-thom <ede-thom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/13 21:11:29 by ede-thom          #+#    #+#             */
-/*   Updated: 2021/05/27 15:00:51 by ede-thom         ###   ########.fr       */
+/*   Updated: 2021/05/29 22:10:34 by ede-thom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,6 @@ char	**ft_split_charset(char *str, char *charset)
 	int		word;
 	int		len;
 	char	**splut;
-	int		j;
 
 	splut = init(&word, &i, str, charset);
 	if (!splut)
