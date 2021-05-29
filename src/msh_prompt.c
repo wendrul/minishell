@@ -6,7 +6,7 @@
 /*   By: ede-thom <ede-thom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/18 16:59:06 by wendrul           #+#    #+#             */
-/*   Updated: 2021/05/27 15:10:27 by ede-thom         ###   ########.fr       */
+/*   Updated: 2021/05/29 18:59:56 by ede-thom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,10 +64,11 @@ static char	*gnl(char **old)
 
 	if (old != NULL)
 		free(*old);
-	ft_putstr_fd(PROMPT_TOKEN, STDERR_FILENO);
+	if (isatty(STDERR_FILENO))
+		ft_putstr_fd(PROMPT_TOKEN, STDERR_FILENO);
 	signal(SIGINT, handle_signal);
 	line = NULL;
-	if (dict_get("TERM") != NULL)
+	if (isatty(STDERR_FILENO) && dict_get("TERM") != NULL)
 	{
 		termios_backup = set_up_termcaps(dict_get("TERM")->value);
 		gnl_ret = gnl_read_loop(&line);
