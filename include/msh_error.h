@@ -6,7 +6,7 @@
 /*   By: ede-thom <ede-thom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/18 17:46:23 by ede-thom          #+#    #+#             */
-/*   Updated: 2021/05/17 16:05:46 by ede-thom         ###   ########.fr       */
+/*   Updated: 2021/05/29 14:22:35 by ede-thom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@
 # define EMPTY_VARIABLE_MESSAGE "Variable name was left blank"
 # define PWD_TOO_BIG_MESSAGE "Current directory path is too big to display"
 # define UNSPECIFIED_ERROR "Unspecified msh error"
+# define EXIT_MANY_ARGS "Bitch choose a code first and then I'll quit u prick"
 
 /*
 ** Exit statuses
@@ -54,6 +55,7 @@
 # define BAD_VAR_NAME 12
 # define EMPTY_VAR_NAME 13
 # define PWD_TOO_BIG 14
+# define EXIT_TOO_MANY_ARGUMENTS 15
 
 # define EXPECTED_KEY_EQUALS_VALUE_STRING "Expected format of `[KEY]=[VALUE]`"
 
