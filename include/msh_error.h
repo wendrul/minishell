@@ -6,7 +6,7 @@
 /*   By: ede-thom <ede-thom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/18 17:46:23 by ede-thom          #+#    #+#             */
-/*   Updated: 2021/05/29 14:22:35 by ede-thom         ###   ########.fr       */
+/*   Updated: 2021/05/29 14:49:23 by ede-thom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@
 # define PWD_TOO_BIG_MESSAGE "Current directory path is too big to display"
 # define UNSPECIFIED_ERROR "Unspecified msh error"
 # define EXIT_MANY_ARGS "Bitch choose a code first and then I'll quit u prick"
+# define EXIT_NUM "Exit codes are supposed to be numeric... I overestimated u"
 
 /*
 ** Exit statuses
@@ -56,6 +57,7 @@
 # define EMPTY_VAR_NAME 13
 # define PWD_TOO_BIG 14
 # define EXIT_TOO_MANY_ARGUMENTS 15
+# define EXIT_NOT_NUMERIC 16
 
 # define EXPECTED_KEY_EQUALS_VALUE_STRING "Expected format of `[KEY]=[VALUE]`"
 

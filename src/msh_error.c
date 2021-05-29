@@ -6,7 +6,7 @@
 /*   By: ede-thom <ede-thom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/16 22:12:10 by ede-thom          #+#    #+#             */
-/*   Updated: 2021/05/29 14:22:20 by ede-thom         ###   ########.fr       */
+/*   Updated: 2021/05/29 14:50:05 by ede-thom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,8 @@ char	*msh_strerror(int error)
 		return (PWD_TOO_BIG_MESSAGE);
 	else if (error == EXIT_TOO_MANY_ARGUMENTS)
 		return (EXIT_MANY_ARGS);
+	else if (error == EXIT_NOT_NUMERIC)
+		return (EXIT_NUM);
 	return (UNSPECIFIED_ERROR);
 }
 
