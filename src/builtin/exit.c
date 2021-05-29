@@ -6,7 +6,7 @@
 /*   By: ede-thom <ede-thom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/18 21:09:50 by ede-thom          #+#    #+#             */
-/*   Updated: 2021/05/29 14:52:57 by ede-thom         ###   ########.fr       */
+/*   Updated: 2021/05/29 22:15:50 by ede-thom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,14 @@ static int	is_numeric(char *str)
 {
 	int	i;
 
-	i = -1;
-	while (str[++i])
+	i = 0;
+	if (str[i] == '+' || str[i] == '-')
+		i++;
+	while (str[i])
 	{
 		if (!ft_isdigit(str[i]))
 			return (0);
+		i++;
 	}
 	return (1);
 }
