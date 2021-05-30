@@ -6,7 +6,7 @@
 /*   By: ede-thom <ede-thom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/20 19:19:14 by ede-thom          #+#    #+#             */
-/*   Updated: 2021/05/25 14:15:56 by ede-thom         ###   ########.fr       */
+/*   Updated: 2021/05/30 13:48:01 by ede-thom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,5 +105,11 @@ void					clear_buf(char *buf, int *cur);
 
 char					*type_name(int type);
 void					add_el(t_list **lst, char *str, int type);
+
+void					memmoves_for_replace(char **str, char *o,
+							int var_start, char *val);
+struct termios			set_up_termcaps(char *term_name);
+void					gnl_aux2(int gnl_ret);
+int						gnl_read_loop(char **line);
 
 #endif

@@ -6,55 +6,11 @@
 /*   By: ede-thom <ede-thom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/18 16:59:06 by wendrul           #+#    #+#             */
-/*   Updated: 2021/05/29 22:23:23 by ede-thom         ###   ########.fr       */
+/*   Updated: 2021/05/30 13:48:12 by ede-thom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-struct termios	set_up_termcaps(char *term_name)
-{
-	struct termios	termios_new;
-	struct termios	termios_backup;
-
-	tgetent(NULL, term_name);
-	tcgetattr(STDIN_FILENO, &termios_backup);
-	termios_new = termios_backup;
-	termios_new.c_lflag &= ~(ICANON);
-	termios_new.c_lflag &= ~(ECHO);
-	termios_new.c_oflag |= ISIG;
-	tcsetattr(STDERR_FILENO, TCSAFLUSH, &termios_new);
-	return (termios_backup);
-}
-
-static void	gnl_aux(int gnl_ret)
-{
-	signal(SIGINT, sig_when_waiting);
-	if (gnl_ret == MALLOC_ERROR || gnl_ret == READ_ERROR)
-		error_exit(FAILED_TO_GET_NEXT_LINE);
-	if (gnl_ret == EOF_RETURN)
-	{
-		write(STDERR_FILENO, "exit\n", 6);
-		exit(keep_status());
-	}
-}
-
-static int	gnl_read_loop(char **line)
-{
-	char	*substitute;
-	int		gnl_ret;
-
-	gnl_ret = get_line(line, "");
-	while (gnl_ret == UP_ARROW_RETURN || gnl_ret == DOWN_ARROW_RETURN)
-	{
-		if (gnl_ret == UP_ARROW_RETURN)
-			substitute = on_up_arrow();
-		else if (gnl_ret == DOWN_ARROW_RETURN)
-			substitute = on_down_arrow();
-		gnl_ret = get_line(line, substitute);
-	}
-	return (gnl_ret);
-}
 
 static char	*gnl(char **old)
 {
@@ -76,7 +32,7 @@ static char	*gnl(char **old)
 	}
 	else
 		gnl_ret = get_next_line(STDIN_FILENO, &line);
-	gnl_aux(gnl_ret);
+	gnl_aux2(gnl_ret);
 	return (line);
 }
 

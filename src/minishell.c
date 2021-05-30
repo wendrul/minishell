@@ -6,24 +6,11 @@
 /*   By: ede-thom <ede-thom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/18 17:00:48 by ede-thom          #+#    #+#             */
-/*   Updated: 2021/05/29 22:25:16 by ede-thom         ###   ########.fr       */
+/*   Updated: 2021/05/30 13:37:18 by ede-thom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-void	handle_signal(int signo)
-{
-	if (signo == SIGINT)
-	{
-		g_msh->clear_buf = 1;
-		if (isatty(STDERR_FILENO))
-		{
-			write(STDERR_FILENO, "^C\n", 3);
-			write(STDERR_FILENO, PROMPT_TOKEN, ft_strlen(PROMPT_TOKEN));
-		}
-	}
-}
 
 void	sig_when_waiting(int signo)
 {

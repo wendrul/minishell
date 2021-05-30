@@ -6,7 +6,7 @@
 #    By: ede-thom <ede-thom@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/11/16 17:26:10 by ede-thom          #+#    #+#              #
-#    Updated: 2021/05/25 14:17:51 by ede-thom         ###   ########.fr        #
+#    Updated: 2021/05/30 13:43:13 by ede-thom         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,7 +29,8 @@ SRCS		=	src/minishell.c\
 				src/msh_error.c\
 				src/char_array.c\
 				src/gnl/get_line.c\
-				src/gnl/get_line2.c
+				src/gnl/get_line2.c\
+				src/fuck_norm.c
 
 SRCS		+=	src/gnl/get_next_line.c\
 				src/gnl/get_next_line_utils.c

@@ -6,17 +6,11 @@
 /*   By: ede-thom <ede-thom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/20 15:32:08 by agoodwin          #+#    #+#             */
-/*   Updated: 2021/05/27 14:50:51 by ede-thom         ###   ########.fr       */
+/*   Updated: 2021/05/30 13:38:05 by ede-thom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-static void	memmoves_for_replace(char **str, char *o, int var_start, char *val)
-{
-	ft_memmove(*str, o, var_start);
-	ft_memmove(*str + var_start, val, ft_strlen(val));
-}
 
 static char	*get_val(char *key)
 {
